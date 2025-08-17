@@ -28,6 +28,7 @@ class Migrations extends BaseConfig
      * files have already been run.
      */
     public string $table = 'migrations';
+    public $type    = 'timestamp'; 
 
     /**
      * --------------------------------------------------------------------------
