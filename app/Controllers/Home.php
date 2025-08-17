@@ -6,7 +6,19 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        // Load your custom template view instead of welcome_message
-        return view('template'); // loads app/Views/template.php
+        // Load homepage template
+        return view('template', ['content' => 'index']);
+    }
+
+    public function about(): string
+    {
+        // Load about page template
+        return view('template', ['content' => 'about']);
+    }
+
+    public function contact(): string
+    {
+        // Load contact page template
+        return view('template', ['content' => 'contact']);
     }
 }
