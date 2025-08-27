@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact</title>
-</head>
-<body>
-    <h1>Contact Page</h1>
-    <nav>
-        <a href="<?= site_url('/') ?>">Home</a> |
-        <a href="<?= site_url('about') ?>">About</a> |
-        <a href="<?= site_url('contact') ?>">Contact</a>
-    </nav>
-</body>
-</html>
+<?= $this->extend('template') ?>
+
+<?= $this->section('title') ?>Contact<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+    <h2>Contact Us</h2>
+    <p>If you have any questions, feel free to reach out to us at <strong>student@example.com</strong>.</p>
+<?= $this->endSection() ?>

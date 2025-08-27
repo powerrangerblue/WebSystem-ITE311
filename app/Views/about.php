@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About</title>
-</head>
-<body>
-    <h1>About Us</h1>
-    <nav>
-        <a href="<?= site_url('/') ?>">Home</a> |
-        <a href="<?= site_url('about') ?>">About</a> |
-        <a href="<?= site_url('contact') ?>">Contact</a>
-    </nav>
-</body>
-</html>
+<?= $this->extend('template') ?>
+
+<?= $this->section('title') ?>About<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+    <h2>About Us</h2>
+    <p>Welcome to our website! This is a simple student-friendly project using CodeIgniter.</p>
+<?= $this->endSection() ?>
