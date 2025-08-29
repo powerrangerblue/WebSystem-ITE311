@@ -32,7 +32,13 @@
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Create Account</button>
                 </form>
+
+                <!-- Already have an account? -->
+                <div class="text-center mt-3">
+                    <p class="mb-0">Already have an account? <a href="<?= base_url('login') ?>">Log in here</a></p>
+                </div>
             </div>
         </div>
     </div>
+</div>
 <?= $this->endSection() ?>

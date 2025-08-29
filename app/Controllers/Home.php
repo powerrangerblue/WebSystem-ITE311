@@ -6,7 +6,7 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('home'); // Homepage
+        return view('index'); // Homepage
     }
 
     public function about()
