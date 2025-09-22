@@ -42,14 +42,59 @@
             </div>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Total Courses</h6>
+                <h3 class="card-title mb-0"><?= esc($totalCourses ?? 0) ?></h3>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="mt-4">
     <div class="card">
         <div class="card-header">Quick Actions</div>
-        <div class="card-body">
-            <a href="#" class="btn btn-primary me-2 disabled">Manage Users</a>
+        <div class="card-body d-flex gap-2 flex-wrap">
+            <a href="#" class="btn btn-primary disabled">Manage Users</a>
             <a href="#" class="btn btn-outline-primary disabled">Manage Courses</a>
+            <a href="#" class="btn btn-outline-secondary disabled">View Reports</a>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <div class="card">
+        <div class="card-header">Recent Activity</div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0 table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($recentUsers)): ?>
+                            <?php foreach ($recentUsers as $u): ?>
+                                <tr>
+                                    <td><?= esc($u['name'] ?? '-') ?></td>
+                                    <td><?= esc($u['email'] ?? '-') ?></td>
+                                    <td><span class="badge bg-secondary text-uppercase"><?= esc($u['role'] ?? '-') ?></span></td>
+                                    <td><?= esc($u['created_at'] ?? '-') ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="4" class="text-center text-muted p-3">No recent activity.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

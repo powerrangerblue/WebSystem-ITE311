@@ -117,6 +117,8 @@ class Auth extends Controller
                             'isLoggedIn' => true
                         ];
                         
+                        // Prevent session fixation
+                        $session->regenerate();
                         $session->set($sessionData);
                         $session->setFlashdata('success', 'Welcome, ' . $userName . '!');
 

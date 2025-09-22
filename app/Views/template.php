@@ -62,9 +62,7 @@
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'login' ? 'active' : '' ?>" href="<?= site_url('login') ?>">Login</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link <?= uri_string() == 'register' ? 'active' : '' ?>" href="<?= site_url('register') ?>">Register</a>
-        </li>
+        
         <?php endif; ?>
       </ul>
     </div>

@@ -28,12 +28,26 @@ class Admin extends Controller
         $totalTeachers = $userModel->where('role', 'teacher')->countAllResults();
         $totalStudents = $userModel->where('role', 'student')->countAllResults();
 
+        // Total courses (if courses table exists)
+        $db = \Config\Database::connect();
+        $totalCourses = 0;
+        try {
+            $totalCourses = $db->table('courses')->countAllResults();
+        } catch (\Throwable $e) {
+            $totalCourses = 0;
+        }
+
+        // Recent activity: latest users as a simple placeholder
+        $recentUsers = $userModel->orderBy('created_at', 'DESC')->limit(5)->find();
+
         $data = [
             'title' => 'Admin Dashboard',
             'totalUsers' => $totalUsers,
             'totalAdmins' => $totalAdmins,
             'totalTeachers' => $totalTeachers,
             'totalStudents' => $totalStudents,
+            'totalCourses' => $totalCourses,
+            'recentUsers' => $recentUsers,
         ];
 
         return view('admin/dashboard', $data);
