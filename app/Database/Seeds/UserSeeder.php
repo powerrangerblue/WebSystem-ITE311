@@ -14,10 +14,29 @@ class UserSeeder extends Seeder
                 'email'    => 'admin@example.com',
                 'password' => password_hash('admin123', PASSWORD_DEFAULT),
                 'role'     => 'admin',
-           
+            ],
+            [
+                'name'     => 'Teacher One',
+                'email'    => 'teacher1@example.com',
+                'password' => password_hash('teacher123', PASSWORD_DEFAULT),
+                'role'     => 'teacher',
+            ],
+            [
+                'name'     => 'Student One',
+                'email'    => 'student1@example.com',
+                'password' => password_hash('student123', PASSWORD_DEFAULT),
+                'role'     => 'student',
             ],
         ];
 
-        $this->db->table('users')->insertBatch($data);
+        $builder = $this->db->table('users');
+        foreach ($data as $row) {
+            $exists = $builder->where('email', $row['email'])->countAllResults();
+            if ($exists === 0) {
+                $builder->insert($row);
+            }
+            // reset builder for next loop
+            $builder = $this->db->table('users');
+        }
     }
 }
