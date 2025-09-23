@@ -62,7 +62,15 @@
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'login' ? 'active' : '' ?>" href="<?= site_url('login') ?>">Login</a>
         </li>
-        
+        <?php else: ?>
+        <?php if ($role === 'teacher'): ?>
+        <li class="nav-item">
+          <a class="nav-link <?= uri_string() == 'teacher/dashboard' ? 'active' : '' ?>" href="<?= site_url('teacher/dashboard') ?>">Teacher Dashboard</a>
+        </li>
+        <?php endif; ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= site_url('logout') ?>">Logout</a>
+        </li>
         <?php endif; ?>
       </ul>
     </div>
