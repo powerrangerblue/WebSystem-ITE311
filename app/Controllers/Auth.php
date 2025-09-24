@@ -21,7 +21,8 @@ class Auth extends Controller
                 'name' => 'required|min_length[3]|max_length[100]',
                 'email' => 'required|valid_email|is_unique[users.email]',
                 'password' => 'required|min_length[6]',
-                'password_confirm' => 'matches[password]'
+                'password_confirm' => 'matches[password]',
+                'role' => 'permit_empty|in_list[student,teacher]'
             ];
             
             if ($this->validate($rules)) {
@@ -31,12 +32,14 @@ class Auth extends Controller
                     // Get the data from form
                     $name = trim($this->request->getPost('name'));
                     $email = $this->request->getPost('email');
+                    $roleInput = strtolower((string) $this->request->getPost('role'));
+                    $role = in_array($roleInput, ['student','teacher'], true) ? $roleInput : 'student';
                     
                     $data = [
                         'name' => $name,
                         'email' => $email,
                         'password' => $this->request->getPost('password'), // Let model handle hashing
-                        'role' => 'student'
+                        'role' => $role
                     ];
                     
                     log_message('info', 'Attempting to insert user data: ' . print_r($data, true));

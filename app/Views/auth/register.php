@@ -23,6 +23,14 @@
                         <input type="email" class="form-control" id="email" name="email" required value="<?= esc(old('email')) ?>">
                     </div>
                     <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select class="form-select" id="role" name="role" required>
+                            <?php $oldRole = strtolower((string) old('role')); ?>
+                            <option value="student" <?= $oldRole === 'student' ? 'selected' : '' ?>>Student</option>
+                            <option value="teacher" <?= $oldRole === 'teacher' ? 'selected' : '' ?>>Teacher</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
