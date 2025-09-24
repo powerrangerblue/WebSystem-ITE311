@@ -122,18 +122,8 @@ class Auth extends Controller
                         $session->set($sessionData);
                         $session->setFlashdata('success', 'Welcome, ' . $userName . '!');
 
-                        // Role-based redirect
-                        $role = strtolower($sessionData['role'] ?? 'student');
-                        if ($role === 'admin') {
-                            return redirect()->to('/admin/dashboard');
-                        } elseif ($role === 'teacher') {
-                            return redirect()->to('/teacher/dashboard');
-                        } elseif ($role === 'student') {
-                            return redirect()->to('/student/dashboard');
-                        }
-
-                        // Fallback
-                        return redirect()->to('/');
+                        // Unified dashboard redirect
+                        return redirect()->to('/dashboard');
                     } else {
                         $session->setFlashdata('login_error', 'Invalid email or password.');
                     }
@@ -168,13 +158,103 @@ class Auth extends Controller
             return redirect()->to('login');
         }
         
-        // Pass user data to the view
-        $data = [
+        $role = strtolower((string) $session->get('role'));
+        $userId = (int) $session->get('user_id');
+
+        // Prepare role-specific data
+        $db = \Config\Database::connect();
+        $roleData = [];
+        try {
+            if ($role === 'admin') {
+                $userModel = new UserModel();
+                $roleData['totalUsers'] = $userModel->countAllResults();
+                $roleData['totalAdmins'] = $userModel->where('role', 'admin')->countAllResults();
+                $roleData['totalTeachers'] = $userModel->where('role', 'teacher')->countAllResults();
+                $roleData['totalStudents'] = $userModel->where('role', 'student')->countAllResults();
+                try {
+                    $roleData['totalCourses'] = $db->table('courses')->countAllResults();
+                } catch (\Throwable $e) {
+                    $roleData['totalCourses'] = 0;
+                }
+                $roleData['recentUsers'] = $userModel->orderBy('created_at', 'DESC')->limit(5)->find();
+            } elseif ($role === 'teacher') {
+                $courses = [];
+                try {
+                    $courses = $db->table('courses')
+                        ->where('teacher_id', $userId)
+                        ->orderBy('created_at', 'DESC')
+                        ->get(10)
+                        ->getResultArray();
+                } catch (\Throwable $e) {
+                    $courses = [];
+                }
+                $notifications = [];
+                try {
+                    $notifications = $db->table('submissions')
+                        ->select('student_name, course_id, created_at')
+                        ->orderBy('created_at', 'DESC')
+                        ->limit(5)
+                        ->get()
+                        ->getResultArray();
+                } catch (\Throwable $e) {
+                    $notifications = [];
+                }
+                $roleData['courses'] = $courses;
+                $roleData['notifications'] = $notifications;
+            } elseif ($role === 'student') {
+                $enrolledCourses = [];
+                $upcomingDeadlines = [];
+                $recentGrades = [];
+                try {
+                    $enrolledCourses = $db->table('enrollments e')
+                        ->select('c.id, c.title, c.description, c.created_at')
+                        ->join('courses c', 'c.id = e.course_id', 'left')
+                        ->where('e.student_id', $userId)
+                        ->orderBy('c.title', 'ASC')
+                        ->get()
+                        ->getResultArray();
+                } catch (\Throwable $e) {
+                    $enrolledCourses = [];
+                }
+                try {
+                    $upcomingDeadlines = $db->table('assignments a')
+                        ->select('a.id, a.title, a.due_date, c.title as course_title')
+                        ->join('courses c', 'c.id = a.course_id', 'left')
+                        ->where('a.due_date >=', date('Y-m-d'))
+                        ->orderBy('a.due_date', 'ASC')
+                        ->limit(5)
+                        ->get()
+                        ->getResultArray();
+                } catch (\Throwable $e) {
+                    $upcomingDeadlines = [];
+                }
+                try {
+                    $recentGrades = $db->table('grades g')
+                        ->select('g.score, g.created_at, a.title as assignment_title, c.title as course_title')
+                        ->join('assignments a', 'a.id = g.assignment_id', 'left')
+                        ->join('courses c', 'c.id = a.course_id', 'left')
+                        ->where('g.student_id', $userId)
+                        ->orderBy('g.created_at', 'DESC')
+                        ->limit(5)
+                        ->get()
+                        ->getResultArray();
+                } catch (\Throwable $e) {
+                    $recentGrades = [];
+                }
+                $roleData['enrolledCourses'] = $enrolledCourses;
+                $roleData['upcomingDeadlines'] = $upcomingDeadlines;
+                $roleData['recentGrades'] = $recentGrades;
+            }
+        } catch (\Throwable $e) {
+            $roleData = [];
+        }
+
+        $data = array_merge([
             'user_name' => $session->get('user_name'),
             'user_email' => $session->get('user_email'),
-            'role' => $session->get('role')
-        ];
-        
-        return view('dashboard', $data);
+            'role' => $role
+        ], $roleData);
+
+        return view('auth/dashboard', $data);
     }
 }

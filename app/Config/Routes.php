@@ -16,7 +16,7 @@ $routes->post('register', 'Auth::register');
 $routes->get('login', 'Auth::login');
 $routes->post('login', 'Auth::login');
 $routes->get('logout', 'Auth::logout');
-// $routes->get('dashboard', 'Auth::dashboard'); // removed generic dashboard route
+$routes->get('dashboard', 'Auth::dashboard');
 
 // Admin routes
 $routes->get('admin/dashboard', 'Admin::dashboard');
