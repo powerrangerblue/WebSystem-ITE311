@@ -390,3 +390,669 @@ Stack trace:
 #9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 #10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
 #11 {main}
+ERROR - 2025-09-23 10:21:49 --> mysqli_sql_exception: Unknown column 'teacher_id' in 'where clause' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(31): CodeIgniter\Database\BaseBuilder->get(10)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:21:49 --> mysqli_sql_exception: Unknown column 'student_name' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `student...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `student...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `student...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `student...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(43): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-09-23 10:26:57 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "student/dashboard.php"
+[Method: GET, Route: student/dashboard]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('student/dashboard.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('student/dashboard', [], true)
+ 3 APPPATH\Controllers\Student.php(47): view('student/dashboard', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-23 10:26:58 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "student/dashboard.php"
+[Method: GET, Route: student/dashboard]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('student/dashboard.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('student/dashboard', [], true)
+ 3 APPPATH\Controllers\Student.php(47): view('student/dashboard', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-23 10:27:13 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "student/dashboard.php"
+[Method: GET, Route: student/dashboard]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('student/dashboard.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('student/dashboard', [], true)
+ 3 APPPATH\Controllers\Student.php(47): view('student/dashboard', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-09-23 10:28:43 --> mysqli_sql_exception: Unknown column 'teacher_id' in 'where clause' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(31): CodeIgniter\Database\BaseBuilder->get(10)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:28:43 --> mysqli_sql_exception: Unknown column 'student_name' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `student...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `student...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `student...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `student...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(43): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:29:37 --> mysqli_sql_exception: Unknown column 'teacher_id' in 'where clause' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(31): CodeIgniter\Database\BaseBuilder->get(10)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:29:37 --> mysqli_sql_exception: Unknown column 'student_name' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `student...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `student...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `student...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `student...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(43): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:29:51 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:29:51 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:29:51 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:31:01 --> mysqli_sql_exception: Unknown column 'teacher_id' in 'where clause' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(31): CodeIgniter\Database\BaseBuilder->get(10)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:31:01 --> mysqli_sql_exception: Unknown column 'student_name' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `student...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `student...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `student...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `student...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(43): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:31:14 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:31:14 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:31:14 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:49 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:49 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:49 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:50 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:50 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:50 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:50 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:50 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:50 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:59 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:59 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:32:59 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:33:01 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:33:01 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:33:01 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:33:34 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:33:34 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:33:34 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:33:46 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:33:46 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:33:46 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:34:21 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:34:21 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:34:21 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:34:46 --> mysqli_sql_exception: Unknown column 'teacher_id' in 'where clause' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(31): CodeIgniter\Database\BaseBuilder->get(10)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:34:46 --> mysqli_sql_exception: Unknown column 'student_name' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `student...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `student...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `student...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `student...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(43): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:40:27 --> mysqli_sql_exception: Unknown column 'teacher_id' in 'where clause' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(31): CodeIgniter\Database\BaseBuilder->get(10)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:40:27 --> mysqli_sql_exception: Unknown column 'student_name' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `student...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `student...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `student...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `student...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Teacher.php(43): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Teacher->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:40:50 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:40:50 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(47): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-09-23 10:40:50 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Student.php(61): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Student->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}

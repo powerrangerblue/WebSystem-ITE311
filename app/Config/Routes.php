@@ -22,3 +22,5 @@ $routes->get('logout', 'Auth::logout');
 $routes->get('admin/dashboard', 'Admin::dashboard');
 // Teacher routes
 $routes->get('teacher/dashboard', 'Teacher::dashboard');
+// Student routes
+$routes->get('student/dashboard', 'Student::dashboard');

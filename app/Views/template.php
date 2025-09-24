@@ -68,6 +68,11 @@
           <a class="nav-link <?= uri_string() == 'teacher/dashboard' ? 'active' : '' ?>" href="<?= site_url('teacher/dashboard') ?>">Teacher Dashboard</a>
         </li>
         <?php endif; ?>
+        <?php if ($role === 'student'): ?>
+        <li class="nav-item">
+          <a class="nav-link <?= uri_string() == 'student/dashboard' ? 'active' : '' ?>" href="<?= site_url('student/dashboard') ?>">Student Dashboard</a>
+        </li>
+        <?php endif; ?>
         <li class="nav-item">
           <a class="nav-link" href="<?= site_url('logout') ?>">Logout</a>
         </li>
