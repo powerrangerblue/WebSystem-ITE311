@@ -4,5 +4,5 @@
 
 <?= $this->section('content') ?>
     <h2>About Us</h2>
-    <p>Welcome to our website! This is a simple student-friendly project using CodeIgniter.</p>
+    <p>This is a modern, student-friendly learning platform built with CodeIgniter, designed to make studying and course management simple and accessible.</p>
 <?= $this->endSection() ?>
