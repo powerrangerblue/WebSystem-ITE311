@@ -97,7 +97,7 @@
                 <?php if (!empty($courses)): ?>
                     <ul class="mb-0">
                         <?php foreach ($courses as $c): ?>
-                            <li><?= esc($c['title'] ?? 'Untitled') ?></li>
+                            <li><?= esc($c['course_name'] ?? 'Untitled') ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php else: ?>
@@ -106,20 +106,6 @@
             </div>
         </div>
 
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white fw-bold">Recent Submissions</div>
-            <div class="card-body">
-                <?php if (!empty($notifications)): ?>
-                    <ul class="mb-0">
-                        <?php foreach ($notifications as $n): ?>
-                            <li><?= esc($n['student_name'] ?? 'Student') ?> - <?= esc($n['created_at'] ?? '') ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php else: ?>
-                    <div class="text-muted">No recent submissions.</div>
-                <?php endif; ?>
-            </div>
-        </div>
     <?php elseif ($roleLower === 'student'): ?>
         <!-- Display Enrolled Courses -->
         <div class="card border-0 shadow-sm mb-4">

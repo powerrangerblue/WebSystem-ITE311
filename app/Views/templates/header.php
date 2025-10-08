@@ -21,10 +21,35 @@
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'login' ? 'active' : '' ?>" href="<?= site_url('login') ?>">Login</a>
         </li>
+        
         <?php else: ?>
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'dashboard' ? 'active' : '' ?>" href="<?= site_url('dashboard') ?>">Dashboard</a>
         </li>
+        <?php 
+        $userRole = strtolower(session('role'));
+        if ($userRole === 'admin'): ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= site_url('admin/users') ?>">Manage Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= site_url('admin/courses') ?>">Manage Courses</a>
+        </li>
+        <?php elseif ($userRole === 'teacher'): ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= site_url('teacher/courses') ?>">My Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= site_url('teacher/students') ?>">Students</a>
+        </li>
+        <?php elseif ($userRole === 'student'): ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= site_url('student/courses') ?>">My Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= site_url('student/grades') ?>">Grades</a>
+        </li>
+        <?php endif; ?>
         <li class="nav-item">
           <a class="nav-link" href="<?= site_url('logout') ?>">Logout</a>
         </li>

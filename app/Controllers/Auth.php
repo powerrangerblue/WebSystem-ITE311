@@ -184,26 +184,13 @@ class Auth extends Controller
                 $courses = [];
                 try {
                     $courses = $db->table('courses')
-                        ->where('teacher_id', $userId)
                         ->orderBy('created_at', 'DESC')
                         ->get(10)
                         ->getResultArray();
                 } catch (\Throwable $e) {
                     $courses = [];
                 }
-                $notifications = [];
-                try {
-                    $notifications = $db->table('submissions')
-                        ->select('student_name, course_id, created_at')
-                        ->orderBy('created_at', 'DESC')
-                        ->limit(5)
-                        ->get()
-                        ->getResultArray();
-                } catch (\Throwable $e) {
-                    $notifications = [];
-                }
                 $roleData['courses'] = $courses;
-                $roleData['notifications'] = $notifications;
             } elseif ($role === 'student') {
                 $enrolledCourses = [];
                 $availableCourses = [];
