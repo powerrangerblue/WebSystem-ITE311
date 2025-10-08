@@ -23,7 +23,7 @@ class CreateEnrollmentsTable extends Migration
                 'type' => 'INT',
                 'unsigned' => true,
             ],
-            'enrolled_at' => [
+            'enrollment_date' => [
                 'type'    => 'DATETIME',
                 'default' => new RawSql('CURRENT_TIMESTAMP'),
             ],

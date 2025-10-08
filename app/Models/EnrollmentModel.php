@@ -15,13 +15,13 @@ class EnrollmentModel extends Model
     protected $allowedFields = [
         'user_id',
         'course_id',
-        'enrolled_at'
+        'enrollment_date'
     ];
 
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat = 'datetime';
-    protected $createdField = 'enrolled_at';
+    protected $createdField = 'enrollment_date';
     protected $updatedField = '';
 
     // Validation
@@ -53,8 +53,8 @@ class EnrollmentModel extends Model
      */
     protected function setEnrollmentDate(array $data)
     {
-        if (!isset($data['data']['enrolled_at'])) {
-            $data['data']['enrolled_at'] = date('Y-m-d H:i:s');
+        if (!isset($data['data']['enrollment_date'])) {
+            $data['data']['enrollment_date'] = date('Y-m-d H:i:s');
         }
         return $data;
     }
@@ -81,7 +81,7 @@ class EnrollmentModel extends Model
         return $this->select('enrollments.*, courses.course_code, courses.course_name, courses.description')
                     ->join('courses', 'courses.id = enrollments.course_id')
                     ->where('enrollments.user_id', $user_id)
-                    ->orderBy('enrollments.enrolled_at', 'DESC')
+                    ->orderBy('enrollments.enrollment_date', 'DESC')
                     ->findAll();
     }
 
@@ -123,7 +123,7 @@ class EnrollmentModel extends Model
         return $this->select('enrollments.*, users.name as user_name, users.email as user_email')
                     ->join('users', 'users.id = enrollments.user_id')
                     ->where('enrollments.course_id', $course_id)
-                    ->orderBy('enrollments.enrolled_at', 'DESC')
+                    ->orderBy('enrollments.enrollment_date', 'DESC')
                     ->findAll();
     }
 }

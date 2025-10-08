@@ -207,53 +207,26 @@ class Auth extends Controller
             } elseif ($role === 'student') {
                 $enrolledCourses = [];
                 $availableCourses = [];
-                $upcomingDeadlines = [];
-                $recentGrades = [];
                 
                 try {
                     // Load models
                     $enrollmentModel = new \App\Models\EnrollmentModel();
-                    $courseModel = new \App\Models\CourseModel();
                     
-                    // Get enrolled courses
+                    // Get enrolled courses using EnrollmentModel::getUserEnrollments()
                     $enrolledCourses = $enrollmentModel->getUserEnrollments($userId);
                     
-                    // Get available courses (not enrolled)
-                    $availableCourses = $courseModel->getAvailableCourses($userId);
+                    // Get available courses (simple query for all courses)
+                    $availableCourses = $db->table('courses')
+                        ->orderBy('course_name', 'ASC')
+                        ->get()
+                        ->getResultArray();
                 } catch (\Throwable $e) {
                     $enrolledCourses = [];
                     $availableCourses = [];
                 }
                 
-                try {
-                    $upcomingDeadlines = $db->table('assignments a')
-                        ->select('a.id, a.title, a.due_date, c.title as course_title')
-                        ->join('courses c', 'c.id = a.course_id', 'left')
-                        ->where('a.due_date >=', date('Y-m-d'))
-                        ->orderBy('a.due_date', 'ASC')
-                        ->limit(5)
-                        ->get()
-                        ->getResultArray();
-                } catch (\Throwable $e) {
-                    $upcomingDeadlines = [];
-                }
-                try {
-                    $recentGrades = $db->table('grades g')
-                        ->select('g.score, g.created_at, a.title as assignment_title, c.title as course_title')
-                        ->join('assignments a', 'a.id = g.assignment_id', 'left')
-                        ->join('courses c', 'c.id = a.course_id', 'left')
-                        ->where('g.student_id', $userId)
-                        ->orderBy('g.created_at', 'DESC')
-                        ->limit(5)
-                        ->get()
-                        ->getResultArray();
-                } catch (\Throwable $e) {
-                    $recentGrades = [];
-                }
                 $roleData['enrolledCourses'] = $enrolledCourses;
                 $roleData['availableCourses'] = $availableCourses;
-                $roleData['upcomingDeadlines'] = $upcomingDeadlines;
-                $roleData['recentGrades'] = $recentGrades;
             }
         } catch (\Throwable $e) {
             $roleData = [];

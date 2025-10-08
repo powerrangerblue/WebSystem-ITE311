@@ -18,10 +18,6 @@ $routes->get('logout', 'Auth::logout');
 $routes->get('dashboard', 'Auth::dashboard');
 
 // Course Routes
-$routes->post('course/enroll', 'Course::enroll');
-$routes->get('course/available', 'Course::getAvailableCourses');
-$routes->get('course/enrollments', 'Course::getUserEnrollments');
-$routes->get('course/(:num)', 'Course::view/$1');
-$routes->get('courses', 'Course::index');
+$routes->post('/course/enroll', 'Course::enroll');
 
 
