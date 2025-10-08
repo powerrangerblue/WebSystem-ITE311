@@ -206,19 +206,25 @@ class Auth extends Controller
                 $roleData['notifications'] = $notifications;
             } elseif ($role === 'student') {
                 $enrolledCourses = [];
+                $availableCourses = [];
                 $upcomingDeadlines = [];
                 $recentGrades = [];
+                
                 try {
-                    $enrolledCourses = $db->table('enrollments e')
-                        ->select('c.id, c.title, c.description, c.created_at')
-                        ->join('courses c', 'c.id = e.course_id', 'left')
-                        ->where('e.student_id', $userId)
-                        ->orderBy('c.title', 'ASC')
-                        ->get()
-                        ->getResultArray();
+                    // Load models
+                    $enrollmentModel = new \App\Models\EnrollmentModel();
+                    $courseModel = new \App\Models\CourseModel();
+                    
+                    // Get enrolled courses
+                    $enrolledCourses = $enrollmentModel->getUserEnrollments($userId);
+                    
+                    // Get available courses (not enrolled)
+                    $availableCourses = $courseModel->getAvailableCourses($userId);
                 } catch (\Throwable $e) {
                     $enrolledCourses = [];
+                    $availableCourses = [];
                 }
+                
                 try {
                     $upcomingDeadlines = $db->table('assignments a')
                         ->select('a.id, a.title, a.due_date, c.title as course_title')
@@ -245,6 +251,7 @@ class Auth extends Controller
                     $recentGrades = [];
                 }
                 $roleData['enrolledCourses'] = $enrolledCourses;
+                $roleData['availableCourses'] = $availableCourses;
                 $roleData['upcomingDeadlines'] = $upcomingDeadlines;
                 $roleData['recentGrades'] = $recentGrades;
             }

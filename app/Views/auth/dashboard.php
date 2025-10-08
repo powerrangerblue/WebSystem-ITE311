@@ -121,18 +121,57 @@
             </div>
         </div>
     <?php elseif ($roleLower === 'student'): ?>
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-white fw-bold">Enrolled Courses</div>
-            <div class="card-body">
-                <?php if (!empty($enrolledCourses)): ?>
-                    <ul class="mb-0">
-                        <?php foreach ($enrolledCourses as $c): ?>
-                            <li><?= esc($c['title'] ?? 'Untitled') ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php else: ?>
-                    <div class="text-muted">No enrollments yet.</div>
-                <?php endif; ?>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white fw-bold">Enrolled Courses</div>
+                    <div class="card-body" id="enrolled-courses">
+                        <?php if (!empty($enrolledCourses)): ?>
+                            <div class="list-group list-group-flush">
+                                <?php foreach ($enrolledCourses as $c): ?>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1"><?= esc($c['course_name'] ?? 'Untitled') ?></h6>
+                                            <small class="text-muted"><?= esc($c['course_code'] ?? '') ?></small>
+                                        </div>
+                                        <span class="badge bg-success">Enrolled</span>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-muted">No enrollments yet.</div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white fw-bold">Available Courses</div>
+                    <div class="card-body" id="available-courses">
+                        <?php if (!empty($availableCourses)): ?>
+                            <div class="list-group list-group-flush">
+                                <?php foreach ($availableCourses as $c): ?>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1"><?= esc($c['course_name'] ?? 'Untitled') ?></h6>
+                                            <small class="text-muted"><?= esc($c['course_code'] ?? '') ?></small>
+                                            <?php if (!empty($c['description'])): ?>
+                                                <p class="mb-0 small text-muted"><?= esc($c['description']) ?></p>
+                                            <?php endif; ?>
+                                        </div>
+                                        <button class="btn btn-primary btn-sm enroll-btn" 
+                                                data-course-id="<?= esc($c['id']) ?>"
+                                                data-course-name="<?= esc($c['course_name']) ?>">
+                                            Enroll
+                                        </button>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-muted">No available courses.</div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -177,6 +216,112 @@
             </div>
         </div>
     <?php endif; ?>
+
+    <!-- Alert container for dynamic messages -->
+    <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>
+
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Handle enrollment button clicks
+    $(document).on('click', '.enroll-btn', function(e) {
+        e.preventDefault();
+        
+        const button = $(this);
+        const courseId = button.data('course-id');
+        const courseName = button.data('course-name');
+        
+        // Disable button and show loading state
+        button.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enrolling...');
+        
+        // Send AJAX request
+        $.post('<?= base_url('course/enroll') ?>', {
+            course_id: courseId,
+            <?= csrf_token() ?>: '<?= csrf_hash() ?>'
+        })
+        .done(function(response) {
+            if (response.success) {
+                // Show success message
+                showAlert('success', response.message);
+                
+                // Remove the course from available courses
+                button.closest('.list-group-item').fadeOut(300, function() {
+                    $(this).remove();
+                    
+                    // Check if no more available courses
+                    if ($('#available-courses .list-group-item').length === 0) {
+                        $('#available-courses').html('<div class="text-muted">No available courses.</div>');
+                    }
+                });
+                
+                // Add to enrolled courses
+                addToEnrolledCourses(response.course);
+                
+            } else {
+                // Show error message
+                showAlert('danger', response.message);
+                
+                // Re-enable button
+                button.prop('disabled', false).html('Enroll');
+            }
+        })
+        .fail(function(xhr) {
+            let message = 'An error occurred while enrolling. Please try again.';
+            
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                message = xhr.responseJSON.message;
+            }
+            
+            showAlert('danger', message);
+            
+            // Re-enable button
+            button.prop('disabled', false).html('Enroll');
+        });
+    });
+    
+    // Function to show alert messages
+    function showAlert(type, message) {
+        const alertHtml = `
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        
+        $('#alert-container').html(alertHtml);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(function() {
+            $('#alert-container .alert').fadeOut();
+        }, 5000);
+    }
+    
+    // Function to add course to enrolled courses list
+    function addToEnrolledCourses(course) {
+        const enrolledContainer = $('#enrolled-courses');
+        
+        // Check if the container has "No enrollments yet" message
+        if (enrolledContainer.find('.text-muted').length > 0) {
+            enrolledContainer.html('<div class="list-group list-group-flush"></div>');
+        }
+        
+        const courseHtml = `
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="mb-1">${course.course_name}</h6>
+                    <small class="text-muted">${course.course_code}</small>
+                </div>
+                <span class="badge bg-success">Enrolled</span>
+            </div>
+        `;
+        
+        enrolledContainer.find('.list-group').append(courseHtml);
+    }
+});
+</script>
 <?= $this->endSection() ?>
 
 

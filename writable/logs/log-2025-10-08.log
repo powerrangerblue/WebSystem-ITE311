@@ -1,0 +1,538 @@
+ERROR - 2025-10-08 05:57:46 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'lms_canitan' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'lms_canitan', 3306, '', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(1525): CodeIgniter\Database\BaseConnection->query('SHOW TABLES FRO...')
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(1545): CodeIgniter\Database\BaseConnection->listTables()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MigrationRunner.php(768): CodeIgniter\Database\BaseConnection->tableExists('migrations')
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MigrationRunner.php(162): CodeIgniter\Database\MigrationRunner->ensureTable()
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\Commands\Database\Migrate.php(85): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#12 C:\xampp\htdocs\ITE311-CANITAN\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'lms_canitan' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(1525): CodeIgniter\Database\BaseConnection->query('SHOW TABLES FRO...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(1545): CodeIgniter\Database\BaseConnection->listTables()
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MigrationRunner.php(768): CodeIgniter\Database\BaseConnection->tableExists('migrations')
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MigrationRunner.php(162): CodeIgniter\Database\MigrationRunner->ensureTable()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Commands\Database\Migrate.php(85): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run(Array)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#11 C:\xampp\htdocs\ITE311-CANITAN\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#12 {main}
+ERROR - 2025-10-08 05:58:59 --> mysqli_sql_exception: Unknown column 'teacher_id' in 'where clause' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(189): CodeIgniter\Database\BaseBuilder->get(10)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 05:58:59 --> mysqli_sql_exception: Unknown column 'student_name' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `student...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `student...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `student...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `student...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(200): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 05:59:14 --> mysqli_sql_exception: Unknown column 'c.title' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(217): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 05:59:14 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(229): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 05:59:14 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 06:05:32 --> mysqli_sql_exception: Unknown column 'teacher_id' in 'where clause' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(189): CodeIgniter\Database\BaseBuilder->get(10)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 06:05:32 --> mysqli_sql_exception: Unknown column 'student_name' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `student...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `student...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `student...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `student...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(200): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 06:17:38 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(235): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 06:17:38 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(248): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-10-08 06:17:44 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:17:53 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:17:54 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-10-08 06:18:43 --> mysqli_sql_exception: Unknown column 'teacher_id' in 'where clause' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(189): CodeIgniter\Database\BaseBuilder->get(10)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 06:18:43 --> mysqli_sql_exception: Unknown column 'student_name' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `student...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `student...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `student...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `student...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(200): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 06:18:50 --> mysqli_sql_exception: Table 'lms_canitan.assignments' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `a`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `a`.`id`...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `a`.`id`...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `a`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(235): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-08 06:18:50 --> mysqli_sql_exception: Table 'lms_canitan.grades' doesn't exist in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `g`.`sco...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `g`.`sco...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `g`.`sco...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `g`.`sco...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Auth.php(248): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Auth->dashboard()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Auth))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-10-08 06:18:56 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:18:56 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:18:57 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:18:57 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:18:57 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:18:58 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:18:59 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:18:59 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:00 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:01 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:01 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:05 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:08 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:09 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:10 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:10 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:10 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:11 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:11 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:15 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:15 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:16 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:16 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:17 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:17 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:18 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:18 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:19 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:20 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:26 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:26 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:27 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-08 06:19:27 --> Error: Call to undefined method CodeIgniter\HTTP\IncomingRequest::isValidCsrf()
+[Method: POST, Route: course/enroll]
+in APPPATH\Controllers\Course.php on line 39.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Course->enroll()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Course))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
