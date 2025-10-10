@@ -180,7 +180,7 @@ $(document).ready(function() {
         button.prop('disabled', true).text('Enrolling...');
         
         // Use $.post() to send the course_id to the /course/enroll URL
-        $.post('/course/enroll', {
+        $.post('<?= base_url('course/enroll') ?>', {
             course_id: courseId,
             <?= csrf_token() ?>: '<?= csrf_hash() ?>'
         })
@@ -229,22 +229,29 @@ $(document).ready(function() {
     function addToEnrolledCourses(course) {
         const enrolledContainer = $('#enrolled-courses');
         
-        // Check if the container has "No enrollments yet" message
-        if (enrolledContainer.find('.text-muted').length > 0) {
+        // Check if list-group exists
+        let listGroup = enrolledContainer.find('.list-group');
+        
+        // If no list-group exists (meaning "No enrollments yet" message is shown)
+        if (listGroup.length === 0) {
+            // Replace the entire content with a new list-group
             enrolledContainer.html('<div class="list-group"></div>');
+            listGroup = enrolledContainer.find('.list-group');
         }
         
+        // Create the course HTML with animation
         const courseHtml = `
-            <div class="list-group-item">
+            <div class="list-group-item" style="display: none;">
                 <h6 class="mb-1">${course.course_name}</h6>
                 <small class="text-muted">${course.course_code}</small>
             </div>
         `;
         
-        enrolledContainer.find('.list-group').append(courseHtml);
+        // Append and fade in the new course
+        const newCourse = $(courseHtml);
+        listGroup.append(newCourse);
+        newCourse.fadeIn(300);
     }
 });
 </script>
 <?= $this->endSection() ?>
-
-

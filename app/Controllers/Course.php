@@ -19,14 +19,6 @@ class Course extends BaseController
             ]);
         }
 
-        // Validate CSRF token
-        if (!$this->request->isValidCsrf()) {
-            return $this->response->setJSON([
-                'success' => false,
-                'message' => 'Invalid security token. Please refresh the page and try again.'
-            ]);
-        }
-
         // Get user ID from session
         $user_id = session()->get('user_id');
         

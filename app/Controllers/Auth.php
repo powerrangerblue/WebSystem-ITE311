@@ -194,16 +194,26 @@ class Auth extends Controller
             } elseif ($role === 'student') {
                 $enrolledCourses = [];
                 $availableCourses = [];
-                
+
                 try {
                     // Load models
                     $enrollmentModel = new \App\Models\EnrollmentModel();
-                    
+
                     // Get enrolled courses using EnrollmentModel::getUserEnrollments()
                     $enrolledCourses = $enrollmentModel->getUserEnrollments($userId);
-                    
-                    // Get available courses (simple query for all courses)
-                    $availableCourses = $db->table('courses')
+
+                    // Get enrolled course IDs to exclude from available courses
+                    $enrolledCourseIds = array_column($enrolledCourses, 'course_id');
+
+                    // Get available courses (exclude already enrolled courses)
+                    $coursesQuery = $db->table('courses');
+
+                    // If user has enrolled courses, exclude them from available courses
+                    if (!empty($enrolledCourseIds)) {
+                        $coursesQuery->whereNotIn('id', $enrolledCourseIds);
+                    }
+
+                    $availableCourses = $coursesQuery
                         ->orderBy('course_name', 'ASC')
                         ->get()
                         ->getResultArray();
@@ -211,7 +221,7 @@ class Auth extends Controller
                     $enrolledCourses = [];
                     $availableCourses = [];
                 }
-                
+
                 $roleData['enrolledCourses'] = $enrolledCourses;
                 $roleData['availableCourses'] = $availableCourses;
             }
