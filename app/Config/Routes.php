@@ -20,4 +20,11 @@ $routes->get('dashboard', 'Auth::dashboard');
 // Course Routes
 $routes->post('/course/enroll', 'Course::enroll');
 
+// Announcement Routes
+$routes->get('/announcements', 'Announcement::index');
 
+// Teacher Routes
+$routes->get('/teacher/dashboard', 'Teacher::dashboard');
+
+// Admin Routes
+$routes->get('/admin/dashboard', 'Admin::dashboard');
