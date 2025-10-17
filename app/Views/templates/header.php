@@ -21,35 +21,42 @@
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'login' ? 'active' : '' ?>" href="<?= site_url('login') ?>">Login</a>
         </li>
-        
+
         <?php else: ?>
-        <li class="nav-item">
-          <a class="nav-link <?= uri_string() == 'dashboard' ? 'active' : '' ?>" href="<?= site_url('dashboard') ?>">Dashboard</a>
-        </li>
-        <?php 
+        <?php
+        $currentUri = uri_string();
         $userRole = strtolower(session('role'));
-        if ($userRole === 'admin'): ?>
+        $isBasicPage = in_array($currentUri, ['', 'about', 'contact']);
+        ?>
+
+        <!-- Show announcements link only for students -->
+        <?php if ($userRole === 'student'): ?>
         <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('admin/users') ?>">Manage Users</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('admin/courses') ?>">Manage Courses</a>
-        </li>
-        <?php elseif ($userRole === 'teacher'): ?>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('teacher/courses') ?>">My Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('teacher/students') ?>">Students</a>
-        </li>
-        <?php elseif ($userRole === 'student'): ?>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('student/courses') ?>">My Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('student/grades') ?>">Grades</a>
+          <a class="nav-link <?= $currentUri == 'announcements' ? 'active' : '' ?>" href="<?= site_url('announcements') ?>">Announcements</a>
         </li>
         <?php endif; ?>
+
+        <!-- Dashboard link - always visible for logged-in users -->
+        <li class="nav-item">
+          <?php
+          $dashboardUrl = '/dashboard'; // default for students
+          $isDashboardActive = false;
+
+          if ($userRole === 'admin') {
+            $dashboardUrl = '/admin/dashboard';
+            $isDashboardActive = in_array($currentUri, ['admin/dashboard', 'admin']);
+          } elseif ($userRole === 'teacher') {
+            $dashboardUrl = '/teacher/dashboard';
+            $isDashboardActive = in_array($currentUri, ['teacher/dashboard', 'teacher']);
+          } else {
+            // For students, dashboard is /dashboard
+            $isDashboardActive = $currentUri == 'dashboard';
+          }
+          ?>
+          <a class="nav-link <?= $isDashboardActive ? 'active' : '' ?>" href="<?= site_url($dashboardUrl) ?>">Dashboard</a>
+        </li>
+
+
         <li class="nav-item">
           <a class="nav-link" href="<?= site_url('logout') ?>">Logout</a>
         </li>
