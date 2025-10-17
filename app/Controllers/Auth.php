@@ -110,7 +110,7 @@ class Auth extends Controller
                     if ($user && password_verify($password, $user['password'])) {
                         // Use the name field directly from database
                         $userName = $user['name'] ?? $user['email'];
-                        
+
                         // Set session data
                         $sessionData = [
                             'user_id' => $user['id'],
@@ -119,14 +119,27 @@ class Auth extends Controller
                             'role' => $user['role'] ?? 'student',
                             'isLoggedIn' => true
                         ];
-                        
+
                         // Prevent session fixation
                         $session->regenerate();
                         $session->set($sessionData);
                         $session->setFlashdata('success', 'Welcome, ' . $userName . '!');
 
-                        // Unified dashboard redirect
-                        return redirect()->to('/dashboard');
+                        // Role-based redirection
+                        switch (strtolower($user['role'] ?? 'student')) {
+                            case 'student':
+                                return redirect()->to('/announcements');
+                                break;
+                            case 'teacher':
+                                return redirect()->to('/teacher/dashboard');
+                                break;
+                            case 'admin':
+                                return redirect()->to('/admin/dashboard');
+                                break;
+                            default:
+                                return redirect()->to('/announcements');
+                                break;
+                        }
                     } else {
                         $session->setFlashdata('login_error', 'Invalid email or password.');
                     }
