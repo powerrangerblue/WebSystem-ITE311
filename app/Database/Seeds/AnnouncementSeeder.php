@@ -11,7 +11,7 @@ class AnnouncementSeeder extends Seeder
         $data = [
             [
                  'title' => 'Welcome to the New Academic Year',
-                'content' => 'We are excited to welcome all students to the new academic year. Classes will begin on January 15, 2024. Please ensure you have completed your enrollment and course registration.',
+                'content' => 'We are excited to welcome all students to the new academic year. Classes will begin on January 15, 2026. Please ensure you have completed your enrollment and course registration.',
                 'created_at' => date('Y-m-d H:i:s'),
             ],
             [
