@@ -6,6 +6,33 @@ use App\Models\EnrollmentModel;
 
 class Course extends BaseController
 {
+    public function materials($course_id)
+    {
+        // Check if user is logged in
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('login');
+        }
+
+        $user_id = session()->get('user_id');
+        $role = session()->get('role');
+
+        // Only check enrollment for students, not for admins/teachers
+        if (strtolower($role) === 'student') {
+            $enrollmentModel = new EnrollmentModel();
+            $enrollment = $enrollmentModel->where('user_id', $user_id)->where('course_id', $course_id)->first();
+
+            if (!$enrollment) {
+                session()->setFlashdata('error', 'You are not enrolled in this course.');
+                return redirect()->to('dashboard');
+            }
+        }
+
+        $materialModel = new \App\Models\MaterialModel();
+        $materials = $materialModel->getMaterialsByCourse($course_id);
+
+        return view('course_materials', ['materials' => $materials]);
+    }
+
     /**
      * Handle course enrollment via AJAX
      */

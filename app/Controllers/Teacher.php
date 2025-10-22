@@ -21,11 +21,16 @@ class Teacher extends BaseController
             return redirect()->to('login');
         }
 
+        // Get courses for the teacher (assuming teachers can manage all courses for now)
+        $db = \Config\Database::connect();
+        $courses = $db->table('courses')->get()->getResultArray();
+
         // Prepare data for view
         $data = [
             'user_name' => $session->get('user_name'),
             'user_email' => $session->get('user_email'),
-            'role' => $role
+            'role' => $role,
+            'courses' => $courses
         ];
 
         return view('teacher_dashboard', $data);

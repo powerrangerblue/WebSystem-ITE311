@@ -113,9 +113,12 @@
                 <?php if (!empty($enrolledCourses)): ?>
                     <div class="list-group">
                         <?php foreach ($enrolledCourses as $c): ?>
-                            <div class="list-group-item">
-                                <h6 class="mb-1"><?= esc($c['course_name'] ?? 'Untitled') ?></h6>
-                                <small class="text-muted"><?= esc($c['course_code'] ?? '') ?></small>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1"><?= esc($c['course_name'] ?? 'Untitled') ?></h6>
+                                    <small class="text-muted"><?= esc($c['course_code'] ?? '') ?></small>
+                                </div>
+                                <a href="<?= site_url('course/materials/' . $c['course_id']) ?>" class="btn btn-info btn-sm">View Materials</a>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -238,11 +241,14 @@ $(document).ready(function() {
             listGroup = enrolledContainer.find('.list-group');
         }
         
-        // Create the course HTML with animation
+        // Create the course HTML with animation - include the View Materials button
         const courseHtml = `
-            <div class="list-group-item" style="display: none;">
-                <h6 class="mb-1">${course.course_name}</h6>
-                <small class="text-muted">${course.course_code}</small>
+            <div class="list-group-item d-flex justify-content-between align-items-center" style="display: none;">
+                <div>
+                    <h6 class="mb-1">${course.course_name}</h6>
+                    <small class="text-muted">${course.course_code}</small>
+                </div>
+                <a href="<?= site_url('course/materials/') ?>${course.id}" class="btn btn-info btn-sm">View Materials</a>
             </div>
         `;
         

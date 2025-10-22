@@ -55,7 +55,7 @@ class RoleAuth implements FilterInterface
                         $hasAccess = true;
                     }
                     break;
-                    
+
                 case 'teacher':
                     // Teacher can access routes starting with /teacher
                     if (strpos($currentUri, '/teacher') === 0) {
