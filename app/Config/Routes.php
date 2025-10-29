@@ -26,3 +26,10 @@ $routes->post('/admin/course/(:num)/upload', 'Materials::upload/$1');
 $routes->get('/materials/delete/(:num)', 'Materials::delete/$1');
 $routes->get('/materials/download/(:num)', 'Materials::download/$1');
 
+// Notifications Routes
+$routes->get('/notifications', 'Notifications::get');
+$routes->post('/notifications/mark_read/(:num)', 'Notifications::mark_as_read/$1');
+
+// Materials API
+$routes->get('/materials/list/(:num)', 'Materials::listByCourse/$1');
+
