@@ -11,27 +11,29 @@ class CreateMaterialsTable extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'           => 'INT',
-                'unsigned'       => true,
+                'type' => 'INT',
+                'unsigned' => true,
                 'auto_increment' => true,
             ],
             'course_id' => [
-                'type'       => 'INT',
-                'unsigned'   => true,
+                'type' => 'INT',
+                'unsigned' => true,
+                'null' => false,
             ],
             'file_name' => [
-                'type'       => 'VARCHAR',
+                'type' => 'VARCHAR',
                 'constraint' => '255',
             ],
             'file_path' => [
-                'type'       => 'VARCHAR',
+                'type' => 'VARCHAR',
                 'constraint' => '255',
             ],
             'created_at' => [
-                'type'    => 'DATETIME',
+                'type' => 'DATETIME',
                 'default' => new RawSql('CURRENT_TIMESTAMP'),
             ],
         ]);
+
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('course_id', 'courses', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('materials');
@@ -42,3 +44,5 @@ class CreateMaterialsTable extends Migration
         $this->forge->dropTable('materials');
     }
 }
+
+

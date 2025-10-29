@@ -5,7 +5,7 @@ namespace App\Database\Migrations;
 use CodeIgniter\Database\Migration;
 use CodeIgniter\Database\RawSql;
 
-class CreateAnnouncementsTable extends Migration
+class CreateGradesTable extends Migration
 {
     public function up()
     {
@@ -15,12 +15,20 @@ class CreateAnnouncementsTable extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'title' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
+            'student_id' => [
+                'type'     => 'INT',
+                'unsigned' => true,
+                'null'     => false,
             ],
-            'content' => [
-                'type' => 'TEXT',
+            'course_id' => [
+                'type'     => 'INT',
+                'unsigned' => true,
+                'null'     => false,
+            ],
+            'grade' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '10',
+                'null'       => true,
             ],
             'created_at' => [
                 'type'    => 'DATETIME',
@@ -30,15 +38,17 @@ class CreateAnnouncementsTable extends Migration
                 'type'    => 'DATETIME',
                 'null'    => true,
                 'default' => null,
-                'on_update' => new RawSql('CURRENT_TIMESTAMP'),
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('announcements');
+        $this->forge->addKey(['student_id', 'course_id']);
+        $this->forge->createTable('grades');
     }
 
     public function down()
     {
-        $this->forge->dropTable('announcements');
+        $this->forge->dropTable('grades');
     }
 }
+
+

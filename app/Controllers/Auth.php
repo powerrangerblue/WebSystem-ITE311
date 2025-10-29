@@ -110,7 +110,7 @@ class Auth extends Controller
                     if ($user && password_verify($password, $user['password'])) {
                         // Use the name field directly from database
                         $userName = $user['name'] ?? $user['email'];
-
+                        
                         // Set session data
                         $sessionData = [
                             'user_id' => $user['id'],
@@ -119,27 +119,14 @@ class Auth extends Controller
                             'role' => $user['role'] ?? 'student',
                             'isLoggedIn' => true
                         ];
-
+                        
                         // Prevent session fixation
                         $session->regenerate();
                         $session->set($sessionData);
                         $session->setFlashdata('success', 'Welcome, ' . $userName . '!');
 
-                        // Role-based redirection
-                        switch (strtolower($user['role'] ?? 'student')) {
-                            case 'student':
-                                return redirect()->to('/announcements');
-                                break;
-                            case 'teacher':
-                                return redirect()->to('/teacher/dashboard');
-                                break;
-                            case 'admin':
-                                return redirect()->to('/admin/dashboard');
-                                break;
-                            default:
-                                return redirect()->to('/announcements');
-                                break;
-                        }
+                        // Unified dashboard redirect
+                        return redirect()->to('/dashboard');
                     } else {
                         $session->setFlashdata('login_error', 'Invalid email or password.');
                     }
@@ -193,6 +180,15 @@ class Auth extends Controller
                     $roleData['totalCourses'] = 0;
                 }
                 $roleData['recentUsers'] = $userModel->orderBy('created_at', 'DESC')->limit(5)->find();
+                // Provide courses list for admin to manage uploads
+                try {
+                    $roleData['courses'] = $db->table('courses')
+                        ->orderBy('course_name', 'ASC')
+                        ->get()
+                        ->getResultArray();
+                } catch (\Throwable $e) {
+                    $roleData['courses'] = [];
+                }
             } elseif ($role === 'teacher') {
                 $courses = [];
                 try {
@@ -207,10 +203,12 @@ class Auth extends Controller
             } elseif ($role === 'student') {
                 $enrolledCourses = [];
                 $availableCourses = [];
+                $materialsByCourse = [];
 
                 try {
                     // Load models
                     $enrollmentModel = new \App\Models\EnrollmentModel();
+                    $materialModel = new \App\Models\MaterialModel();
 
                     // Get enrolled courses using EnrollmentModel::getUserEnrollments()
                     $enrolledCourses = $enrollmentModel->getUserEnrollments($userId);
@@ -230,13 +228,22 @@ class Auth extends Controller
                         ->orderBy('course_name', 'ASC')
                         ->get()
                         ->getResultArray();
+                    // Fetch materials per enrolled course
+                    foreach ($enrolledCourses as $enCourse) {
+                        $cid = (int) ($enCourse['course_id'] ?? 0);
+                        if ($cid > 0) {
+                            $materialsByCourse[$cid] = $materialModel->getMaterialsByCourse($cid);
+                        }
+                    }
                 } catch (\Throwable $e) {
                     $enrolledCourses = [];
                     $availableCourses = [];
+                    $materialsByCourse = [];
                 }
 
                 $roleData['enrolledCourses'] = $enrolledCourses;
                 $roleData['availableCourses'] = $availableCourses;
+                $roleData['materialsByCourse'] = $materialsByCourse;
             }
         } catch (\Throwable $e) {
             $roleData = [];

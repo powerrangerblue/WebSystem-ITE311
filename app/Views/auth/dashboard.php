@@ -2,7 +2,11 @@
 
 <?= $this->section('content') ?>
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mb-0">Dashboard</h1>
+        <div>
+            <h1 class="mb-1">Dashboard</h1>
+            <div class="text-muted small">A quick overview of your account</div>
+        </div>
+        <a href="<?= base_url('logout') ?>" class="btn btn-outline-danger">Logout</a>
     </div>
 
     <?php if (session()->getFlashdata('success')): ?>
@@ -17,9 +21,14 @@
         </div>
     <?php endif; ?>
 
-    <div class="alert alert-info" role="alert">
-        Welcome, <?= esc(session('user_name')) ?>!<br>
-        <small class="text-muted">Email: <?= esc(session('user_email')) ?> | Role: <?= esc($role) ?></small>
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <div class="fw-semibold">Welcome back, <?= esc(session('user_name')) ?>.</div>
+                <small class="text-muted">Email: <?= esc(session('user_email')) ?> • Role: <?= esc($role) ?></small>
+            </div>
+            <span class="badge text-bg-primary">Active</span>
+        </div>
     </div>
 
     <?php $roleLower = strtolower((string) $role); ?>
@@ -89,16 +98,43 @@
                 </div>
             </div>
         </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white fw-bold">Courses • Manage Materials</div>
+            <div class="card-body">
+                <?php if (!empty($courses)): ?>
+                    <div class="list-group">
+                        <?php foreach ($courses as $c): ?>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-semibold mb-0"><?= esc($c['course_name'] ?? 'Untitled') ?></div>
+                                    <span class="badge text-bg-light border small"><?= esc($c['course_code'] ?? '') ?></span>
+                                </div>
+                                <a class="btn btn-primary btn-sm" href="<?= site_url('/admin/course/' . (int)$c['id'] . '/upload') ?>">Upload Material</a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="text-muted">No courses found.</div>
+                <?php endif; ?>
+            </div>
+        </div>
     <?php elseif ($roleLower === 'teacher'): ?>
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-header bg-white fw-bold">Your Courses</div>
             <div class="card-body">
                 <?php if (!empty($courses)): ?>
-                    <ul class="mb-0">
+                    <div class="list-group">
                         <?php foreach ($courses as $c): ?>
-                            <li><?= esc($c['course_name'] ?? 'Untitled') ?></li>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-semibold mb-0"><?= esc($c['course_name'] ?? 'Untitled') ?></div>
+                                    <span class="badge text-bg-light border small"><?= esc($c['course_code'] ?? '') ?></span>
+                                </div>
+                                <a class="btn btn-primary btn-sm" href="<?= site_url('/admin/course/' . (int)$c['id'] . '/upload') ?>">Upload Material</a>
+                            </div>
                         <?php endforeach; ?>
-                    </ul>
+                    </div>
                 <?php else: ?>
                     <div class="text-muted">No courses found.</div>
                 <?php endif; ?>
@@ -106,50 +142,127 @@
         </div>
 
     <?php elseif ($roleLower === 'student'): ?>
-        <!-- Display Enrolled Courses -->
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-white fw-bold">Enrolled Courses</div>
-            <div class="card-body" id="enrolled-courses">
-                <?php if (!empty($enrolledCourses)): ?>
-                    <div class="list-group">
-                        <?php foreach ($enrolledCourses as $c): ?>
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-1"><?= esc($c['course_name'] ?? 'Untitled') ?></h6>
-                                    <small class="text-muted"><?= esc($c['course_code'] ?? '') ?></small>
-                                </div>
-                                <a href="<?= site_url('course/materials/' . $c['course_id']) ?>" class="btn btn-info btn-sm">View Materials</a>
-                            </div>
-                        <?php endforeach; ?>
+        <?php
+            $enrolledCount = !empty($enrolledCourses) ? count($enrolledCourses) : 0;
+            $availableCount = !empty($availableCourses) ? count($availableCourses) : 0;
+            $materialsCount = 0;
+            if (!empty($materialsByCourse)) {
+                foreach ($materialsByCourse as $matList) {
+                    $materialsCount += is_array($matList) ? count($matList) : 0;
+                }
+            }
+        ?>
+
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="h2 mb-0"><?= (int)$enrolledCount ?></div>
+                        <div class="text-muted">Enrolled</div>
                     </div>
-                <?php else: ?>
-                    <div class="text-muted">No enrollments yet.</div>
-                <?php endif; ?>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="h2 mb-0"><?= (int)$availableCount ?></div>
+                        <div class="text-muted">Available</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="h2 mb-0"><?= (int)$materialsCount ?></div>
+                        <div class="text-muted">Materials</div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Available Courses -->
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-white fw-bold">Available Courses</div>
-            <div class="card-body" id="available-courses">
-                <?php if (!empty($availableCourses)): ?>
-                    <div class="list-group">
-                        <?php foreach ($availableCourses as $c): ?>
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-1"><?= esc($c['course_name'] ?? 'Untitled') ?></h6>
-                                    <small class="text-muted"><?= esc($c['course_code'] ?? '') ?></small>
-                                </div>
-                                <button class="btn btn-primary btn-sm" 
-                                        data-course-id="<?= esc($c['id']) ?>">
-                                    Enroll
-                                </button>
-                            </div>
-                        <?php endforeach; ?>
+        <!-- Nav Tabs for better navigation -->
+        <ul class="nav nav-tabs mb-3" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-enrolled-btn" data-bs-toggle="tab" data-bs-target="#tab-enrolled" type="button" role="tab" aria-controls="tab-enrolled" aria-selected="true">Enrolled (<?= (int)$enrolledCount ?>)</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-available-btn" data-bs-toggle="tab" data-bs-target="#tab-available" type="button" role="tab" aria-controls="tab-available" aria-selected="false">Available (<?= (int)$availableCount ?>)</button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Enrolled Tab -->
+            <div class="tab-pane fade show active" id="tab-enrolled" role="tabpanel" aria-labelledby="tab-enrolled-btn">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Enrolled Courses</span>
+                        <input id="course-search" type="text" class="form-control form-control-sm w-auto" placeholder="Search courses">
                     </div>
-                <?php else: ?>
-                    <div class="text-muted">No available courses.</div>
-                <?php endif; ?>
+                    <div class="card-body" id="enrolled-courses">
+                        <?php if (!empty($enrolledCourses)): ?>
+                            <div class="list-group">
+                                <?php foreach ($enrolledCourses as $c): ?>
+                                    <?php $cid = (int)($c['course_id'] ?? 0); ?>
+                                    <?php $courseMaterials = $materialsByCourse[$cid] ?? []; ?>
+                                    <?php $matCount = is_array($courseMaterials) ? count($courseMaterials) : 0; ?>
+                                    <div class="list-group-item" data-search-text="<?= esc(strtolower(($c['course_name'] ?? '') . ' ' . ($c['course_code'] ?? ''))) ?>">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h6 class="mb-1"><?= esc($c['course_name'] ?? 'Untitled') ?></h6>
+                                                <span class="badge text-bg-light border small"><?= esc($c['course_code'] ?? '') ?></span>
+                                            </div>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <span class="badge rounded-pill text-bg-success">Enrolled</span>
+                                                <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#materials-<?= $cid ?>" aria-expanded="false" aria-controls="materials-<?= $cid ?>">Materials (<?= (int)$matCount ?>)</button>
+                                            </div>
+                                        </div>
+
+                                        <div id="materials-<?= $cid ?>" class="collapse mt-2">
+                                            <?php if (!empty($courseMaterials)): ?>
+                                                <div class="list-group list-group-flush">
+                                                    <?php foreach ($courseMaterials as $m): ?>
+                                                        <div class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                                            <span class="text-truncate" style="max-width: 75%;"><?= esc($m['file_name']) ?></span>
+                                                            <a class="btn btn-sm btn-outline-primary" href="<?= site_url('/materials/download/' . (int)$m['id']) ?>">Download</a>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php else: ?>
+                                                <div class="text-muted small">No materials yet.</div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-muted">No enrollments yet.</div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Available Tab -->
+            <div class="tab-pane fade" id="tab-available" role="tabpanel" aria-labelledby="tab-available-btn">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white fw-bold">Available Courses</div>
+                    <div class="card-body" id="available-courses">
+                        <?php if (!empty($availableCourses)): ?>
+                            <div class="list-group">
+                                <?php foreach ($availableCourses as $c): ?>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center" data-search-text="<?= esc(strtolower(($c['course_name'] ?? '') . ' ' . ($c['course_code'] ?? ''))) ?>">
+                                        <div>
+                                            <h6 class="mb-1"><?= esc($c['course_name'] ?? 'Untitled') ?></h6>
+                                            <span class="badge text-bg-light border small"><?= esc($c['course_code'] ?? '') ?></span>
+                                        </div>
+                                        <button class="btn btn-primary btn-sm" data-course-id="<?= esc($c['id']) ?>">Enroll</button>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-muted">No available courses.</div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -210,6 +323,20 @@ $(document).ready(function() {
         });
     });
     
+    // Lightweight client-side filtering for enrolled courses
+    $('#course-search').on('input', function() {
+        const q = $(this).val().toString().toLowerCase().trim();
+        const items = $('#enrolled-courses .list-group-item');
+        if (!q) {
+            items.show();
+            return;
+        }
+        items.each(function() {
+            const text = ($(this).data('search-text') || '').toString();
+            $(this).toggle(text.indexOf(q) !== -1);
+        });
+    });
+    
     // Function to show Bootstrap alert message
     function showAlert(type, message) {
         const alertHtml = `
@@ -241,14 +368,11 @@ $(document).ready(function() {
             listGroup = enrolledContainer.find('.list-group');
         }
         
-        // Create the course HTML with animation - include the View Materials button
+        // Create the course HTML with animation
         const courseHtml = `
-            <div class="list-group-item d-flex justify-content-between align-items-center" style="display: none;">
-                <div>
-                    <h6 class="mb-1">${course.course_name}</h6>
-                    <small class="text-muted">${course.course_code}</small>
-                </div>
-                <a href="<?= site_url('course/materials/') ?>${course.id}" class="btn btn-info btn-sm">View Materials</a>
+            <div class="list-group-item" style="display: none;">
+                <h6 class="mb-1">${course.course_name}</h6>
+                <small class="text-muted">${course.course_code}</small>
             </div>
         `;
         

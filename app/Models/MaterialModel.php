@@ -8,35 +8,32 @@ class MaterialModel extends Model
 {
     protected $table = 'materials';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['course_id', 'file_name', 'file_path'];
-    protected $useTimestamps = true;
+    protected $useAutoIncrement = true;
+    protected $returnType = 'array';
+    protected $useSoftDeletes = false;
+    protected $protectFields = true;
+    protected $allowedFields = [
+        'course_id',
+        'file_name',
+        'file_path',
+        'created_at',
+    ];
+
+    protected $useTimestamps = false;
+    protected $dateFormat = 'datetime';
     protected $createdField = 'created_at';
-    protected $updatedField = 'updated_at';
 
-    public function insertMaterial($data)
+    public function insertMaterial(array $data)
     {
-        try {
-            $result = $this->insert($data);
-            if ($result === false) {
-                log_message('error', 'Material insert failed: ' . implode(', ', $this->errors()));
-            }
-            return $result;
-        } catch (\Exception $e) {
-            log_message('error', 'Material insert exception: ' . $e->getMessage());
-            return false;
-        }
+        return $this->insert($data);
     }
 
-    public function getMaterialsByCourse($course_id)
+    public function getMaterialsByCourse(int $courseId): array
     {
-        return $this->where('course_id', $course_id)->findAll();
-    }
-
-    public function getAllMaterials()
-    {
-        return $this->select('materials.*, courses.course_name, courses.course_code')
-                    ->join('courses', 'courses.id = materials.course_id')
-                    ->orderBy('materials.created_at', 'DESC')
-                    ->findAll();
+        return $this->where('course_id', $courseId)
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
     }
 }
+
+

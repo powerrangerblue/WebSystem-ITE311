@@ -36,22 +36,11 @@
         </li>
         <?php endif; ?>
 
-        <!-- Dashboard link - always visible for logged-in users -->
+        <!-- Dashboard link - unified route for all roles -->
         <li class="nav-item">
           <?php
-          $dashboardUrl = '/dashboard'; // default for students
-          $isDashboardActive = false;
-
-          if ($userRole === 'admin') {
-            $dashboardUrl = '/admin/dashboard';
-            $isDashboardActive = in_array($currentUri, ['admin/dashboard', 'admin']);
-          } elseif ($userRole === 'teacher') {
-            $dashboardUrl = '/teacher/dashboard';
-            $isDashboardActive = in_array($currentUri, ['teacher/dashboard', 'teacher']);
-          } else {
-            // For students, dashboard is /dashboard
-            $isDashboardActive = $currentUri == 'dashboard';
-          }
+          $dashboardUrl = 'dashboard';
+          $isDashboardActive = ($currentUri == 'dashboard');
           ?>
           <a class="nav-link <?= $isDashboardActive ? 'active' : '' ?>" href="<?= site_url($dashboardUrl) ?>">Dashboard</a>
         </li>
