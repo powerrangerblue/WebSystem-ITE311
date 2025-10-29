@@ -180,19 +180,9 @@
             </div>
         </div>
 
-        <!-- Nav Tabs for better navigation -->
-        <ul class="nav nav-tabs mb-3" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="tab-enrolled-btn" data-bs-toggle="tab" data-bs-target="#tab-enrolled" type="button" role="tab" aria-controls="tab-enrolled" aria-selected="true">Enrolled (<?= (int)$enrolledCount ?>)</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab-available-btn" data-bs-toggle="tab" data-bs-target="#tab-available" type="button" role="tab" aria-controls="tab-available" aria-selected="false">Available (<?= (int)$availableCount ?>)</button>
-            </li>
-        </ul>
-
-        <div class="tab-content">
-            <!-- Enrolled Tab -->
-            <div class="tab-pane fade show active" id="tab-enrolled" role="tabpanel" aria-labelledby="tab-enrolled-btn">
+        <!-- Enrolled and Available sections shown together -->
+        <div class="mb-3">
+            <!-- Enrolled Section -->
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center">
                         <span class="fw-bold">Enrolled Courses</span>
@@ -239,10 +229,8 @@
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>
 
-            <!-- Available Tab -->
-            <div class="tab-pane fade" id="tab-available" role="tabpanel" aria-labelledby="tab-available-btn">
+            <!-- Available Section -->
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-white fw-bold">Available Courses</div>
                     <div class="card-body" id="available-courses">
@@ -254,7 +242,7 @@
                                             <h6 class="mb-1"><?= esc($c['course_name'] ?? 'Untitled') ?></h6>
                                             <span class="badge text-bg-light border small"><?= esc($c['course_code'] ?? '') ?></span>
                                         </div>
-                                        <button class="btn btn-primary btn-sm" data-course-id="<?= esc($c['id']) ?>">Enroll</button>
+                                        <button class="btn btn-success btn-sm" data-course-id="<?= esc($c['id']) ?>">Enroll</button>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -283,8 +271,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-    // Listen for a click on the Enroll button
-    $('button[data-course-id]').click(function(e) {
+    // CSRF helpers (read fresh token from cookie after every request)
+    const CSRF_TOKEN_NAME = '<?= csrf_token() ?>';
+    const CSRF_COOKIE_NAME = '<?= config('Security')->cookieName ?>';
+    function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'));
+        return match ? decodeURIComponent(match[1]) : '';
+    }
+    function currentCsrf() {
+        return getCookie(CSRF_COOKIE_NAME);
+    }
+    // Listen for a click on the Enroll button (event delegation for reliability)
+    $(document).on('click', 'button[data-course-id]', function(e) {
         // Prevent the default form submission behavior
         e.preventDefault();
         
@@ -294,10 +292,18 @@ $(document).ready(function() {
         // Disable button to prevent multiple clicks
         button.prop('disabled', true).text('Enrolling...');
         
-        // Use $.post() to send the course_id to the /course/enroll URL
-        $.post('<?= base_url('course/enroll') ?>', {
-            course_id: courseId,
-            <?= csrf_token() ?>: '<?= csrf_hash() ?>'
+        // Use $.post() to send the course_id to the /course/enroll URL with a fresh CSRF token
+        const payload = { course_id: courseId };
+        payload[CSRF_TOKEN_NAME] = currentCsrf();
+        $.ajax({
+            url: '<?= base_url('course/enroll') ?>',
+            method: 'POST',
+            data: payload,
+            dataType: 'json',
+            headers: {
+                '<?= config('Security')->headerName ?>': currentCsrf(),
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         })
         .done(function(response) {
             if (response.success) {
@@ -312,6 +318,32 @@ $(document).ready(function() {
                 
                 // Update the Enrolled Courses list dynamically without reloading the page
                 addToEnrolledCourses(response.course);
+
+                // Smooth scroll to the Enrolled Courses section and briefly highlight the new item
+                try {
+                    const target = $('#enrolled-courses');
+                    if (target.length) {
+                        $('html, body').animate({ scrollTop: target.offset().top - 80 }, 400);
+                        const highlight = target.find('.list-group-item').first();
+                        highlight.addClass('bg-warning-subtle');
+                        setTimeout(function(){ highlight.removeClass('bg-warning-subtle'); }, 1200);
+                    }
+                } catch(_e) {}
+
+                // Fetch and render materials for the newly enrolled course
+                fetchAndAttachMaterials(response.course.id);
+
+                // Update counters (top summary cards)
+                try {
+                    const enrolledCard = $(".card .card-body:contains('Enrolled')").closest('.card').find('.h2');
+                    const availableCard = $(".card .card-body:contains('Available')").closest('.card').find('.h2');
+                    if (enrolledCard.length) {
+                        const n = parseInt(enrolledCard.text(), 10) || 0; enrolledCard.text(n + 1);
+                    }
+                    if (availableCard.length) {
+                        const n = parseInt(availableCard.text(), 10) || 0; availableCard.text(Math.max(0, n - 1));
+                    }
+                } catch(_e) {}
             } else {
                 showAlert('danger', response.message);
                 button.prop('disabled', false).text('Enroll');
@@ -368,18 +400,56 @@ $(document).ready(function() {
             listGroup = enrolledContainer.find('.list-group');
         }
         
-        // Create the course HTML with animation
+        // Create the course HTML matching enrolled layout
+        const cid = course.id;
         const courseHtml = `
-            <div class="list-group-item" style="display: none;">
-                <h6 class="mb-1">${course.course_name}</h6>
-                <small class="text-muted">${course.course_code}</small>
+            <div class="list-group-item" data-search-text="${(course.course_name || '') + ' ' + (course.course_code || '')}" style="display: none;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h6 class="mb-1">${course.course_name}</h6>
+                        <span class="badge text-bg-light border small">${course.course_code || ''}</span>
+                    </div>
+                    <div class="d-flex gap-2 align-items-center">
+                        <span class="badge rounded-pill text-bg-success">Enrolled</span>
+                        <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#materials-${cid}" aria-expanded="false" aria-controls="materials-${cid}">Materials (0)</button>
+                    </div>
+                </div>
+                <div id="materials-${cid}" class="collapse mt-2">
+                    <div class="text-muted small">Loading materials...</div>
+                </div>
             </div>
         `;
         
         // Append and fade in the new course
         const newCourse = $(courseHtml);
-        listGroup.append(newCourse);
+        listGroup.prepend(newCourse);
         newCourse.fadeIn(300);
+    }
+
+    function fetchAndAttachMaterials(courseId) {
+        $.get('<?= base_url('materials/list') ?>/' + courseId)
+            .done(function(res) {
+                if (!res || !res.success) return;
+                const list = res.materials || [];
+                const container = $('#materials-' + courseId);
+                const toggleBtn = container.closest('.list-group-item').find('[data-bs-target="#materials-' + courseId + '"]');
+                if (toggleBtn.length) {
+                    toggleBtn.text('Materials (' + list.length + ')');
+                }
+                if (list.length === 0) {
+                    container.html('<div class="text-muted small">No materials yet.</div>');
+                    return;
+                }
+                let html = '<div class="list-group list-group-flush">';
+                list.forEach(function(m) {
+                    html += '<div class="list-group-item px-0 d-flex justify-content-between align-items-center">'
+                         + '<span class="text-truncate" style="max-width: 75%;">' + m.file_name + '</span>'
+                         + '<a class="btn btn-sm btn-outline-primary" href="<?= site_url('/materials/download/') ?>' + m.id + '">Download</a>'
+                         + '</div>';
+                });
+                html += '</div>';
+                container.html(html);
+            });
     }
 });
 </script>
