@@ -65,6 +65,14 @@ class Course extends BaseController
 
         // Return a JSON response indicating success or failure
         if ($enrollmentId) {
+            // Create notification for the user
+            $notificationModel = new \App\Models\NotificationModel();
+            $notificationModel->insert([
+                'user_id' => $user_id,
+                'message' => 'You have been enrolled in ' . $course['course_name'],
+                'is_read' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
             return $this->response->setJSON([
                 'success' => true,
                 'message' => 'Successfully enrolled in ' . esc($course['course_name']) . '!',
