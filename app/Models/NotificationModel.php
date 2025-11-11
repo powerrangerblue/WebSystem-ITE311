@@ -89,7 +89,6 @@ class NotificationModel extends Model
     {
         return $this->where('user_id', $userId)
                     ->orderBy('created_at', 'DESC')
-                    ->limit(5)
                     ->findAll();
     }
 

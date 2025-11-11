@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+x<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -96,7 +96,7 @@
             font-size: 12px;
             color: #007bff;
             text-decoration: none;
-            margin-left: 10px;
+            cursor: pointer;
         }
 
         .mark-btn:hover {
@@ -144,7 +144,7 @@
                             <li class="notification-item" data-id="${notification.id}">
                                 <div>${notification.message}</div>
                                 <span class="notification-time">${new Date(notification.created_at).toLocaleString()}</span>
-                                ${notification.is_read == 0 ? '<a href="#" class="mark-btn">Mark</a>' : ''}
+                                ${notification.is_read == 0 ? '<a href="#" class="mark-btn">Mark as Read</a>' : ''}
                             </li>
                         `;
                         list.append(item);
