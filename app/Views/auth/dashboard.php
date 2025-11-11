@@ -307,17 +307,8 @@ $(document).ready(function() {
         })
         .done(function(response) {
             if (response.success) {
-                // On a successful response from the server:
-                // Display a Bootstrap alert message
-                showAlert('success', response.message);
-                
-                // Hide or disable the Enroll button for that course
-                button.closest('.list-group-item').fadeOut(300, function() {
-                    $(this).remove();
-                });
-                
-                // Update the Enrolled Courses list dynamically without reloading the page
-                addToEnrolledCourses(response.course);
+                // Handle successful enrollment with UI updates
+                handleEnrollmentSuccess(response);
 
                 // Smooth scroll to the Enrolled Courses section and briefly highlight the new item
                 try {
@@ -332,18 +323,6 @@ $(document).ready(function() {
 
                 // Fetch and render materials for the newly enrolled course
                 fetchAndAttachMaterials(response.course.id);
-
-                // Update counters (top summary cards)
-                try {
-                    const enrolledCard = $(".card .card-body:contains('Enrolled')").closest('.card').find('.h2');
-                    const availableCard = $(".card .card-body:contains('Available')").closest('.card').find('.h2');
-                    if (enrolledCard.length) {
-                        const n = parseInt(enrolledCard.text(), 10) || 0; enrolledCard.text(n + 1);
-                    }
-                    if (availableCard.length) {
-                        const n = parseInt(availableCard.text(), 10) || 0; availableCard.text(Math.max(0, n - 1));
-                    }
-                } catch(_e) {}
             } else {
                 showAlert('danger', response.message);
                 button.prop('disabled', false).text('Enroll');
@@ -389,21 +368,21 @@ $(document).ready(function() {
     // Function to add course to enrolled courses list
     function addToEnrolledCourses(course) {
         const enrolledContainer = $('#enrolled-courses');
-        
+
         // Check if list-group exists
         let listGroup = enrolledContainer.find('.list-group');
-        
+
         // If no list-group exists (meaning "No enrollments yet" message is shown)
         if (listGroup.length === 0) {
             // Replace the entire content with a new list-group
             enrolledContainer.html('<div class="list-group"></div>');
             listGroup = enrolledContainer.find('.list-group');
         }
-        
+
         // Create the course HTML matching enrolled layout
         const cid = course.id;
         const courseHtml = `
-            <div class="list-group-item" data-search-text="${(course.course_name || '') + ' ' + (course.course_code || '')}" style="display: none;">
+            <div class="list-group-item" data-search-text="${((course.course_name || '') + ' ' + (course.course_code || '')).toLowerCase()}">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <h6 class="mb-1">${course.course_name}</h6>
@@ -419,11 +398,28 @@ $(document).ready(function() {
                 </div>
             </div>
         `;
-        
+
         // Append and fade in the new course
         const newCourse = $(courseHtml);
         listGroup.prepend(newCourse);
-        newCourse.fadeIn(300);
+        newCourse.hide().fadeIn(300);
+    }
+
+    // Function to handle enrollment success
+    function handleEnrollmentSuccess(data) {
+        // Add the course to enrolled courses list
+        addToEnrolledCourses(data.course);
+
+        // Remove the course from available courses list
+        $('#available-courses .list-group-item:has(button[data-course-id="' + data.course.id + '"])').fadeOut(300, function() {
+            $(this).remove();
+        });
+
+        // Show success message
+        showAlert('success', data.message);
+
+        // Update counters
+        updateCounters();
     }
 
     function fetchAndAttachMaterials(courseId) {
@@ -450,6 +446,20 @@ $(document).ready(function() {
                 html += '</div>';
                 container.html(html);
             });
+    }
+
+    // Function to update counters
+    function updateCounters() {
+        const enrolledCard = $(".card .card-body:contains('Enrolled')").closest('.card').find('.h2');
+        const availableCard = $(".card .card-body:contains('Available')").closest('.card').find('.h2');
+        if (enrolledCard.length) {
+            const n = parseInt(enrolledCard.text(), 10) || 0;
+            enrolledCard.text(n + 1);
+        }
+        if (availableCard.length) {
+            const n = parseInt(availableCard.text(), 10) || 0;
+            availableCard.text(Math.max(0, n - 1));
+        }
     }
 });
 </script>
