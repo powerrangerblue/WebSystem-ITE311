@@ -55,4 +55,17 @@ abstract class BaseController extends Controller
 
         // E.g.: $this->session = service('session');
     }
+
+    /**
+     * Get unread notification count for the current user
+     */
+    protected function getUnreadNotificationCount()
+    {
+        if (!session()->get('isLoggedIn')) {
+            return 0;
+        }
+
+        $notificationModel = new \App\Models\NotificationModel();
+        return $notificationModel->getUnreadCount(session()->get('user_id'));
+    }
 }

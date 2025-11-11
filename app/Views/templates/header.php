@@ -45,6 +45,19 @@
           <a class="nav-link <?= $isDashboardActive ? 'active' : '' ?>" href="<?= site_url($dashboardUrl) ?>">Dashboard</a>
         </li>
 
+        <!-- Notifications dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Notifications <span class="badge bg-danger" id="notification-badge" style="display: none;">0</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationsDropdown">
+            <li id="notifications-list">
+              <div class="notification-item text-center text-muted">
+                Loading notifications...
+              </div>
+            </li>
+          </ul>
+        </li>
 
         <li class="nav-item">
           <a class="nav-link" href="<?= site_url('logout') ?>">Logout</a>

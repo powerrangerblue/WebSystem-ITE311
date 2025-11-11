@@ -67,45 +67,40 @@ class NotificationModel extends Model
     }
 
     /**
+     * Get unread count for a user
+     *
+     * @param int $userId User ID
+     * @return int Number of unread notifications
+     */
+    public function getUnreadCount($userId)
+    {
+        return $this->where('user_id', $userId)
+                    ->where('is_read', 0)
+                    ->countAllResults();
+    }
+
+    /**
      * Get notifications for a user
      *
-     * @param int $user_id User ID
-     * @param int $limit Number of notifications to retrieve
+     * @param int $userId User ID
      * @return array Array of notifications
      */
-    public function getUserNotifications($user_id, $limit = 10)
+    public function getNotificationsForUser($userId)
     {
-        return $this->where('user_id', $user_id)
+        return $this->where('user_id', $userId)
                     ->orderBy('created_at', 'DESC')
-                    ->limit($limit)
+                    ->limit(5)
                     ->findAll();
     }
 
     /**
      * Mark a notification as read
      *
-     * @param int $notification_id Notification ID
-     * @param int $user_id User ID (for security)
+     * @param int $notificationId Notification ID
      * @return bool True on success, false on failure
      */
-    public function markAsRead($notification_id, $user_id)
+    public function markAsRead($notificationId)
     {
-        return $this->where('id', $notification_id)
-                    ->where('user_id', $user_id)
-                    ->set(['is_read' => 1])
-                    ->update();
-    }
-
-    /**
-     * Get unread notification count for a user
-     *
-     * @param int $user_id User ID
-     * @return int Number of unread notifications
-     */
-    public function getUnreadCount($user_id)
-    {
-        return $this->where('user_id', $user_id)
-                    ->where('is_read', 0)
-                    ->countAllResults();
+        return $this->update($notificationId, ['is_read' => 1]);
     }
 }
