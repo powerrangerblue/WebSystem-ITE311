@@ -18,6 +18,9 @@ $routes->get('logout', 'Auth::logout');
 $routes->get('dashboard', 'Auth::dashboard');
 
 // Course Routes
+$routes->get('/courses', 'Course::index');
+$routes->get('/courses/search', 'Course::search');
+$routes->post('/courses/search', 'Course::search');
 $routes->post('/course/enroll', 'Course::enroll');
 
 // Materials Routes

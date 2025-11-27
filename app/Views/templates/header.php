@@ -15,6 +15,9 @@
           <a class="nav-link <?= uri_string() == 'about' ? 'active' : '' ?>" href="<?= site_url('about') ?>">About</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link <?= uri_string() == 'courses' ? 'active' : '' ?>" href="<?= site_url('courses') ?>">Courses</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'contact' ? 'active' : '' ?>" href="<?= site_url('contact') ?>">Contact</a>
         </li>
         <?php if (!session('isLoggedIn')): ?>

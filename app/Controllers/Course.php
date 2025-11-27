@@ -2,10 +2,31 @@
 
 namespace App\Controllers;
 
+use App\Models\CourseModel;
 use App\Models\EnrollmentModel;
 
 class Course extends BaseController
 {
+    protected CourseModel $courseModel;
+    protected EnrollmentModel $enrollmentModel;
+
+    public function __construct()
+    {
+        $this->courseModel = new CourseModel();
+        $this->enrollmentModel = new EnrollmentModel();
+    }
+
+    public function index()
+    {
+        $searchTerm = trim((string) ($this->request->getGet('search_term') ?? ''));
+        $courses = $this->getCourses($searchTerm);
+
+        return view('courses/index', [
+            'courses' => $courses,
+            'searchTerm' => $searchTerm,
+        ]);
+    }
+
     /**
      * Handle course enrollment via AJAX
      */
@@ -46,8 +67,7 @@ class Course extends BaseController
         }
 
         // Check if the user is already enrolled
-        $enrollmentModel = new EnrollmentModel();
-        if ($enrollmentModel->isAlreadyEnrolled($user_id, $course_id)) {
+        if ($this->enrollmentModel->isAlreadyEnrolled($user_id, $course_id)) {
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'You are already enrolled in this course.'
@@ -61,7 +81,7 @@ class Course extends BaseController
             'enrollment_date' => date('Y-m-d H:i:s')
         ];
 
-        $enrollmentId = $enrollmentModel->enrollUser($enrollmentData);
+        $enrollmentId = $this->enrollmentModel->enrollUser($enrollmentData);
 
         // Return a JSON response indicating success or failure
         if ($enrollmentId) {
@@ -88,5 +108,43 @@ class Course extends BaseController
                 'message' => 'Failed to enroll in course. Please try again.'
             ]);
         }
+    }
+
+    public function search()
+    {
+        $searchTerm = trim((string) ($this->request->getVar('search_term') ?? ''));
+        $courses = $this->getCourses($searchTerm);
+
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON([
+                'success' => true,
+                'count' => count($courses),
+                'courses' => $courses,
+                'searchTerm' => $searchTerm,
+            ]);
+        }
+
+        return view('courses/index', [
+            'courses' => $courses,
+            'searchTerm' => $searchTerm,
+        ]);
+    }
+
+    /**
+     * Apply LIKE filters to the courses table using Query Builder.
+     */
+    protected function getCourses(string $searchTerm): array
+    {
+        if ($searchTerm !== '') {
+            $this->courseModel
+                ->groupStart()
+                ->like('course_name', $searchTerm)
+                ->orLike('description', $searchTerm)
+                ->groupEnd();
+        }
+
+        return $this->courseModel
+            ->orderBy('course_name', 'ASC')
+            ->findAll();
     }
 }
