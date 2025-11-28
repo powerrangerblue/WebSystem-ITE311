@@ -15,9 +15,6 @@
           <a class="nav-link <?= uri_string() == 'about' ? 'active' : '' ?>" href="<?= site_url('about') ?>">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?= uri_string() == 'courses' ? 'active' : '' ?>" href="<?= site_url('courses') ?>">Courses</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'contact' ? 'active' : '' ?>" href="<?= site_url('contact') ?>">Contact</a>
         </li>
         <?php if (!session('isLoggedIn')): ?>
@@ -31,6 +28,13 @@
         $userRole = strtolower(session('role'));
         $isBasicPage = in_array($currentUri, ['', 'about', 'contact']);
         ?>
+
+        <!-- Show Courses link only for logged-in users (student, admin, teacher) -->
+        <?php if (in_array($userRole, ['student', 'admin', 'teacher'])): ?>
+        <li class="nav-item">
+          <a class="nav-link <?= $currentUri == 'courses' ? 'active' : '' ?>" href="<?= site_url('courses') ?>">Courses</a>
+        </li>
+        <?php endif; ?>
 
         <!-- Show announcements link only for students -->
         <?php if ($userRole === 'student'): ?>

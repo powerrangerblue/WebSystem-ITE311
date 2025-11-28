@@ -1,0 +1,4 @@
+CRITICAL - 2025-11-28 02:10:36 --> ErrorException: Cannot declare class App\Database\Migrations\CreateNotificationsTable, because the name is already in use
+[Method: CLI, Route: migrate]
+in APPPATH\Database\Migrations\2025-11-11-111315_CreateNotificationsTable.php on line 7.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
