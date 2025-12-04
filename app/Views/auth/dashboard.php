@@ -89,34 +89,12 @@
                                     <td><?= esc($u['email'] ?? '') ?></td>
                                     <td><?= esc($u['role'] ?? '') ?></td>
                                     <td><?= esc($u['created_at'] ?? '') ?></td>
-                                </tr>
                             <?php endforeach; else: ?>
                                 <tr><td colspan="4" class="text-center text-muted">No recent users.</td></tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-white fw-bold">Courses • Manage Materials</div>
-            <div class="card-body">
-                <?php if (!empty($courses)): ?>
-                    <div class="list-group">
-                        <?php foreach ($courses as $c): ?>
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <div class="fw-semibold mb-0"><?= esc($c['course_name'] ?? 'Untitled') ?></div>
-                                    <span class="badge text-bg-light border small"><?= esc($c['course_code'] ?? '') ?></span>
-                                </div>
-                                <a class="btn btn-primary btn-sm" href="<?= site_url('/admin/course/' . (int)$c['id'] . '/upload') ?>">Upload Material</a>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <div class="text-muted">No courses found.</div>
-                <?php endif; ?>
             </div>
         </div>
     <?php elseif ($roleLower === 'teacher'): ?>

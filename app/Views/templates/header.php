@@ -8,6 +8,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+        <?php if (!session('isLoggedIn')): ?>
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == '' ? 'active' : '' ?>" href="<?= site_url('/') ?>">Home</a>
         </li>
@@ -17,7 +18,6 @@
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'contact' ? 'active' : '' ?>" href="<?= site_url('contact') ?>">Contact</a>
         </li>
-        <?php if (!session('isLoggedIn')): ?>
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'login' ? 'active' : '' ?>" href="<?= site_url('login') ?>">Login</a>
         </li>
@@ -51,6 +51,13 @@
           ?>
           <a class="nav-link <?= $isDashboardActive ? 'active' : '' ?>" href="<?= site_url($dashboardUrl) ?>">Dashboard</a>
         </li>
+
+        <!-- Manage Users link for admins -->
+        <?php if ($userRole === 'admin'): ?>
+        <li class="nav-item">
+          <a class="nav-link <?= uri_string() == 'admin/manage-users' ? 'active' : '' ?>" href="<?= site_url('/admin/manage-users') ?>">Manage Users</a>
+        </li>
+        <?php endif; ?>
 
         <!-- Notifications dropdown -->
         <li class="nav-item dropdown">

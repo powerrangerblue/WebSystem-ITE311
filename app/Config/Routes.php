@@ -33,6 +33,9 @@ $routes->get('/materials/download/(:num)', 'Materials::download/$1');
 $routes->get('/notifications', 'Notifications::get');
 $routes->post('/notifications/mark_read/(:num)', 'Notifications::mark_as_read/$1');
 
+// Admin Routes
+$routes->get('/admin/manage-users', 'Auth::manageUsers');
+$routes->get('/admin/delete-user/(:num)', 'Auth::deleteUser/$1');
+
 // Materials API
 $routes->get('/materials/list/(:num)', 'Materials::listByCourse/$1');
-

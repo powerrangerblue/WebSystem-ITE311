@@ -180,15 +180,6 @@ class Auth extends Controller
                     $roleData['totalCourses'] = 0;
                 }
                 $roleData['recentUsers'] = $userModel->orderBy('created_at', 'DESC')->limit(5)->find();
-                // Provide courses list for admin to manage uploads
-                try {
-                    $roleData['courses'] = $db->table('courses')
-                        ->orderBy('course_name', 'ASC')
-                        ->get()
-                        ->getResultArray();
-                } catch (\Throwable $e) {
-                    $roleData['courses'] = [];
-                }
             } elseif ($role === 'teacher') {
                 $courses = [];
                 try {
@@ -256,5 +247,43 @@ class Auth extends Controller
         ], $roleData);
 
         return view('auth/dashboard', $data);
+    }
+
+    public function manageUsers()
+    {
+        $session = session();
+
+        // Check if user is logged in and is admin
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'admin') {
+            $session->setFlashdata('error', 'Access denied.');
+            return redirect()->to('/dashboard');
+        }
+
+        $userModel = new UserModel();
+        $users = $userModel->findAll(); // This will exclude soft deleted by default
+
+        return view('auth/manage_users', ['users' => $users]);
+    }
+
+    public function deleteUser($id)
+    {
+        $session = session();
+
+        // Check if user is logged in and is admin
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'admin') {
+            $session->setFlashdata('error', 'Access denied.');
+            return redirect()->to('/dashboard');
+        }
+
+        $userModel = new UserModel();
+
+        // Soft delete the user
+        if ($userModel->delete($id)) {
+            $session->setFlashdata('success', 'User has been marked as deleted.');
+        } else {
+            $session->setFlashdata('error', 'Failed to delete user.');
+        }
+
+        return redirect()->to('/admin/manage-users');
     }
 }
