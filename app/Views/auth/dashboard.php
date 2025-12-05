@@ -388,6 +388,9 @@ $(document).ready(function() {
         // Add the course to enrolled courses list
         addToEnrolledCourses(data.course);
 
+        // Initialize material count for the new course
+        materialCounts[data.course.id] = 0;
+
         // Remove the course from available courses list
         $('#available-courses .list-group-item:has(button[data-course-id="' + data.course.id + '"])').fadeOut(300, function() {
             $(this).remove();
@@ -426,6 +429,70 @@ $(document).ready(function() {
             });
     }
 
+    // Polling for real-time material updates
+    let materialCounts = {}; // Store current material counts for each course
+
+    // Initialize material counts for enrolled courses
+    function initializeMaterialCounts() {
+        $('#enrolled-courses .list-group-item').each(function() {
+            const courseId = $(this).find('[data-bs-toggle="collapse"]').attr('data-bs-target').replace('#materials-', '');
+            const countText = $(this).find('[data-bs-toggle="collapse"]').text().match(/Materials \((\d+)\)/);
+            const count = countText ? parseInt(countText[1], 10) : 0;
+            materialCounts[courseId] = count;
+        });
+    }
+
+    // Check for material updates
+    function checkForMaterialUpdates() {
+        for (const courseId in materialCounts) {
+            $.get('<?= base_url('materials/list') ?>/' + courseId)
+                .done(function(res) {
+                    if (!res || !res.success) return;
+                    const list = res.materials || [];
+                    const currentCount = materialCounts[courseId];
+                    const newCount = list.length;
+
+                    if (newCount !== currentCount) {
+                        // Update the stored count
+                        materialCounts[courseId] = newCount;
+
+                        // Update the button text
+                        const toggleBtn = $('#enrolled-courses [data-bs-target="#materials-' + courseId + '"]');
+                        if (toggleBtn.length) {
+                            toggleBtn.text('Materials (' + newCount + ')');
+                        }
+
+                        // If materials section is expanded, update the content
+                        const container = $('#materials-' + courseId);
+                        if (container.hasClass('show')) {
+                            if (newCount === 0) {
+                                container.html('<div class="text-muted small">No materials yet.</div>');
+                            } else {
+                                let html = '<div class="list-group list-group-flush">';
+                                list.forEach(function(m) {
+                                    html += '<div class="list-group-item px-0 d-flex justify-content-between align-items-center">'
+                                         + '<span class="text-truncate" style="max-width: 75%;">' + m.file_name + '</span>'
+                                         + '<a class="btn btn-sm btn-outline-primary" href="<?= site_url('/materials/download/') ?>' + m.id + '">Download</a>'
+                                         + '</div>';
+                                });
+                                html += '</div>';
+                                container.html(html);
+                            }
+                        }
+
+                        // Show notification and update counter for new material
+                        if (newCount > currentCount) {
+                            showAlert('info', 'New material(s) available in one of your enrolled courses!');
+                            updateMaterialsCounter(newCount - currentCount);
+                        } else if (newCount < currentCount) {
+                            // Handle material deletion
+                            updateMaterialsCounter(newCount - currentCount);
+                        }
+                    }
+                });
+        }
+    }
+
     // Function to update counters
     function updateCounters() {
         const enrolledCard = $(".card .card-body:contains('Enrolled')").closest('.card').find('.h2');
@@ -439,6 +506,22 @@ $(document).ready(function() {
             availableCard.text(Math.max(0, n - 1));
         }
     }
+
+    // Function to update materials counter
+    function updateMaterialsCounter(change) {
+        const materialsCard = $(".card .card-body:contains('Materials')").closest('.card').find('.h2');
+        if (materialsCard.length) {
+            const n = parseInt(materialsCard.text(), 10) || 0;
+            materialsCard.text(Math.max(0, n + change));
+        }
+    }
+
+        // Initialize material counts and start polling after page load
+        setTimeout(function() {
+            initializeMaterialCounts();
+            // Start polling every 15 seconds for more responsive updates
+            setInterval(checkForMaterialUpdates, 15000);
+        }, 1000);
 });
 </script>
 <?= $this->endSection() ?>

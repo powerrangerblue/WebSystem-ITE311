@@ -117,6 +117,29 @@ class Materials extends BaseController
 
         return $this->response->download($absolutePath, null)->setFileName($material['file_name']);
     }
+
+    public function listByCourse($course_id)
+    {
+        $session = session();
+        if (!$session->get('isLoggedIn')) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Not logged in']);
+        }
+
+        $userId = (int) $session->get('user_id');
+        $courseId = (int) $course_id;
+
+        $enrollmentModel = new EnrollmentModel();
+        $isEnrolled = $enrollmentModel->isAlreadyEnrolled($userId, $courseId);
+        if (!$isEnrolled) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Not enrolled']);
+        }
+
+        $materialModel = new MaterialModel();
+        $materials = $materialModel->getMaterialsByCourse($courseId);
+
+        return $this->response->setJSON([
+            'success' => true,
+            'materials' => $materials
+        ]);
+    }
 }
-
-
