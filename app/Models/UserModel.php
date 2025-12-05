@@ -15,7 +15,8 @@ class UserModel extends Model
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'status'
     ];
 
     // Dates
@@ -28,8 +29,8 @@ class UserModel extends Model
     protected $validationRules = [
         'name' => 'required|min_length[3]|max_length[100]',
         'email' => 'required|valid_email|is_unique[users.email]',
-        'password' => 'required|min_length[6]'
-        // Removed role validation since we're setting it programmatically
+        'password' => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/]',
+        'role' => 'permit_empty|in_list[student,teacher,admin]'
     ];
 
     protected $validationMessages = [
@@ -43,8 +44,8 @@ class UserModel extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert = ['hashPassword'];
-    protected $beforeUpdate = ['hashPassword'];
+    protected $beforeInsert = ['normalizeEmail', 'hashPassword'];
+    protected $beforeUpdate = ['normalizeEmail', 'hashPassword'];
 
     protected function hashPassword(array $data)
     {
@@ -53,6 +54,16 @@ class UserModel extends Model
         }
 
         $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+        return $data;
+    }
+
+    protected function normalizeEmail(array $data)
+    {
+        if (!isset($data['data']['email'])) {
+            return $data;
+        }
+
+        $data['data']['email'] = strtolower($data['data']['email']);
         return $data;
     }
 }

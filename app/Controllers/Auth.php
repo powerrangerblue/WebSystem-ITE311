@@ -20,9 +20,9 @@ class Auth extends Controller
             $rules = [
                 'name' => 'required|min_length[3]|max_length[100]',
                 'email' => 'required|valid_email|is_unique[users.email]',
-                'password' => 'required|min_length[6]',
+                'password' => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/]',
                 'password_confirm' => 'matches[password]',
-                'role' => 'permit_empty|in_list[student,teacher]'
+                'role' => 'permit_empty|in_list[student,teacher,admin]'
             ];
             
             if ($this->validate($rules)) {
@@ -31,9 +31,9 @@ class Auth extends Controller
                 try {
                     // Get the data from form
                     $name = trim($this->request->getPost('name'));
-                    $email = $this->request->getPost('email');
+                    $email = strtolower($this->request->getPost('email')); // Normalize email to lowercase
                     $roleInput = strtolower((string) $this->request->getPost('role'));
-                    $role = in_array($roleInput, ['student','teacher'], true) ? $roleInput : 'student';
+                    $role = in_array($roleInput, ['student','teacher','admin'], true) ? $roleInput : 'student';
                     
                     $data = [
                         'name' => $name,
@@ -98,7 +98,7 @@ class Auth extends Controller
             ];
             
             if ($this->validate($rules)) {
-                $email = $this->request->getPost('email');
+                $email = strtolower($this->request->getPost('email')); // Normalize email to lowercase
                 $password = $this->request->getPost('password');
                 
                 try {
@@ -106,8 +106,8 @@ class Auth extends Controller
                     
                     // Find user by email only
                     $user = $model->where('email', $email)->first();
-                    
-                    if ($user && password_verify($password, $user['password'])) {
+
+                    if ($user && password_verify($password, $user['password']) && $user['status'] === 'active') {
                         // Use the name field directly from database
                         $userName = $user['name'] ?? $user['email'];
                         
@@ -265,6 +265,208 @@ class Auth extends Controller
         return view('auth/manage_users', ['users' => $users]);
     }
 
+    public function changeRole()
+    {
+        $session = session();
+
+        // Check if user is logged in and is admin
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'admin') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Access denied.']);
+        }
+
+        $userId = $this->request->getPost('user_id');
+        $newRole = $this->request->getPost('role');
+
+        if (!$userId || !$newRole) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Invalid request.']);
+        }
+
+        $userModel = new UserModel();
+        $user = $userModel->find($userId);
+
+        if (!$user) {
+            return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
+        }
+
+        // Prevent changing the protected admin's role
+        if ($user['email'] === 'admin@example.com') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Cannot change the role of the protected admin.']);
+        }
+
+        // Validate role
+        $validRoles = ['student', 'teacher', 'admin'];
+        if (!in_array($newRole, $validRoles)) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Invalid role.']);
+        }
+
+        // Update the role
+        if ($userModel->update($userId, ['role' => $newRole])) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to update role.']);
+        }
+    }
+
+    public function toggleStatus()
+    {
+        $session = session();
+
+        // Check if user is logged in and is admin
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'admin') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Access denied.']);
+        }
+
+        $userId = $this->request->getPost('user_id');
+        $newStatus = $this->request->getPost('status');
+
+        if (!$userId || !$newStatus) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Invalid request.']);
+        }
+
+        $userModel = new UserModel();
+        $user = $userModel->find($userId);
+
+        if (!$user) {
+            return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
+        }
+
+        // Prevent changing the protected admin's status
+        if ($user['email'] === 'admin@example.com') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Cannot change the status of the protected admin.']);
+        }
+
+        // Validate status
+        $validStatuses = ['active', 'inactive'];
+        if (!in_array($newStatus, $validStatuses)) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Invalid status.']);
+        }
+
+        // Update the status
+        if ($userModel->update($userId, ['status' => $newStatus])) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to update status.']);
+        }
+    }
+
+    public function addUser()
+    {
+        $session = session();
+
+        // Check if user is logged in and is admin
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'admin') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Access denied.']);
+        }
+
+        helper(['form']);
+
+        $rules = [
+            'name' => 'required|min_length[3]|max_length[100]',
+            'email' => 'required|valid_email|is_unique[users.email]',
+            'role' => 'required|in_list[student,teacher,admin]'
+        ];
+
+        if (!$this->validate($rules)) {
+            $errors = $this->validator->getErrors();
+            return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+        }
+
+        $userModel = new UserModel();
+
+        $data = [
+            'name' => $this->request->getPost('name'),
+            'email' => strtolower($this->request->getPost('email')), // Normalize email to lowercase
+            'password' => 'Rmmc1960!', // Default password for all new users (meets strong password requirements)
+            'role' => $this->request->getPost('role')
+        ];
+
+        if ($userModel->insert($data)) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            $errors = $userModel->errors();
+            return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+        }
+    }
+
+    public function editUser()
+    {
+        $session = session();
+
+        // Check if user is logged in and is admin
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'admin') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Access denied.']);
+        }
+
+        helper(['form']);
+
+        $userId = $this->request->getPost('user_id');
+        $email = strtolower($this->request->getPost('email')); // Normalize email to lowercase
+        $password = $this->request->getPost('password');
+
+        if (!$userId) {
+            return $this->response->setJSON(['success' => false, 'message' => 'User ID is required.']);
+        }
+
+        $userModel = new UserModel();
+        $user = $userModel->find($userId);
+
+        if (!$user) {
+            return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
+        }
+
+        // Prevent editing the protected admin
+        if ($user['email'] === 'admin@example.com') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Cannot edit the protected admin.']);
+        }
+
+        // Build validation rules
+        $rules = [
+            'name' => 'required|min_length[3]|max_length[100]',
+            'email' => 'required|valid_email',
+            'role' => 'required|in_list[student,teacher,admin]'
+        ];
+
+        // Add password validation only if password is provided
+        if (!empty($password)) {
+            $rules['password'] = 'min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/]';
+        }
+
+        // Check email uniqueness excluding current user only if email has changed (case-insensitive)
+        if (strtolower($user['email']) !== $email) {
+            $existingUser = $userModel->where('LOWER(email)', $email)->where('id !=', $userId)->first();
+            if ($existingUser) {
+                return $this->response->setJSON(['success' => false, 'message' => 'This email is already registered.']);
+            }
+        }
+
+        if (!$this->validate($rules)) {
+            $errors = $this->validator->getErrors();
+            return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+        }
+
+        // Prepare update data
+        $data = [
+            'name' => $this->request->getPost('name'),
+            'email' => $email,
+            'role' => $this->request->getPost('role')
+        ];
+
+        // Only update password if provided
+        if (!empty($password)) {
+            $data['password'] = $password; // Model will hash it
+        }
+
+        // Skip model validation since uniqueness is checked manually above
+        $userModel->skipValidation(true);
+
+        if ($userModel->update($userId, $data)) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            $errors = $userModel->errors();
+            return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+        }
+    }
+
     public function deleteUser($id)
     {
         $session = session();
@@ -276,6 +478,18 @@ class Auth extends Controller
         }
 
         $userModel = new UserModel();
+        $user = $userModel->find($id);
+
+        if (!$user) {
+            $session->setFlashdata('error', 'User not found.');
+            return redirect()->to('/admin/manage-users');
+        }
+
+        // Prevent deleting the protected admin
+        if ($user['email'] === 'admin@example.com') {
+            $session->setFlashdata('error', 'Cannot delete the protected admin.');
+            return redirect()->to('/admin/manage-users');
+        }
 
         // Soft delete the user
         if ($userModel->delete($id)) {
