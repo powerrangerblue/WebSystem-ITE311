@@ -181,16 +181,21 @@ class Auth extends Controller
                 }
                 $roleData['recentUsers'] = $userModel->orderBy('created_at', 'DESC')->limit(5)->find();
             } elseif ($role === 'teacher') {
-                $courses = [];
-                try {
-                    $courses = $db->table('courses')
-                        ->orderBy('created_at', 'DESC')
-                        ->get(10)
-                        ->getResultArray();
-                } catch (\Throwable $e) {
-                    $courses = [];
-                }
-                $roleData['courses'] = $courses;
+                // Get teacher dashboard metrics
+                $assignmentModel = new \App\Models\AssignmentModel();
+                $roleData['totalCourses'] = $assignmentModel->getTotalCoursesCount();
+                $roleData['totalStudents'] = $assignmentModel->getTotalActiveStudentsCount();
+                $roleData['assignmentsPosted'] = $assignmentModel->getAssignmentsPostedCount();
+                $roleData['pendingGrades'] = $assignmentModel->getPendingGradesCount($userId);
+
+                // Get courses with assignment counts
+                $roleData['courses'] = $assignmentModel->getAllCoursesWithAssignments();
+
+                // Get upcoming assignments (due within 7 days)
+                $roleData['upcomingAssignments'] = $assignmentModel->getUpcomingAssignments(7);
+
+                // Get assignments needing grading
+                $roleData['assignmentsNeedingGrading'] = $assignmentModel->getAssignmentsNeedingGrading($userId);
             } elseif ($role === 'student') {
                 $enrolledCourses = [];
                 $materialsByCourse = [];

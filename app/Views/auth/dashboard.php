@@ -98,26 +98,149 @@
             </div>
         </div>
     <?php elseif ($roleLower === 'teacher'): ?>
+        <!-- Dashboard Header -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="mb-1">Welcome back, <?= esc(session('user_name')) ?>!</h4>
+                <p class="text-muted mb-0">Here's an overview of your teaching dashboard</p>
+            </div>
+        </div>
+
+        <!-- Quick Overview Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="h2 mb-0 text-primary"><?= (int)($totalCourses ?? 0) ?></div>
+                        <div class="text-muted small">Courses</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="h2 mb-0 text-success"><?= (int)($totalStudents ?? 0) ?></div>
+                        <div class="text-muted small">Students</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="h2 mb-0 text-info"><?= (int)($assignmentsPosted ?? 0) ?></div>
+                        <div class="text-muted small">Assignments</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="h2 mb-0 text-warning"><?= (int)($pendingGrades ?? 0) ?></div>
+                        <div class="text-muted small">Pending Grades</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Your Courses -->
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-header bg-white fw-bold">Your Courses</div>
             <div class="card-body">
                 <?php if (!empty($courses)): ?>
                     <div class="list-group">
-                        <?php foreach ($courses as $c): ?>
-                            <div class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <div class="fw-semibold mb-0"><?= esc($c['course_name'] ?? 'Untitled') ?></div>
-                                    <span class="badge text-bg-light border small"><?= esc($c['course_code'] ?? '') ?></span>
+                        <?php foreach ($courses as $course): ?>
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1"><?= esc($course['course_name']) ?></h6>
+                                        <span class="badge bg-light text-dark">
+                                            <i class="bi bi-tag"></i> <?= esc($course['course_code']) ?>
+                                        </span>
+                                        <p class="mb-2 text-muted small mt-2">
+                                            <?= esc(substr($course['description'] ?? '', 0, 100)) ?>...
+                                        </p>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <div class="text-muted small">
+                                            <i class="bi bi-journal-text"></i>
+                                            <?= (int)$course['assignment_count'] ?> assignment<?= (int)$course['assignment_count'] !== 1 ? 's' : '' ?>
+                                        </div>
+                                    </div>
                                 </div>
-                                <a class="btn btn-primary btn-sm" href="<?= site_url('/admin/course/' . (int)$c['id'] . '/upload') ?>">Upload Material</a>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 <?php else: ?>
-                    <div class="text-muted">No courses found.</div>
+                    <div class="text-center py-5">
+                        <div class="text-muted mb-3">
+                            <i class="bi bi-journal-x" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5 class="text-muted">No courses available</h5>
+                        <p class="text-muted">There are no courses available.</p>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>
+
+        <!-- Upcoming Assignments -->
+        <?php if (!empty($upcomingAssignments)): ?>
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Upcoming Assignments</h5>
+                <small class="text-muted">Assignments due within the next 7 days</small>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <?php foreach ($upcomingAssignments as $assignment): ?>
+                        <div class="list-group-item">
+                            <div>
+                                <h6 class="mb-1"><?= esc($assignment['title']) ?></h6>
+                                <p class="mb-2 text-muted small">
+                                    <strong>Course:</strong> <?= esc($assignment['course_name']) ?> |
+                                    <strong>Due:</strong> <?= date('M j, Y \a\t g:i A', strtotime($assignment['due_date'])) ?>
+                                </p>
+                                <p class="mb-0 text-muted small">
+                                    <?= esc(substr($assignment['description'], 0, 120)) ?>...
+                                </p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <!-- Pending Submissions / Needs Grading -->
+        <?php if (!empty($assignmentsNeedingGrading)): ?>
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Pending Submissions / Needs Grading</h5>
+                <small class="text-muted">Assignments with ungraded student submissions</small>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <?php foreach ($assignmentsNeedingGrading as $assignment): ?>
+                        <div class="list-group-item">
+                            <div>
+                                <h6 class="mb-1"><?= esc($assignment['title']) ?></h6>
+                                <p class="mb-2 text-muted small">
+                                    <strong>Course:</strong> <?= esc($assignment['course_name']) ?> |
+                                    <strong>Due:</strong> <?= date('M j, Y \a\t g:i A', strtotime($assignment['due_date'])) ?>
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-warning text-dark me-2">
+                                        <i class="bi bi-exclamation-triangle"></i>
+                                        <?= (int)$assignment['pending_count'] ?> pending grade<?= (int)$assignment['pending_count'] !== 1 ? 's' : '' ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
 
     <?php elseif ($roleLower === 'student'): ?>
         <?php

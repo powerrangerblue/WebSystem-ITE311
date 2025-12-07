@@ -45,3 +45,18 @@ $routes->get('/admin/delete-user/(:num)', 'Auth::deleteUser/$1');
 
 // Materials API
 $routes->get('/materials/list/(:num)', 'Materials::listByCourse/$1');
+
+// Assignment Routes
+$routes->get('/assignments/teacher', 'Assignment::teacherDashboard');
+$routes->get('/assignments/student', 'Assignment::studentDashboard');
+$routes->get('/assignments/course/(:num)', 'Assignment::courseAssignments/$1');
+$routes->get('/assignments/create/(:num)', 'Assignment::create/$1');
+$routes->post('/assignments/store', 'Assignment::store');
+$routes->get('/assignments/submissions/(:num)', 'Assignment::submissions/$1');
+$routes->post('/assignments/grade/(:num)', 'Assignment::grade/$1');
+$routes->get('/assignments/student/course/(:num)', 'Assignment::courseAssignmentsStudent/$1');
+$routes->post('/assignments/submit/(:num)', 'Assignment::submit/$1');
+
+// File Downloads
+$routes->get('/assignments/download/(:num)', 'Assignment::downloadAssignment/$1');
+$routes->get('/assignments/download-submission/(:num)', 'Assignment::downloadSubmission/$1');

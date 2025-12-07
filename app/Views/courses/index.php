@@ -3,10 +3,21 @@
 <?= $this->section('title') ?>Courses<?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<?php
+$userRole = strtolower((string) session()->get('role'));
+$isStudent = $userRole === 'student';
+?>
+
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h1 class="mb-1">Courses</h1>
-        <div class="text-muted small">Browse all available courses and enroll in the ones you're interested in.</div>
+        <div class="text-muted small">
+            <?php if ($isStudent): ?>
+                Browse all available courses and enroll in the ones you're interested in.
+            <?php else: ?>
+                View all available courses in the system.
+            <?php endif; ?>
+        </div>
     </div>
     <a href="<?= base_url('dashboard') ?>" class="btn btn-outline-secondary">Back to Dashboard</a>
 </div>
@@ -50,15 +61,27 @@
                         <span class="badge text-bg-light border"><?= esc($course['course_code'] ?? 'N/A') ?></span>
                     </div>
                     <div class="card-footer bg-white border-0">
-                        <?php if ($isEnrolled): ?>
-                            <button class="btn btn-success btn-sm w-100" disabled>
-                                <i class="bi bi-check-circle"></i> Enrolled
-                            </button>
+                        <?php if ($isStudent): ?>
+                            <?php if ($isEnrolled): ?>
+                                <button class="btn btn-success btn-sm w-100" disabled>
+                                    <i class="bi bi-check-circle"></i> Enrolled
+                                </button>
+                            <?php else: ?>
+                                <button class="btn btn-primary btn-sm w-100 enroll-btn" data-course-id="<?= $courseId ?>">
+                                    <span class="btn-text">Enroll</span>
+                                    <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                </button>
+                            <?php endif; ?>
                         <?php else: ?>
-                            <button class="btn btn-primary btn-sm w-100 enroll-btn" data-course-id="<?= $courseId ?>">
-                                <span class="btn-text">Enroll</span>
-                                <span class="spinner-border spinner-border-sm d-none" role="status"></span>
-                            </button>
+                            <!-- Teachers and admins can view courses and upload materials -->
+                            <div class="btn-group w-100" role="group">
+                                <a href="<?= base_url('assignments/course/' . $courseId) ?>" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-eye"></i> View Course
+                                </a>
+                                <a href="<?= base_url('admin/course/' . $courseId . '/upload') ?>" class="btn btn-success btn-sm">
+                                    <i class="bi bi-upload"></i> Upload Material
+                                </a>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -219,6 +242,7 @@ $(document).ready(function() {
             const filterText = ((course.course_name || '') + ' ' + (course.course_code || '') + ' ' + (course.description || '')).toLowerCase();
 
             let buttonHtml;
+            <?php if ($isStudent): ?>
             if (isEnrolled) {
                 buttonHtml = `<button class="btn btn-success btn-sm w-100" disabled>
                     <i class="bi bi-check-circle"></i> Enrolled
@@ -229,6 +253,17 @@ $(document).ready(function() {
                     <span class="spinner-border spinner-border-sm d-none" role="status"></span>
                 </button>`;
             }
+            <?php else: ?>
+            // Teachers and admins can view courses and upload materials
+            buttonHtml = `<div class="btn-group w-100" role="group">
+                <a href="<?= base_url('assignments/course/') ?>${courseId}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-eye"></i> View Course
+                </a>
+                <a href="<?= base_url('admin/course/') ?>${courseId}/upload" class="btn btn-success btn-sm">
+                    <i class="bi bi-upload"></i> Upload Material
+                </a>
+            </div>`;
+            <?php endif; ?>
 
             return `
                 <div class="col-md-4 mb-4 course-card" data-filter-text="${filterText}">

@@ -49,6 +49,15 @@ class Course extends BaseController
             ]);
         }
 
+        // Check if the user is a student (only students can enroll)
+        $userRole = strtolower((string) session()->get('role'));
+        if ($userRole !== 'student') {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Only students can enroll in courses.'
+            ]);
+        }
+
         // Get user ID from session
         $user_id = session()->get('user_id');
         

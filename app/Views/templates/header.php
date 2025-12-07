@@ -36,6 +36,17 @@
         </li>
         <?php endif; ?>
 
+        <!-- Show Assignments link for students and teachers -->
+        <?php if (in_array($userRole, ['student', 'teacher'])): ?>
+        <li class="nav-item">
+          <?php if ($userRole === 'student'): ?>
+            <a class="nav-link <?= strpos($currentUri, 'assignments/student') === 0 ? 'active' : '' ?>" href="<?= site_url('assignments/student') ?>">Assignments</a>
+          <?php else: ?>
+            <a class="nav-link <?= strpos($currentUri, 'assignments/') === 0 ? 'active' : '' ?>" href="<?= site_url('assignments/teacher') ?>">Assignments</a>
+          <?php endif; ?>
+        </li>
+        <?php endif; ?>
+
         <!-- Show announcements link only for students -->
         <?php if ($userRole === 'student'): ?>
         <li class="nav-item">

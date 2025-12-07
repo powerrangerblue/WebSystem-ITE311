@@ -1,0 +1,287 @@
+CRITICAL - 2025-12-07 04:09:37 --> CodeIgniter\HTTP\Exceptions\HTTPException: The original file is not a valid file.
+[Method: POST, Route: assignments/submit/1]
+in SYSTEMPATH\HTTP\Files\UploadedFile.php on line 142.
+ 1 SYSTEMPATH\HTTP\Files\UploadedFile.php(142): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidFile()
+ 2 APPPATH\Controllers\Assignment.php(332): CodeIgniter\HTTP\Files\UploadedFile->move('C:\\xampp\\htdocs\\ITE311-CANITAN\\writable\\uploads/submissions/', '1765080577_04dc40df3fd6382ab514')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:09:41 --> CodeIgniter\HTTP\Exceptions\HTTPException: The original file is not a valid file.
+[Method: POST, Route: assignments/submit/1]
+in SYSTEMPATH\HTTP\Files\UploadedFile.php on line 142.
+ 1 SYSTEMPATH\HTTP\Files\UploadedFile.php(142): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidFile()
+ 2 APPPATH\Controllers\Assignment.php(332): CodeIgniter\HTTP\Files\UploadedFile->move('C:\\xampp\\htdocs\\ITE311-CANITAN\\writable\\uploads/submissions/', '1765080581_a0d0f55252203599c443')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:09:48 --> CodeIgniter\HTTP\Exceptions\HTTPException: The original file is not a valid file.
+[Method: POST, Route: assignments/submit/1]
+in SYSTEMPATH\HTTP\Files\UploadedFile.php on line 142.
+ 1 SYSTEMPATH\HTTP\Files\UploadedFile.php(142): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidFile()
+ 2 APPPATH\Controllers\Assignment.php(332): CodeIgniter\HTTP\Files\UploadedFile->move('C:\\xampp\\htdocs\\ITE311-CANITAN\\writable\\uploads/submissions/', '1765080588_dfd8dd3277cc292aa63f')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-07 04:13:08 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `su...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `su...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `su...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `su...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\ITE311-CANITAN\app\Models\AssignmentSubmissionModel.php(173): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Assignment.php(346): App\Models\AssignmentSubmissionModel->submitAssignment('1', 3, Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2025-12-07 04:13:08 --> Assignment submission error: Unknown column 'created_at' in 'field list'
+ERROR - 2025-12-07 04:13:09 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `su...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `su...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `su...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `su...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\ITE311-CANITAN\app\Models\AssignmentSubmissionModel.php(173): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Assignment.php(346): App\Models\AssignmentSubmissionModel->submitAssignment('1', 3, Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2025-12-07 04:13:09 --> Assignment submission error: Unknown column 'created_at' in 'field list'
+ERROR - 2025-12-07 04:13:18 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `su...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `su...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `su...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `su...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\ITE311-CANITAN\app\Models\AssignmentSubmissionModel.php(173): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Assignment.php(346): App\Models\AssignmentSubmissionModel->submitAssignment('1', 3, Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2025-12-07 04:13:18 --> Assignment submission error: Unknown column 'created_at' in 'field list'
+ERROR - 2025-12-07 04:13:25 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `su...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `su...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `su...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `su...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\ITE311-CANITAN\app\Models\AssignmentSubmissionModel.php(173): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Assignment.php(346): App\Models\AssignmentSubmissionModel->submitAssignment('1', 3, Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2025-12-07 04:13:25 --> Assignment submission error: Unknown column 'created_at' in 'field list'
+ERROR - 2025-12-07 04:13:29 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `su...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `su...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `su...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `su...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\ITE311-CANITAN\app\Models\AssignmentSubmissionModel.php(173): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Assignment.php(346): App\Models\AssignmentSubmissionModel->submitAssignment('1', 3, Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2025-12-07 04:13:29 --> Assignment submission error: Unknown column 'created_at' in 'field list'
+ERROR - 2025-12-07 04:13:34 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `su...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `su...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `su...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `su...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\ITE311-CANITAN\app\Models\AssignmentSubmissionModel.php(173): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Assignment.php(346): App\Models\AssignmentSubmissionModel->submitAssignment('1', 3, Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2025-12-07 04:13:34 --> Assignment submission error: Unknown column 'created_at' in 'field list'
+ERROR - 2025-12-07 04:13:37 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `su...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `su...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `su...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `su...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\ITE311-CANITAN\app\Models\AssignmentSubmissionModel.php(173): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Assignment.php(346): App\Models\AssignmentSubmissionModel->submitAssignment('1', 3, Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2025-12-07 04:13:37 --> Assignment submission error: Unknown column 'created_at' in 'field list'
+ERROR - 2025-12-07 04:13:58 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `su...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `su...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `su...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `su...', Array, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\ITE311-CANITAN\app\Models\AssignmentSubmissionModel.php(173): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\ITE311-CANITAN\app\Controllers\Assignment.php(346): App\Models\AssignmentSubmissionModel->submitAssignment('1', 3, Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(933): App\Controllers\Assignment->submit('1')
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\ITE311-CANITAN\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+ERROR - 2025-12-07 04:13:58 --> Assignment submission error: Unknown column 'created_at' in 'field list'
+CRITICAL - 2025-12-07 04:23:59 --> ParseError: Unclosed '{' on line 8
+[Method: GET, Route: assignments/course/1]
+in APPPATH\Models\AssignmentModel.php on line 132.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Models\\AssignmentModel.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Models\\AssignmentModel')
+ 3 APPPATH\Controllers\Assignment.php(18): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Models\\AssignmentModel')
+ 4 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Assignment->__construct()
+ 5 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:24:01 --> ParseError: Unclosed '{' on line 8
+[Method: GET, Route: assignments/submissions/1]
+in APPPATH\Models\AssignmentModel.php on line 132.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Models\\AssignmentModel.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Models\\AssignmentModel')
+ 3 APPPATH\Controllers\Assignment.php(18): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Models\\AssignmentModel')
+ 4 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Assignment->__construct()
+ 5 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:25:18 --> ParseError: Unclosed '{' on line 8
+[Method: GET, Route: assignments/teacher]
+in APPPATH\Models\AssignmentModel.php on line 122.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Models\\AssignmentModel.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Models\\AssignmentModel')
+ 3 APPPATH\Controllers\Assignment.php(18): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Models\\AssignmentModel')
+ 4 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Assignment->__construct()
+ 5 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:25:38 --> ParseError: Unclosed '{' on line 8
+[Method: GET, Route: assignments/teacher]
+in APPPATH\Models\AssignmentModel.php on line 122.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Models\\AssignmentModel.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Models\\AssignmentModel')
+ 3 APPPATH\Controllers\Assignment.php(18): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Models\\AssignmentModel')
+ 4 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Assignment->__construct()
+ 5 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:27:08 --> ParseError: Unclosed '{' on line 8
+[Method: GET, Route: assignments/teacher]
+in APPPATH\Models\AssignmentModel.php on line 127.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Models\\AssignmentModel.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Models\\AssignmentModel')
+ 3 APPPATH\Controllers\Assignment.php(18): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Models\\AssignmentModel')
+ 4 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Assignment->__construct()
+ 5 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:27:49 --> ParseError: Unclosed '{' on line 8
+[Method: GET, Route: assignments/teacher]
+in APPPATH\Models\AssignmentModel.php on line 127.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Models\\AssignmentModel.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Models\\AssignmentModel')
+ 3 APPPATH\Controllers\Assignment.php(18): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Models\\AssignmentModel')
+ 4 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Assignment->__construct()
+ 5 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:29:10 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\AssignmentModel::getAssignmentWithCourse
+[Method: GET, Route: assignments/submissions/1]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Assignment.php(138): CodeIgniter\Model->__call('getAssignmentWithCourse', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Assignment->submissions('1')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:29:16 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\AssignmentModel::getAssignmentWithCourse
+[Method: GET, Route: assignments/submissions/1]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Assignment.php(138): CodeIgniter\Model->__call('getAssignmentWithCourse', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Assignment->submissions('1')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-07 04:30:25 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\AssignmentModel::getAssignmentWithCourse
+[Method: GET, Route: assignments/submissions/1]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Assignment.php(138): CodeIgniter\Model->__call('getAssignmentWithCourse', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Assignment->submissions('1')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
