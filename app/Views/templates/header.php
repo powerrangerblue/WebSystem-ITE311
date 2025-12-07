@@ -52,6 +52,11 @@
           <a class="nav-link <?= $isDashboardActive ? 'active' : '' ?>" href="<?= site_url($dashboardUrl) ?>">Dashboard</a>
         </li>
 
+        <!-- Profile link for all logged-in users -->
+        <li class="nav-item">
+          <a class="nav-link <?= $currentUri == 'profile' ? 'active' : '' ?>" href="<?= site_url('profile') ?>">Profile</a>
+        </li>
+
         <!-- Manage Users link for admins -->
         <?php if ($userRole === 'admin'): ?>
         <li class="nav-item">

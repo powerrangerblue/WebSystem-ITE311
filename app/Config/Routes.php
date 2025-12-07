@@ -16,6 +16,8 @@ $routes->get('login', 'Auth::login');
 $routes->post('login', 'Auth::login');
 $routes->get('logout', 'Auth::logout');
 $routes->get('dashboard', 'Auth::dashboard');
+$routes->get('profile', 'Auth::profile');
+$routes->post('profile/update', 'Auth::updateProfile');
 
 // Course Routes
 $routes->get('/courses', 'Course::index');

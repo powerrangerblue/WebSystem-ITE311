@@ -21,9 +21,18 @@ class Course extends BaseController
         $searchTerm = trim((string) ($this->request->getGet('search_term') ?? ''));
         $courses = $this->getCourses($searchTerm);
 
+        // Get enrolled course IDs for the current user
+        $enrolledCourseIds = [];
+        if (session()->get('isLoggedIn')) {
+            $userId = session()->get('user_id');
+            $enrolledCourses = $this->enrollmentModel->getUserEnrollments($userId);
+            $enrolledCourseIds = array_column($enrolledCourses, 'course_id');
+        }
+
         return view('courses/index', [
             'courses' => $courses,
             'searchTerm' => $searchTerm,
+            'enrolledCourseIds' => $enrolledCourseIds,
         ]);
     }
 
@@ -93,9 +102,13 @@ class Course extends BaseController
                 'is_read' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
+
+            // Set flash message for redirect
+            session()->setFlashdata('success', 'Successfully enrolled in ' . esc($course['course_name']) . '!');
+
             return $this->response->setJSON([
                 'success' => true,
-                'message' => 'Successfully enrolled in ' . esc($course['course_name']) . '!',
+                'message' => 'Successfully enrolled in ' . esc($course['course_name']) . '! Redirecting to dashboard...',
                 'course' => [
                     'id' => $course['id'],
                     'course_code' => $course['course_code'],
@@ -115,18 +128,28 @@ class Course extends BaseController
         $searchTerm = trim((string) ($this->request->getVar('search_term') ?? ''));
         $courses = $this->getCourses($searchTerm);
 
+        // Get enrolled course IDs for the current user (for AJAX responses)
+        $enrolledCourseIds = [];
+        if (session()->get('isLoggedIn')) {
+            $userId = session()->get('user_id');
+            $enrolledCourses = $this->enrollmentModel->getUserEnrollments($userId);
+            $enrolledCourseIds = array_column($enrolledCourses, 'course_id');
+        }
+
         if ($this->request->isAJAX()) {
             return $this->response->setJSON([
                 'success' => true,
                 'count' => count($courses),
                 'courses' => $courses,
                 'searchTerm' => $searchTerm,
+                'enrolledCourseIds' => $enrolledCourseIds,
             ]);
         }
 
         return view('courses/index', [
             'courses' => $courses,
             'searchTerm' => $searchTerm,
+            'enrolledCourseIds' => $enrolledCourseIds,
         ]);
     }
 

@@ -193,7 +193,6 @@ class Auth extends Controller
                 $roleData['courses'] = $courses;
             } elseif ($role === 'student') {
                 $enrolledCourses = [];
-                $availableCourses = [];
                 $materialsByCourse = [];
 
                 try {
@@ -204,21 +203,6 @@ class Auth extends Controller
                     // Get enrolled courses using EnrollmentModel::getUserEnrollments()
                     $enrolledCourses = $enrollmentModel->getUserEnrollments($userId);
 
-                    // Get enrolled course IDs to exclude from available courses
-                    $enrolledCourseIds = array_column($enrolledCourses, 'course_id');
-
-                    // Get available courses (exclude already enrolled courses)
-                    $coursesQuery = $db->table('courses');
-
-                    // If user has enrolled courses, exclude them from available courses
-                    if (!empty($enrolledCourseIds)) {
-                        $coursesQuery->whereNotIn('id', $enrolledCourseIds);
-                    }
-
-                    $availableCourses = $coursesQuery
-                        ->orderBy('course_name', 'ASC')
-                        ->get()
-                        ->getResultArray();
                     // Fetch materials per enrolled course
                     foreach ($enrolledCourses as $enCourse) {
                         $cid = (int) ($enCourse['course_id'] ?? 0);
@@ -226,15 +210,18 @@ class Auth extends Controller
                             $materialsByCourse[$cid] = $materialModel->getMaterialsByCourse($cid);
                         }
                     }
+
+                    // Get total courses count in the system
+                    $totalCourses = $db->table('courses')->countAllResults();
                 } catch (\Throwable $e) {
                     $enrolledCourses = [];
-                    $availableCourses = [];
                     $materialsByCourse = [];
+                    $totalCourses = 0;
                 }
 
                 $roleData['enrolledCourses'] = $enrolledCourses;
-                $roleData['availableCourses'] = $availableCourses;
                 $roleData['materialsByCourse'] = $materialsByCourse;
+                $roleData['totalCourses'] = $totalCourses;
             }
         } catch (\Throwable $e) {
             $roleData = [];
@@ -288,8 +275,8 @@ class Auth extends Controller
             return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
         }
 
-        // Prevent changing the protected admin's role
-        if ($user['email'] === 'admin@example.com') {
+        // Prevent changing the protected admin's role (Admin ID=1)
+        if ($user['id'] == 1) {
             return $this->response->setJSON(['success' => false, 'message' => 'Cannot change the role of the protected admin.']);
         }
 
@@ -330,8 +317,8 @@ class Auth extends Controller
             return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
         }
 
-        // Prevent changing the protected admin's status
-        if ($user['email'] === 'admin@example.com') {
+        // Prevent changing the protected admin's status (Admin ID=1)
+        if ($user['id'] == 1) {
             return $this->response->setJSON(['success' => false, 'message' => 'Cannot change the status of the protected admin.']);
         }
 
@@ -414,8 +401,8 @@ class Auth extends Controller
             return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
         }
 
-        // Prevent editing the protected admin
-        if ($user['email'] === 'admin@example.com') {
+        // Prevent editing the protected admin (Admin ID=1)
+        if ($user['id'] == 1) {
             return $this->response->setJSON(['success' => false, 'message' => 'Cannot edit the protected admin.']);
         }
 
@@ -485,8 +472,8 @@ class Auth extends Controller
             return redirect()->to('/admin/manage-users');
         }
 
-        // Prevent deleting the protected admin
-        if ($user['email'] === 'admin@example.com') {
+        // Prevent deleting the protected admin (Admin ID=1)
+        if ($user['id'] == 1) {
             $session->setFlashdata('error', 'Cannot delete the protected admin.');
             return redirect()->to('/admin/manage-users');
         }
@@ -499,5 +486,146 @@ class Auth extends Controller
         }
 
         return redirect()->to('/admin/manage-users');
+    }
+
+    public function profile()
+    {
+        $session = session();
+
+        // Check if user is logged in
+        if (!$session->get('isLoggedIn')) {
+            $session->setFlashdata('login_error', 'Please login to access your profile.');
+            return redirect()->to('login');
+        }
+
+        $userId = (int) $session->get('user_id');
+        $userModel = new UserModel();
+        $user = $userModel->find($userId);
+
+        if (!$user) {
+            $session->setFlashdata('error', 'User not found.');
+            return redirect()->to('/dashboard');
+        }
+
+        return view('auth/profile', ['user' => $user]);
+    }
+
+    public function updateProfile()
+    {
+        $session = session();
+
+        // Check if user is logged in
+        if (!$session->get('isLoggedIn')) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Please login to update your profile.']);
+        }
+
+        $userId = (int) $session->get('user_id');
+        $userModel = new UserModel();
+        $user = $userModel->find($userId);
+
+        if (!$user) {
+            return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
+        }
+
+        // Validate current password (required for any changes)
+        $currentPassword = $this->request->getPost('current_password');
+        if (empty($currentPassword) || !password_verify($currentPassword, $user['password'])) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Current password is incorrect.']);
+        }
+
+        // Get form data
+        $name = trim($this->request->getPost('name'));
+        $email = strtolower(trim($this->request->getPost('email')));
+        $password = $this->request->getPost('password');
+        $passwordConfirm = $this->request->getPost('password_confirm');
+
+        // Prepare validation rules
+        $rules = [];
+
+        // Validate name if provided
+        if (!empty($name)) {
+            $rules['name'] = 'required|min_length[3]|max_length[100]';
+        }
+
+        // Validate email if provided and different from current
+        if (!empty($email) && $email !== $user['email']) {
+            $rules['email'] = 'required|valid_email|is_unique[users.email,id,' . $userId . ']';
+
+            // Manual check for uniqueness (excluding current user)
+            $existingUser = $userModel->where('LOWER(email)', $email)->where('id !=', $userId)->first();
+            if ($existingUser) {
+                return $this->response->setJSON(['success' => false, 'message' => 'This email is already registered.']);
+            }
+        }
+
+        // Validate password if provided
+        if (!empty($password)) {
+            $rules['password'] = 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/]';
+            $rules['password_confirm'] = 'required|matches[password]';
+
+            if ($password !== $passwordConfirm) {
+                return $this->response->setJSON(['success' => false, 'message' => 'Password confirmation does not match.']);
+            }
+        }
+
+        // Run validation if there are rules to check
+        if (!empty($rules) && !$this->validate($rules)) {
+            $errors = $this->validator->getErrors();
+            return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+        }
+
+        // Prepare update data
+        $updateData = [];
+
+        if (!empty($name)) {
+            $updateData['name'] = $name;
+        }
+
+        if (!empty($email) && $email !== $user['email']) {
+            $updateData['email'] = $email;
+        }
+
+        if (!empty($password)) {
+            $updateData['password'] = $password; // Model will hash it
+        }
+
+        // Check if any changes were made
+        if (empty($updateData)) {
+            return $this->response->setJSON(['success' => false, 'message' => 'No changes were made.']);
+        }
+
+        // Skip model validation since we handled it manually
+        $userModel->skipValidation(true);
+
+        try {
+            // Update user
+            if ($userModel->update($userId, $updateData)) {
+                // Update session data if name or email changed
+                if (!empty($updateData['name'])) {
+                    $session->set('user_name', $updateData['name']);
+                }
+                if (!empty($updateData['email'])) {
+                    $session->set('user_email', $updateData['email']);
+                }
+
+                // Get updated user data for response
+                $updatedUser = $userModel->find($userId);
+
+                return $this->response->setJSON([
+                    'success' => true,
+                    'message' => 'Profile updated successfully!',
+                    'user' => [
+                        'name' => $updatedUser['name'],
+                        'email' => $updatedUser['email']
+                    ]
+                ]);
+            } else {
+                $errors = $userModel->errors();
+                return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Profile update exception: ' . $e->getMessage());
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to update profile. Please try again.']);
+        }
     }
 }
