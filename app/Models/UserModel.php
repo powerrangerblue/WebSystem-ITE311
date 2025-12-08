@@ -28,7 +28,7 @@ class UserModel extends Model
     // Validation - Only validate fields that exist in your database
     protected $validationRules = [
         'name' => 'required|min_length[3]|max_length[100]',
-        'email' => 'required|valid_email|is_unique[users.email]',
+        'email' => 'required|valid_email',
         'password' => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/]',
         'role' => 'permit_empty|in_list[student,teacher,admin]'
     ];

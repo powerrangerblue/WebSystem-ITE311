@@ -21,8 +21,7 @@ class Auth extends Controller
                 'name' => 'required|min_length[3]|max_length[100]',
                 'email' => 'required|valid_email|is_unique[users.email]',
                 'password' => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/]',
-                'password_confirm' => 'matches[password]',
-                'role' => 'permit_empty|in_list[student,teacher,admin]'
+                'password_confirm' => 'matches[password]'
             ];
             
             if ($this->validate($rules)) {
@@ -32,8 +31,7 @@ class Auth extends Controller
                     // Get the data from form
                     $name = trim($this->request->getPost('name'));
                     $email = strtolower($this->request->getPost('email')); // Normalize email to lowercase
-                    $roleInput = strtolower((string) $this->request->getPost('role'));
-                    $role = in_array($roleInput, ['student','teacher','admin'], true) ? $roleInput : 'student';
+                    $role = 'student'; // All new registrations are students
                     
                     $data = [
                         'name' => $name,
@@ -174,11 +172,6 @@ class Auth extends Controller
                 $roleData['totalAdmins'] = $userModel->where('role', 'admin')->countAllResults();
                 $roleData['totalTeachers'] = $userModel->where('role', 'teacher')->countAllResults();
                 $roleData['totalStudents'] = $userModel->where('role', 'student')->countAllResults();
-                try {
-                    $roleData['totalCourses'] = $db->table('courses')->countAllResults();
-                } catch (\Throwable $e) {
-                    $roleData['totalCourses'] = 0;
-                }
                 $roleData['recentUsers'] = $userModel->orderBy('created_at', 'DESC')->limit(5)->find();
             } elseif ($role === 'teacher') {
                 // Get teacher dashboard metrics
@@ -350,33 +343,56 @@ class Auth extends Controller
             return $this->response->setJSON(['success' => false, 'message' => 'Access denied.']);
         }
 
-        helper(['form']);
+        try {
+            helper(['form']);
 
-        $rules = [
-            'name' => 'required|min_length[3]|max_length[100]',
-            'email' => 'required|valid_email|is_unique[users.email]',
-            'role' => 'required|in_list[student,teacher,admin]'
-        ];
+            $email = strtolower($this->request->getPost('email')); // Normalize email to lowercase
 
-        if (!$this->validate($rules)) {
-            $errors = $this->validator->getErrors();
-            return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
-        }
+            $rules = [
+                'name' => 'required|min_length[3]|max_length[100]',
+                'email' => 'required|valid_email'
+            ];
 
-        $userModel = new UserModel();
+            $userModel = new UserModel();
 
-        $data = [
-            'name' => $this->request->getPost('name'),
-            'email' => strtolower($this->request->getPost('email')), // Normalize email to lowercase
-            'password' => 'Rmmc1960!', // Default password for all new users (meets strong password requirements)
-            'role' => $this->request->getPost('role')
-        ];
+            // Check email uniqueness (emails are stored in lowercase)
+            $existingUser = $userModel->where('email', $email)->first();
+            if ($existingUser) {
+                return $this->response->setJSON(['success' => false, 'message' => 'This email is already registered.']);
+            }
 
-        if ($userModel->insert($data)) {
-            return $this->response->setJSON(['success' => true]);
-        } else {
-            $errors = $userModel->errors();
-            return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+            if (!$this->validate($rules)) {
+                $errors = $this->validator->getErrors();
+                return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+            }
+
+            $data = [
+                'name' => $this->request->getPost('name'),
+                'email' => $email, // Already lowercased
+                'password' => 'Rmmc1960!', // Default password for all new users (meets strong password requirements)
+                'role' => 'student', // All admin-added users are students
+                'status' => 'active'
+            ];
+
+            log_message('info', 'Attempting to add user with data: ' . print_r($data, true));
+
+            // Skip model validation since we handled it manually above
+            $userModel->skipValidation(true);
+
+            $insertResult = $userModel->insert($data);
+            log_message('info', 'Insert result: ' . ($insertResult ? 'success' : 'failed'));
+            if ($insertResult) {
+                return $this->response->setJSON(['success' => true]);
+            } else {
+                $errors = $userModel->errors();
+                log_message('error', 'Insert errors: ' . print_r($errors, true));
+                $errorMsg = !empty($errors) ? implode(', ', $errors) : 'Unknown error during user insertion.';
+                return $this->response->setJSON(['success' => false, 'message' => $errorMsg]);
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Add user exception: ' . $e->getMessage());
+            log_message('error', 'Stack trace: ' . $e->getTraceAsString());
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to add user. Please try again.']);
         }
     }
 

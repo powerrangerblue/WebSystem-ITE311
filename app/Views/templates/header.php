@@ -29,8 +29,8 @@
         $isBasicPage = in_array($currentUri, ['', 'about', 'contact']);
         ?>
 
-        <!-- Show Courses link only for logged-in users (student, admin, teacher) -->
-        <?php if (in_array($userRole, ['student', 'admin', 'teacher'])): ?>
+        <!-- Show Courses link only for logged-in users (student, teacher) -->
+        <?php if (in_array($userRole, ['student', 'teacher'])): ?>
         <li class="nav-item">
           <a class="nav-link <?= $currentUri == 'courses' ? 'active' : '' ?>" href="<?= site_url('courses') ?>">Courses</a>
         </li>
