@@ -194,25 +194,25 @@ class Assignment extends BaseController
         try {
             $teacherId = (int) $session->get('user_id');
 
-            // Get dashboard metrics
-            $totalCourses = $this->assignmentModel->getTotalCoursesCount();
-            $totalStudents = $this->assignmentModel->getTotalActiveStudentsCount();
+            // Get dashboard metrics specific to this teacher
+            $totalCourses = $this->assignmentModel->getTeacherCourses($teacherId); // Count teacher's courses
+            $totalCoursesCount = count($totalCourses); // Get count from actual result
+            $totalStudents = $this->countTeacherStudents($teacherId); // Count enrolled students in teacher's courses
             $assignmentsPosted = $this->assignmentModel->getAssignmentsPostedCount();
             $pendingGrades = $this->assignmentModel->getPendingGradesCount($teacherId);
 
-            // Get all courses (in a real system, you'd filter by courses the teacher teaches)
-            // You could implement a teacher_course relationship table for proper course ownership
-            $courses = $this->assignmentModel->getAllCoursesWithAssignments();
+            // Get courses assigned to this teacher by admin
+            $courses = $this->assignmentModel->getTeacherCourses($teacherId);
 
-            // Get upcoming assignments (due within 7 days)
-            $upcomingAssignments = $this->assignmentModel->getUpcomingAssignments(7);
+            // Get upcoming assignments only for teacher's courses
+            $upcomingAssignments = $this->getTeacherUpcomingAssignments($teacherId, 7);
 
             // Get assignments needing grading
             $assignmentsNeedingGrading = $this->assignmentModel->getAssignmentsNeedingGrading($teacherId);
 
             return view('assignments/teacher_dashboard', [
                 'courses' => $courses ?: [],
-                'totalCourses' => $totalCourses,
+                'totalCourses' => $totalCoursesCount,
                 'totalStudents' => $totalStudents,
                 'assignmentsPosted' => $assignmentsPosted,
                 'pendingGrades' => $pendingGrades,
@@ -525,6 +525,196 @@ class Assignment extends BaseController
                     'reference_id' => $assignmentId // Optional: link to the assignment
                 ]);
             }
+        }
+    }
+
+    /**
+     * Teacher: Manage Students in their courses
+     */
+    public function manageStudents()
+    {
+        $session = session();
+
+        // Check if user is logged in and is a teacher
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'teacher') {
+            return redirect()->to('/dashboard')->with('error', 'Access denied.');
+        }
+
+        $teacherId = (int) $session->get('user_id');
+
+        // Get courses taught by this teacher
+        $db = \Config\Database::connect();
+        $courses = $db->table('courses')
+            ->where('teacher_id', $teacherId)
+            ->where('status', 'Active')
+            ->select('id, course_code, course_name, school_year, semester')
+            ->get()
+            ->getResultArray();
+
+        if (empty($courses)) {
+            return view('teacher/manage_students', [
+                'courses' => [],
+                'students' => [],
+                'filters' => [],
+                'currentCourse' => null
+            ]);
+        }
+
+        // Get selected course or default to first course
+        $selectedCourseId = $this->request->getGet('course') ?: $courses[0]['id'];
+
+        // Verify teacher teaches this course
+        $selectedCourse = null;
+        foreach ($courses as $course) {
+            if ($course['id'] == $selectedCourseId) {
+                $selectedCourse = $course;
+                break;
+            }
+        }
+
+        if (!$selectedCourse) {
+            return redirect()->to('/teacher/manage-students')->with('error', 'Course not found.');
+        }
+
+        // Get all enrolled students for the selected course (no filtering)
+        $students = $db->table('enrollments')
+            ->select('enrollments.*, users.name, users.email')
+            ->join('users', 'users.id = enrollments.user_id')
+            ->where('enrollments.course_id', $selectedCourseId)
+            ->orderBy('users.name', 'ASC')
+            ->get()
+            ->getResultArray();
+
+        return view('teacher/manage_students', [
+            'courses' => $courses,
+            'students' => $students,
+            'currentCourse' => $selectedCourse
+        ]);
+    }
+
+    /**
+     * Teacher: Update Student Status
+     */
+    public function updateStudentStatus()
+    {
+        $session = session();
+
+        // Check if user is logged in and is a teacher
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'teacher') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Access denied.']);
+        }
+
+        $teacherId = (int) $session->get('user_id');
+        $enrollmentId = $this->request->getPost('enrollment_id');
+        $newStatus = $this->request->getPost('new_status');
+        $remarks = $this->request->getPost('remarks');
+
+        if (!$enrollmentId || !$newStatus) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Missing required fields.']);
+        }
+
+        // Verify enrollment exists and teacher has access
+        $db = \Config\Database::connect();
+        $enrollment = $db->table('enrollments')
+            ->join('courses', 'courses.id = enrollments.course_id')
+            ->where('enrollments.id', $enrollmentId)
+            ->where('courses.teacher_id', $teacherId)
+            ->select('enrollments.id, courses.course_name')
+            ->get()
+            ->getRow();
+
+        if (!$enrollment) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Enrollment not found or access denied.']);
+        }
+
+        // Update student status
+        $updateData = ['status' => $newStatus];
+        if (!empty($remarks)) {
+            $updateData['enrollment_status'] = $remarks;
+        }
+
+        if ($this->enrollmentModel->update($enrollmentId, $updateData)) {
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Student status updated successfully.'
+            ]);
+        }
+
+        return $this->response->setJSON(['success' => false, 'message' => 'Failed to update student status.']);
+    }
+
+    /**
+     * Teacher: Get Student Details for Modal
+     */
+    public function getStudentDetails($studentId)
+    {
+        $session = session();
+
+        // Check if user is logged in and is a teacher
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'teacher') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Access denied.']);
+        }
+
+        $teacherId = (int) $session->get('user_id');
+
+        // Get student details with enrollment info and course verification
+        $db = \Config\Database::connect();
+        $studentDetails = $db->table('enrollments')
+            ->select('enrollments.*, users.name, users.email, courses.course_name, courses.course_code, courses.school_year, courses.semester')
+            ->join('users', 'users.id = enrollments.user_id')
+            ->join('courses', 'courses.id = enrollments.course_id')
+            ->where('enrollments.user_id', $studentId)
+            ->where('courses.teacher_id', $teacherId)
+            ->where('enrollments.status !=', 'Dropped') // Don't show dropped students in details
+            ->get()
+            ->getResultArray();
+
+        if (empty($studentDetails)) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Student not found or access denied.']);
+        }
+
+        // Return details for all courses this student is enrolled in with this teacher
+        return $this->response->setJSON(['success' => true, 'student' => $studentDetails]);
+    }
+
+    /**
+     * Count total students enrolled in teacher's courses
+     */
+    private function countTeacherStudents($teacherId)
+    {
+        try {
+            return $this->db->table('enrollments')
+                ->join('courses', 'courses.id = enrollments.course_id')
+                ->where('courses.teacher_id', $teacherId)
+                ->where('enrollments.status !=', 'Dropped')
+                ->countAllResults();
+        } catch (\Exception $e) {
+            log_message('error', 'Error counting teacher students: ' . $e->getMessage());
+            return 0;
+        }
+    }
+
+    /**
+     * Get upcoming assignments for teacher's courses
+     */
+    private function getTeacherUpcomingAssignments($teacherId, $daysAhead = 7)
+    {
+        try {
+            $futureDate = date('Y-m-d H:i:s', strtotime("+{$daysAhead} days"));
+            $currentDate = date('Y-m-d H:i:s');
+
+            return $this->db->table('assignments')
+                ->select('assignments.*, courses.course_name, courses.course_code')
+                ->join('courses', 'courses.id = assignments.course_id')
+                ->where('courses.teacher_id', $teacherId)
+                ->where('assignments.due_date >', $currentDate)
+                ->where('assignments.due_date <=', $futureDate)
+                ->orderBy('assignments.due_date', 'ASC')
+                ->get()
+                ->getResultArray();
+        } catch (\Exception $e) {
+            log_message('error', 'Error getting teacher upcoming assignments: ' . $e->getMessage());
+            return [];
         }
     }
 

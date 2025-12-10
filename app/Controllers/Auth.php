@@ -176,19 +176,48 @@ class Auth extends Controller
             } elseif ($role === 'teacher') {
                 // Get teacher dashboard metrics
                 $assignmentModel = new \App\Models\AssignmentModel();
-                $roleData['totalCourses'] = $assignmentModel->getTotalCoursesCount();
-                $roleData['totalStudents'] = $assignmentModel->getTotalActiveStudentsCount();
+
+                // Get courses assigned to this teacher by admin
+                $teacherCourses = $assignmentModel->getTeacherCourses($userId);
+                $roleData['totalCourses'] = count($teacherCourses);
+
+                // Count enrolled students in teacher's courses
+                $db = \Config\Database::connect();
+                $roleData['totalStudents'] = $db->table('enrollments')
+                    ->join('courses', 'courses.id = enrollments.course_id')
+                    ->where('courses.teacher_id', $userId)
+                    ->where('enrollments.status !=', 'Dropped')
+                    ->countAllResults();
+
                 $roleData['assignmentsPosted'] = $assignmentModel->getAssignmentsPostedCount();
                 $roleData['pendingGrades'] = $assignmentModel->getPendingGradesCount($userId);
 
-                // Get courses with assignment counts
-                $roleData['courses'] = $assignmentModel->getAllCoursesWithAssignments();
+                // Get courses assigned to this teacher
+                $roleData['courses'] = $teacherCourses;
 
-                // Get upcoming assignments (due within 7 days)
-                $roleData['upcomingAssignments'] = $assignmentModel->getUpcomingAssignments(7);
+                // Get upcoming assignments only for teacher's courses
+                $roleData['upcomingAssignments'] = $db->table('assignments')
+                    ->select('assignments.*, courses.course_name, courses.course_code')
+                    ->join('courses', 'courses.id = assignments.course_id')
+                    ->where('courses.teacher_id', $userId)
+                    ->where('assignments.due_date >', date('Y-m-d H:i:s'))
+                    ->where('assignments.due_date <=', date('Y-m-d H:i:s', strtotime("+7 days")))
+                    ->orderBy('assignments.due_date', 'ASC')
+                    ->get()
+                    ->getResultArray();
 
                 // Get assignments needing grading
                 $roleData['assignmentsNeedingGrading'] = $assignmentModel->getAssignmentsNeedingGrading($userId);
+
+                // Get recent materials uploaded by teacher (limit to 10)
+                $roleData['recentMaterials'] = $db->table('materials m')
+                    ->select('m.file_name, m.file_path, m.created_at, c.course_name, c.course_code')
+                    ->join('courses c', 'c.id = m.course_id')
+                    ->where('c.teacher_id', $userId)
+                    ->orderBy('m.created_at', 'DESC')
+                    ->limit(10)
+                    ->get()
+                    ->getResultArray();
             } elseif ($role === 'student') {
                 $enrolledCourses = [];
                 $materialsByCourse = [];

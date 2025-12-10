@@ -112,12 +112,9 @@ class Course extends BaseController
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
 
-            // Set flash message for redirect
-            session()->setFlashdata('success', 'Successfully enrolled in ' . esc($course['course_name']) . '!');
-
             return $this->response->setJSON([
                 'success' => true,
-                'message' => 'Successfully enrolled in ' . esc($course['course_name']) . '! Redirecting to dashboard...',
+                'message' => 'Successfully enrolled in ' . esc($course['course_name']) . '!',
                 'course' => [
                     'id' => $course['id'],
                     'course_code' => $course['course_code'],

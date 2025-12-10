@@ -15,6 +15,12 @@ class EnrollmentModel extends Model
     protected $allowedFields = [
         'user_id',
         'course_id',
+        'student_id',
+        'program',
+        'year_level',
+        'section',
+        'status',
+        'enrollment_status',
         'enrollment_date'
     ];
 

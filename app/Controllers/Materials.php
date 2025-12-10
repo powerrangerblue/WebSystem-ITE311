@@ -14,6 +14,39 @@ class Materials extends BaseController
         $courseId = (int) $course_id;
         $session = session();
 
+        // Check user permissions
+        if (!$session->get('isLoggedIn')) {
+            $session->setFlashdata('error', 'You must be logged in to upload materials.');
+            return redirect()->to('/dashboard');
+        }
+
+        $userId = (int) $session->get('user_id');
+        $userRole = strtolower((string) $session->get('role'));
+
+        // Check if course exists
+        $db = \Config\Database::connect();
+        $course = $db->table('courses')->where('id', $courseId)->get()->getRowArray();
+        if (!$course) {
+            $session->setFlashdata('error', 'Course not found.');
+            return redirect()->to('/dashboard');
+        }
+
+        // Check permissions: Admins can upload anywhere, Teachers only to their assigned courses
+        $hasPermission = false;
+        if ($userRole === 'admin') {
+            $hasPermission = true; // Admins can upload to any course
+        } elseif ($userRole === 'teacher') {
+            // Check if teacher is assigned to this course
+            if ($course['teacher_id'] == $userId) {
+                $hasPermission = true;
+            }
+        }
+
+        if (!$hasPermission) {
+            $session->setFlashdata('error', 'You do not have permission to upload materials to this course.');
+            return redirect()->to('/dashboard');
+        }
+
         if ($this->request->getMethod() === 'POST') {
             $validationRules = [
                 'material_file' => [
@@ -140,6 +173,45 @@ class Materials extends BaseController
         return $this->response->setJSON([
             'success' => true,
             'materials' => $materials
+        ]);
+    }
+
+    public function teacherMaterials()
+    {
+        $session = session();
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'teacher') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Access denied']);
+        }
+
+        $userId = (int) $session->get('user_id');
+        $offset = (int) ($this->request->getGet('offset') ?? 0);
+        $limit = (int) ($this->request->getGet('limit') ?? 10);
+
+        $db = \Config\Database::connect();
+
+        $materials = $db->table('materials m')
+            ->select('m.file_name, m.file_path, m.created_at, c.course_name, c.course_code')
+            ->join('courses c', 'c.id = m.course_id')
+            ->where('c.teacher_id', $userId)
+            ->orderBy('m.created_at', 'DESC')
+            ->limit($limit, $offset)
+            ->get()
+            ->getResultArray();
+
+        // Format the response with proper date formatting
+        $formattedMaterials = array_map(function($material) {
+            return [
+                'file_name' => $material['file_name'],
+                'file_path' => base_url($material['file_path']),
+                'course_name' => $material['course_name'],
+                'course_code' => $material['course_code'],
+                'upload_date' => date('M j, Y \a\t g:i A', strtotime($material['created_at']))
+            ];
+        }, $materials);
+
+        return $this->response->setJSON([
+            'success' => true,
+            'materials' => $formattedMaterials
         ]);
     }
 }

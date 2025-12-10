@@ -72,16 +72,6 @@ $isStudent = $userRole === 'student';
                                     <span class="spinner-border spinner-border-sm d-none" role="status"></span>
                                 </button>
                             <?php endif; ?>
-                        <?php else: ?>
-                            <!-- Teachers and admins can view courses and upload materials -->
-                            <div class="btn-group w-100" role="group">
-                                <a href="<?= base_url('assignments/course/' . $courseId) ?>" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-eye"></i> View Course
-                                </a>
-                                <a href="<?= base_url('admin/course/' . $courseId . '/upload') ?>" class="btn btn-success btn-sm">
-                                    <i class="bi bi-upload"></i> Upload Material
-                                </a>
-                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -188,20 +178,16 @@ $(document).ready(function() {
         })
         .done(function(response) {
             if (response.success) {
-                showAlert('success', response.message);
+                showAlert('success', 'Successfully enrolled in ' + (response.course?.course_name || 'the course'));
 
-                // Update button to show enrolled state
+                // Update button to show enrolled state immediately
                 button.removeClass('btn-primary').addClass('btn-success').prop('disabled', true);
                 btnText.html('<i class="bi bi-check-circle"></i> Enrolled').removeClass('d-none');
                 spinner.addClass('d-none');
 
-                // Remove spinner completely
+                // Remove spinner completely since enrollment is done
                 spinner.remove();
 
-                // Redirect to dashboard after short delay
-                setTimeout(function() {
-                    window.location.href = '<?= base_url('dashboard') ?>';
-                }, 1500);
             } else {
                 showAlert('danger', response.message);
 
@@ -254,15 +240,8 @@ $(document).ready(function() {
                 </button>`;
             }
             <?php else: ?>
-            // Teachers and admins can view courses and upload materials
-            buttonHtml = `<div class="btn-group w-100" role="group">
-                <a href="<?= base_url('assignments/course/') ?>${courseId}" class="btn btn-primary btn-sm">
-                    <i class="bi bi-eye"></i> View Course
-                </a>
-                <a href="<?= base_url('admin/course/') ?>${courseId}/upload" class="btn btn-success btn-sm">
-                    <i class="bi bi-upload"></i> Upload Material
-                </a>
-            </div>`;
+            // View Course button removed for teachers and admins
+            buttonHtml = '';
             <?php endif; ?>
 
             return `

@@ -137,6 +137,29 @@ class AssignmentModel extends Model
     }
 
     /**
+     * Get courses assigned to a teacher by admin
+     */
+    public function getTeacherCourses($teacherId)
+    {
+        try {
+            $courses = $this->db->table('courses')
+                ->select('courses.*, COUNT(assignments.id) as assignment_count')
+                ->join('assignments', 'assignments.course_id = courses.id', 'left')
+                ->where('courses.teacher_id', $teacherId)
+                ->where('courses.status', 'Active')
+                ->groupBy('courses.id')
+                ->orderBy('courses.course_name', 'ASC')
+                ->get()
+                ->getResultArray();
+
+            return $courses ?: [];
+        } catch (\Exception $e) {
+            log_message('error', 'Error getting teacher courses: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
      * Get total courses count
      */
     public function getTotalCoursesCount()

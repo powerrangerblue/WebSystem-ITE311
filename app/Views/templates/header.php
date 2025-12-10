@@ -47,6 +47,13 @@
         </li>
         <?php endif; ?>
 
+        <!-- Show Manage Students link for teachers -->
+        <?php if ($userRole === 'teacher'): ?>
+        <li class="nav-item">
+          <a class="nav-link <?= $currentUri == 'teacher/manage-students' ? 'active' : '' ?>" href="<?= site_url('/teacher/manage-students') ?>">Manage Students</a>
+        </li>
+        <?php endif; ?>
+
         <!-- Show announcements link only for students -->
         <?php if ($userRole === 'student'): ?>
         <li class="nav-item">
@@ -72,6 +79,13 @@
         <?php if ($userRole === 'admin'): ?>
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'admin/manage-users' ? 'active' : '' ?>" href="<?= site_url('/admin/manage-users') ?>">Manage Users</a>
+        </li>
+        <?php endif; ?>
+
+        <!-- Course Management link for admins -->
+        <?php if ($userRole === 'admin'): ?>
+        <li class="nav-item">
+          <a class="nav-link <?= uri_string() == 'admin/courses' ? 'active' : '' ?>" href="<?= site_url('/admin/courses') ?>">Course Management</a>
         </li>
         <?php endif; ?>
 

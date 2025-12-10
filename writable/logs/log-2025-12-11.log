@@ -1,0 +1,68 @@
+ERROR - 2025-12-11 00:04:31 --> mysqli_sql_exception: Duplicate column name 'teacher_id' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('ALTER TABLE `co...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('ALTER TABLE `co...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('ALTER TABLE `co...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\Forge.php(772): CodeIgniter\Database\BaseConnection->query('ALTER TABLE `co...')
+#4 C:\xampp\htdocs\ITE311-CANITAN\app\Database\Migrations\2025-12-11-000001_AddCourseManagementFieldsToCoursesTable.php(48): CodeIgniter\Database\Forge->addColumn('courses', Array)
+#5 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MigrationRunner.php(876): App\Database\Migrations\AddCourseManagementFieldsToCoursesTable->up()
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\Commands\Database\Migrate.php(85): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#12 C:\xampp\htdocs\ITE311-CANITAN\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-12-11 00:35:02 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "teacher/manage_students.php"
+[Method: GET, Route: teacher/manage-students]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('teacher/manage_students.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('teacher/manage_students', [], true)
+ 3 APPPATH\Controllers\Assignment.php(621): view('teacher/manage_students', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Assignment->manageStudents()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 00:49:00 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 00:49:00 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 00:52:53 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 00:52:53 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 00:56:05 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 00:56:05 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 00:59:08 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 00:59:08 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:01:50 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:01:50 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:01:53 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:01:53 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:01:53 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:01:53 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:01:54 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:01:54 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:04:02 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:04:02 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:08:20 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:08:20 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:36 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:36 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:43 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:43 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:46 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:46 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:49 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:49 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:52 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:52 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:56 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:09:56 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:10:05 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:10:05 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:10:58 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:10:58 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:11:04 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:11:04 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:12:13 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 01:12:13 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db

@@ -30,6 +30,7 @@ $routes->get('/admin/course/(:num)/upload', 'Materials::upload/$1');
 $routes->post('/admin/course/(:num)/upload', 'Materials::upload/$1');
 $routes->get('/materials/delete/(:num)', 'Materials::delete/$1');
 $routes->get('/materials/download/(:num)', 'Materials::download/$1');
+$routes->get('/materials/teacher-materials', 'Materials::teacherMaterials');
 
 // Notifications Routes
 $routes->get('/notifications', 'Notifications::get');
@@ -42,6 +43,9 @@ $routes->post('/admin/add-user', 'Auth::addUser');
 $routes->post('/admin/edit-user', 'Auth::editUser');
 $routes->post('/admin/toggle-status', 'Auth::toggleStatus');
 $routes->get('/admin/delete-user/(:num)', 'Auth::deleteUser/$1');
+$routes->get('/admin/courses', 'Admin::courses');
+$routes->post('/admin/courses/update', 'Admin::updateCourse');
+$routes->post('/admin/courses/create', 'Admin::createCourse');
 
 // Materials API
 $routes->get('/materials/list/(:num)', 'Materials::listByCourse/$1');
@@ -56,6 +60,11 @@ $routes->get('/assignments/submissions/(:num)', 'Assignment::submissions/$1');
 $routes->post('/assignments/grade/(:num)', 'Assignment::grade/$1');
 $routes->get('/assignments/student/course/(:num)', 'Assignment::courseAssignmentsStudent/$1');
 $routes->post('/assignments/submit/(:num)', 'Assignment::submit/$1');
+
+// Teacher Routes
+$routes->get('/teacher/manage-students', 'Assignment::manageStudents');
+$routes->post('/teacher/manage-students/update-status', 'Assignment::updateStudentStatus');
+$routes->get('/teacher/manage-students/student/details/(:num)', 'Assignment::getStudentDetails/$1');
 
 // File Downloads
 $routes->get('/assignments/download/(:num)', 'Assignment::downloadAssignment/$1');

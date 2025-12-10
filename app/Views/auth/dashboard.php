@@ -69,6 +69,8 @@
             </div>
         </div>
 
+
+
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-header bg-white fw-bold">Recent Users</div>
             <div class="card-body p-0">
@@ -162,10 +164,15 @@
                                     </div>
 
                                     <div class="text-end">
-                                        <div class="text-muted small">
+                                        <div class="text-muted small mb-2">
                                             <i class="bi bi-journal-text"></i>
                                             <?= (int)$course['assignment_count'] ?> assignment<?= (int)$course['assignment_count'] !== 1 ? 's' : '' ?>
                                         </div>
+                                        <!-- Teacher can upload materials to their assigned courses -->
+                                        <a href="<?= base_url('admin/course/' . $course['id'] . '/upload') ?>"
+                                           class="btn btn-sm btn-success">
+                                            <i class="bi bi-upload"></i> Upload Material
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -182,6 +189,37 @@
                 <?php endif; ?>
             </div>
         </div>
+
+        <!-- Recent Materials Uploaded -->
+        <?php if (!empty($recentMaterials ?? [])): ?>
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Recent Materials Uploaded</h5>
+                <small class="text-muted">Materials you've uploaded to your courses</small>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <?php foreach ($recentMaterials as $material): ?>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1"><?= esc($material['file_name']) ?></h6>
+                                <p class="mb-1 text-muted small">
+                                    Course: <?= esc($material['course_name']) ?> (<?= esc($material['course_code']) ?>) |
+                                    Uploaded: <?= date('M j, Y \a\t g:i A', strtotime($material['created_at'])) ?>
+                                </p>
+                            </div>
+                            <a href="<?= base_url($material['file_path']) ?>" target="_blank" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-download"></i> View
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="mt-3 text-center">
+                    <a href="#" class="btn btn-outline-secondary btn-sm" onclick="loadMoreMaterials()">Load More Materials</a>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <!-- Upcoming Assignments -->
         <?php if (!empty($upcomingAssignments)): ?>
@@ -416,6 +454,52 @@ $(document).ready(function() {
         // Start polling every 15 seconds for more responsive updates
         setInterval(checkForMaterialUpdates, 15000);
     }, 1000);
+
+    // Load more materials for teachers
+    let materialsOffset = 10; // Assuming initial load shows 10
+
+    function loadMoreMaterials() {
+        const btn = event.target;
+        const originalText = $(btn).text();
+        $(btn).text('Loading...').prop('disabled', true);
+
+        $.get('<?= base_url('materials/teacher-materials') ?>?offset=' + materialsOffset + '&limit=10')
+            .done(function(res) {
+                if (res && res.success && res.materials && res.materials.length > 0) {
+                    let html = '';
+                    res.materials.forEach(function(material) {
+                        html += `
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">${material.file_name}</h6>
+                                    <p class="mb-1 text-muted small">
+                                        Course: ${material.course_name} (${material.course_code}) |
+                                        Uploaded: ${material.upload_date}
+                                    </p>
+                                </div>
+                                <a href="${material.file_path}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-download"></i> View
+                                </a>
+                            </div>
+                        `;
+                    });
+                    $('.list-group-flush').append(html);
+                    materialsOffset += 10;
+
+                    if (res.materials.length < 10) {
+                        $(btn).hide(); // No more materials
+                    }
+                } else {
+                    $(btn).hide(); // No more materials
+                }
+            })
+            .fail(function() {
+                showAlert('danger', 'Failed to load more materials');
+            })
+            .always(function() {
+                $(btn).text(originalText).prop('disabled', false);
+            });
+    }
 });
 </script>
 <?= $this->endSection() ?>
