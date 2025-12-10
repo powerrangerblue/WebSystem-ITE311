@@ -24,6 +24,7 @@ $routes->get('/courses', 'Course::index');
 $routes->get('/courses/search', 'Course::search');
 $routes->post('/courses/search', 'Course::search');
 $routes->post('/course/enroll', 'Course::enroll');
+$routes->get('/course/enrollment-details/(:num)', 'Course::getEnrollmentDetails/$1');
 
 // Materials Routes
 $routes->get('/admin/course/(:num)/upload', 'Materials::upload/$1');

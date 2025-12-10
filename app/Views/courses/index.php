@@ -271,6 +271,8 @@ $(document).ready(function() {
         `);
     }
 
+
+
     // Function to show Bootstrap alert
     function showAlert(type, message) {
         const alertHtml = `

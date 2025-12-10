@@ -335,6 +335,9 @@
                                     </div>
                                     <div class="d-flex gap-2 align-items-center">
                                         <span class="badge rounded-pill text-bg-success">Enrolled</span>
+                                        <button class="btn btn-sm btn-outline-info view-details-btn" data-course-id="<?= $cid ?>">
+                                            <i class="bi bi-eye"></i> View Details
+                                        </button>
                                         <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#materials-<?= $cid ?>" aria-expanded="false" aria-controls="materials-<?= $cid ?>">Materials (<?= (int)$matCount ?>)</button>
                                     </div>
                                 </div>
@@ -372,6 +375,31 @@
 
     <!-- Alert container for dynamic messages -->
     <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>
+
+    <!-- Enrollment Details Modal -->
+    <div class="modal fade" id="enrollmentDetailsModal" tabindex="-1" aria-labelledby="enrollmentDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="enrollmentDetailsModalLabel">Course Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="enrollment-details-content">
+                        <div class="text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading course details...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <?= $this->endSection() ?>
 
@@ -454,6 +482,78 @@ $(document).ready(function() {
         // Start polling every 15 seconds for more responsive updates
         setInterval(checkForMaterialUpdates, 15000);
     }, 1000);
+
+    // Handle view details button clicks for enrolled courses
+    $(document).on('click', '.view-details-btn', function(e) {
+        e.preventDefault();
+
+        const courseId = $(this).data('course-id');
+
+        $('#enrollmentDetailsModal').modal('show');
+
+        // Load enrollment details via AJAX
+        $.ajax({
+            url: '<?= base_url('/course/enrollment-details/') ?>' + courseId,
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success && response.enrollment) {
+                    const enrollment = response.enrollment;
+
+                    const detailsHtml = `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="text-primary"><i class="bi bi-person me-2"></i>Course Information</h6>
+                                <table class="table table-sm">
+                                    <tr><td class="fw-semibold">Course Code:</td><td>${enrollment.course_code || 'N/A'}</td></tr>
+                                    <tr><td class="fw-semibold">Course Name:</td><td>${enrollment.course_name || 'N/A'}</td></tr>
+                                    <tr><td class="fw-semibold">School Year:</td><td>${enrollment.school_year || 'N/A'}</td></tr>
+                                    <tr><td class="fw-semibold">Semester:</td><td>${enrollment.semester || 'N/A'}</td></tr>
+                                    <tr><td class="fw-semibold">Schedule:</td><td>${enrollment.schedule || 'N/A'}</td></tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-primary"><i class="bi bi-mortarboard me-2"></i>Instructor & Enrollment</h6>
+                                <table class="table table-sm">
+                                    <tr><td class="fw-semibold">Teacher:</td><td>${enrollment.teacher_name || 'Not Assigned'}</td></tr>
+                                    <tr><td class="fw-semibold">Status:</td><td>
+                                        <span class="badge bg-${enrollment.status === 'Active' ? 'success' : (enrollment.status === 'Inactive' ? 'warning' : 'danger')}">
+                                            ${enrollment.status || 'N/A'}
+                                        </span>
+                                    </td></tr>
+                                    <tr><td class="fw-semibold">Enrollment Date:</td><td>${enrollment.enrollment_date || 'N/A'}</td></tr>
+                                    <tr><td class="fw-semibold">Remarks:</td><td>${enrollment.enrollment_status || '-'}</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        ${enrollment.description ? `
+                        <div class="mt-3">
+                            <h6 class="text-primary"><i class="bi bi-info-circle me-2"></i>Course Description</h6>
+                            <p class="text-muted small">${enrollment.description}</p>
+                        </div>
+                        ` : ''}
+                    `;
+
+                    $('#enrollment-details-content').html(detailsHtml);
+                } else {
+                    $('#enrollment-details-content').html(`
+                        <div class="alert alert-warning">
+                            <h5>Details Not Found</h5>
+                            <p>Unable to load course details. Please try again.</p>
+                        </div>
+                    `);
+                }
+            },
+            error: function() {
+                $('#enrollment-details-content').html(`
+                    <div class="alert alert-danger">
+                        <h5>Error</h5>
+                        <p>Failed to load course details. Please try again.</p>
+                    </div>
+                `);
+            }
+        });
+    });
 
     // Load more materials for teachers
     let materialsOffset = 10; // Assuming initial load shows 10

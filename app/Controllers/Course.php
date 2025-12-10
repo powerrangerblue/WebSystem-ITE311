@@ -160,6 +160,55 @@ class Course extends BaseController
     }
 
     /**
+     * Get enrollment details for the current student
+     */
+    public function getEnrollmentDetails($courseId)
+    {
+        // Check if the user is logged in
+        if (!session()->get('isLoggedIn')) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'You must be logged in to view enrollment details.'
+            ]);
+        }
+
+        // Check if the user is a student
+        $userRole = strtolower((string) session()->get('role'));
+        if ($userRole !== 'student') {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Only students can view their enrollment details.'
+            ]);
+        }
+
+        $userId = session()->get('user_id');
+
+        // Get enrollment details with course and user information, including teacher name
+        $db = \Config\Database::connect();
+        $enrollment = $db->table('enrollments')
+            ->select('enrollments.*, users.name, users.email, courses.course_name, courses.course_code, courses.description, courses.school_year, courses.semester, courses.schedule, teacher.name as teacher_name')
+            ->join('users', 'users.id = enrollments.user_id')
+            ->join('courses', 'courses.id = enrollments.course_id')
+            ->join('users as teacher', 'teacher.id = courses.teacher_id', 'left')
+            ->where('enrollments.user_id', $userId)
+            ->where('enrollments.course_id', $courseId)
+            ->get()
+            ->getRowArray();
+
+        if (!$enrollment) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Enrollment not found.'
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'success' => true,
+            'enrollment' => $enrollment
+        ]);
+    }
+
+    /**
      * Apply LIKE filters to the courses table using Query Builder.
      */
     protected function getCourses(string $searchTerm): array
