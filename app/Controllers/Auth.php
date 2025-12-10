@@ -378,7 +378,7 @@ class Auth extends Controller
             $email = strtolower($this->request->getPost('email')); // Normalize email to lowercase
 
             $rules = [
-                'name' => 'required|min_length[3]|max_length[100]',
+                'name' => 'required|min_length[3]|max_length[100]|regex_match[/^[a-zA-Z\s\-\.\']+$/]',
                 'email' => 'required|valid_email'
             ];
 
@@ -458,7 +458,7 @@ class Auth extends Controller
 
         // Build validation rules
         $rules = [
-            'name' => 'required|min_length[3]|max_length[100]',
+            'name' => 'required|min_length[3]|max_length[100]|regex_match[/^[a-zA-Z\s\-\.\']+$/]',
             'email' => 'required|valid_email',
             'role' => 'required|in_list[student,teacher,admin]'
         ];
