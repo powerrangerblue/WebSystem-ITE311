@@ -49,12 +49,27 @@ class Admin extends BaseController
 
         $courseId = $input['course_id'] ?? null;
 
-        // Validate dates against academic year if dates and school year are provided
+        if (!$courseId) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Course ID not provided']);
+        }
+
+        // Get existing course data to check what changed
+        $existingCourse = $db->table('courses')->where('id', $courseId)->get()->getRowArray();
+        if (!$existingCourse) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Course not found']);
+        }
+
+        // Check if dates have changed
         $startDate = $input['start_date'] ?? null;
         $endDate = $input['end_date'] ?? null;
         $schoolYear = $input['school_year'] ?? null;
 
-        if (!empty($startDate) && !empty($endDate)) {
+        $datesChanged = ($startDate !== $existingCourse['start_date']) ||
+                        ($endDate !== $existingCourse['end_date']) ||
+                        ($schoolYear !== $existingCourse['school_year']);
+
+        // Validate dates against academic year ONLY if dates have changed
+        if ($datesChanged && !empty($startDate) && !empty($endDate) && !empty($schoolYear)) {
             if (strtotime($endDate) <= strtotime($startDate)) {
                 return $this->response->setJSON([
                     'success' => false,
@@ -62,14 +77,12 @@ class Admin extends BaseController
                 ]);
             }
 
-            // Validate that dates match the selected academic year
-            if (!empty($schoolYear)) {
-                if (!$this->validateDatesAgainstAcademicYear($startDate, $endDate, $schoolYear)) {
-                    return $this->response->setJSON([
-                        'success' => false,
-                        'message' => 'The Start Date and End Date must match the selected Academic Year (' . $schoolYear . ').'
-                    ]);
-                }
+            // Validate against academic year
+            if (!$this->validateDatesAgainstAcademicYear($startDate, $endDate, $schoolYear)) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'The Start Date and End Date must match the selected Academic Year (' . $schoolYear . ').'
+                ]);
             }
         }
 
@@ -104,12 +117,8 @@ class Admin extends BaseController
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
-        if ($courseId) {
-            $db->table('courses')->where('id', $courseId)->update($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Course updated successfully']);
-        }
-
-        return $this->response->setJSON(['success' => false, 'message' => 'Course ID not provided']);
+        $db->table('courses')->where('id', $courseId)->update($data);
+        return $this->response->setJSON(['success' => true, 'message' => 'Course updated successfully']);
     }
 
     public function createCourse()
@@ -134,7 +143,7 @@ class Admin extends BaseController
             ]);
         }
 
-        // Validate dates: end_date should be after start_date
+        // Validate dates: end_date should be after start_date and match academic year
         $startDate = $input['start_date'] ?? null;
         $endDate = $input['end_date'] ?? null;
         $schoolYear = $input['school_year'] ?? null;
@@ -147,7 +156,7 @@ class Admin extends BaseController
                 ]);
             }
 
-            // Validate that dates match the selected academic year
+            // Validate against academic year if school year is provided
             if (!empty($schoolYear)) {
                 if (!$this->validateDatesAgainstAcademicYear($startDate, $endDate, $schoolYear)) {
                     return $this->response->setJSON([
@@ -480,8 +489,8 @@ class Admin extends BaseController
     }
 
     /**
-     * Validate that start and end dates fall within the academic year range
-     * Academic year format: "2025–2026" corresponds to Start Date in 2025, End Date in 2026
+     * Validate that start and end dates match the academic year years
+     * Academic year format: "2025–2026" corresponds to Start Date year = 2025, End Date year = 2026
      */
     private function validateDatesAgainstAcademicYear($startDate, $endDate, $schoolYear)
     {
@@ -497,17 +506,12 @@ class Admin extends BaseController
         $startYear = (int) $matches[1];
         $endYear = (int) $matches[2];
 
-        // Start Date must be within the first year (Jan 1 to Dec 31)
-        $startYearStart = date('Y-m-d', strtotime($startYear . '-01-01'));
-        $startYearEnd = date('Y-m-d', strtotime($startYear . '-12-31'));
+        // Extract years from dates
+        $startDateYear = (int) date('Y', strtotime($startDate));
+        $endDateYear = (int) date('Y', strtotime($endDate));
 
-        // End Date must be within the second year (Jan 1 to Dec 31)
-        $endYearStart = date('Y-m-d', strtotime($endYear . '-01-01'));
-        $endYearEnd = date('Y-m-d', strtotime($endYear . '-12-31'));
-
-        // Check if start date is in the first year and end date is in the second year
-        return ($startDate >= $startYearStart && $startDate <= $startYearEnd) &&
-               ($endDate >= $endYearStart && $endDate <= $endYearEnd);
+        // Start Date year must match the first year, End Date year must match the second year
+        return ($startDateYear === $startYear) && ($endDateYear === $endYear);
     }
 
 }

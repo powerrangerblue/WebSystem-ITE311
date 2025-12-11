@@ -277,35 +277,7 @@
 
 <?= $this->section('scripts') ?>
 <script>
-function validateDatesAgainstAcademicYear(startDate, endDate, schoolYear) {
-    if (!startDate || !endDate || !schoolYear) {
-        return false;
-    }
-
-    // Parse school year (e.g., "2025–2026")
-    const yearMatch = schoolYear.match(/^(\d{4})[–\-](\d{4})$/);
-    if (!yearMatch) {
-        return false; // Invalid format
-    }
-
-    const startYear = parseInt(yearMatch[1]);
-    const endYear = parseInt(yearMatch[2]);
-
-    // Start Date must be within the first year (Jan 1 to Dec 31)
-    const startYearStart = new Date(startYear, 0, 1); // January is month 0 (0-indexed)
-    const startYearEnd = new Date(startYear, 11, 31); // December is month 11, 31st
-
-    // End Date must be within the second year (Jan 1 to Dec 31)
-    const endYearStart = new Date(endYear, 0, 1);
-    const endYearEnd = new Date(endYear, 11, 31);
-
-    const startDateObj = new Date(startDate);
-    const endDateObj = new Date(endDate);
-
-    // Check if start date is in the first year and end date is in the second year
-    return (startDateObj >= startYearStart && startDateObj <= startYearEnd) &&
-           (endDateObj >= endYearStart && endDateObj <= endYearEnd);
-}
+// Removed academic year validation - dates can now be any valid range
 
 $(document).ready(function() {
     let isCreateMode = false;
@@ -400,12 +372,6 @@ $(document).ready(function() {
 
             if (endDateTime <= startDateTime) {
                 showAlert('danger', 'End date must be after the start date');
-                return false;
-            }
-
-            // Validate dates against academic year
-            if (schoolYear && !validateDatesAgainstAcademicYear(startDate, endDate, schoolYear)) {
-                showAlert('danger', 'The Start Date and End Date must match the selected Academic Year (' + schoolYear + ').');
                 return false;
             }
         }
