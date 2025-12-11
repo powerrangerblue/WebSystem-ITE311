@@ -510,6 +510,8 @@ $(document).ready(function() {
                                     <tr><td class="fw-semibold">School Year:</td><td>${enrollment.school_year || 'N/A'}</td></tr>
                                     <tr><td class="fw-semibold">Semester:</td><td>${enrollment.semester || 'N/A'}</td></tr>
                                     <tr><td class="fw-semibold">Schedule:</td><td>${enrollment.schedule || 'N/A'}</td></tr>
+                                    <tr><td class="fw-semibold">Room:</td><td>${enrollment.room || 'N/A'}</td></tr>
+                                    <tr><td class="fw-semibold">Day of Class:</td><td>${enrollment.day_of_class || 'N/A'}</td></tr>
                                 </table>
                             </div>
                             <div class="col-md-6">

@@ -17,10 +17,14 @@ class EnrollmentModel extends Model
         'course_id',
         'student_id',
         'program',
-        'year_level',
         'section',
+        'room',
         'status',
         'enrollment_status',
+        'approval_status',
+        'approved_by',
+        'approved_at',
+        'approval_notes',
         'enrollment_date'
     ];
 
@@ -77,8 +81,8 @@ class EnrollmentModel extends Model
     }
 
     /**
-     * Get all courses a user is enrolled in
-     * 
+     * Get all courses a user is enrolled in (approved enrollments only)
+     *
      * @param int $user_id User ID
      * @return array Array of enrolled courses
      */
@@ -87,6 +91,7 @@ class EnrollmentModel extends Model
         return $this->select('enrollments.*, courses.course_code, courses.course_name, courses.description')
                     ->join('courses', 'courses.id = enrollments.course_id')
                     ->where('enrollments.user_id', $user_id)
+                    ->where('enrollments.approval_status', 'approved')
                     ->orderBy('enrollments.enrollment_date', 'DESC')
                     ->findAll();
     }
@@ -119,8 +124,8 @@ class EnrollmentModel extends Model
     }
 
     /**
-     * Get all enrollments for a specific course
-     * 
+     * Get all enrollments for a specific course (approved only)
+     *
      * @param int $course_id Course ID
      * @return array Array of enrollments with user data
      */
@@ -129,7 +134,97 @@ class EnrollmentModel extends Model
         return $this->select('enrollments.*, users.name as user_name, users.email as user_email')
                     ->join('users', 'users.id = enrollments.user_id')
                     ->where('enrollments.course_id', $course_id)
+                    ->where('enrollments.approval_status', 'approved')
                     ->orderBy('enrollments.enrollment_date', 'DESC')
                     ->findAll();
+    }
+
+    /**
+     * Get pending enrollment requests for a specific course (for teachers/admins)
+     *
+     * @param int $course_id Course ID
+     * @return array Array of pending enrollments with user data
+     */
+    public function getPendingEnrollments($course_id)
+    {
+        return $this->select('enrollments.*, users.name as user_name, users.email as user_email, users.role')
+                    ->join('users', 'users.id = enrollments.user_id')
+                    ->where('enrollments.course_id', $course_id)
+                    ->where('enrollments.approval_status', 'pending')
+                    ->orderBy('enrollments.enrollment_date', 'ASC')
+                    ->findAll();
+    }
+
+    /**
+     * Get all pending enrollment requests for courses taught by a teacher
+     *
+     * @param int $teacher_id Teacher ID
+     * @return array Array of pending enrollments with course and user data
+     */
+    public function getPendingEnrollmentsForTeacher($teacher_id)
+    {
+        return $this->select('enrollments.*, courses.course_code, courses.course_name, users.name as student_name, users.email as student_email')
+                    ->join('courses', 'courses.id = enrollments.course_id')
+                    ->join('users', 'users.id = enrollments.user_id')
+                    ->where('courses.teacher_id', $teacher_id)
+                    ->where('enrollments.approval_status', 'pending')
+                    ->orderBy('enrollments.enrollment_date', 'ASC')
+                    ->findAll();
+    }
+
+    /**
+     * Get all pending enrollment requests (for admins)
+     *
+     * @return array Array of all pending enrollments with course and user data
+     */
+    public function getAllPendingEnrollments()
+    {
+        return $this->select('enrollments.*, courses.course_code, courses.course_name, users.name as student_name, users.email as student_email, teacher.name as teacher_name')
+                    ->join('courses', 'courses.id = enrollments.course_id')
+                    ->join('users', 'users.id = enrollments.user_id')
+                    ->join('users as teacher', 'teacher.id = courses.teacher_id', 'left')
+                    ->where('enrollments.approval_status', 'pending')
+                    ->orderBy('enrollments.enrollment_date', 'ASC')
+                    ->findAll();
+    }
+
+    /**
+     * Approve or decline an enrollment request
+     *
+     * @param int $enrollment_id Enrollment ID
+     * @param string $action 'approve' or 'decline'
+     * @param int $approved_by User ID of the approver
+     * @param string|null $notes Approval notes
+     * @return bool True on success, false on failure
+     */
+    public function processEnrollmentRequest($enrollment_id, $action, $approved_by, $notes = null)
+    {
+        $status = ($action === 'approve') ? 'approved' : 'declined';
+
+        $data = [
+            'approval_status' => $status,
+            'approved_by' => $approved_by,
+            'approved_at' => date('Y-m-d H:i:s'),
+            'approval_notes' => $notes
+        ];
+
+        return $this->update($enrollment_id, $data);
+    }
+
+    /**
+     * Get enrollment statistics for a course
+     *
+     * @param int $course_id Course ID
+     * @return array Statistics array
+     */
+    public function getEnrollmentStats($course_id)
+    {
+        $stats = [
+            'total_pending' => $this->where('course_id', $course_id)->where('approval_status', 'pending')->countAllResults(),
+            'total_approved' => $this->where('course_id', $course_id)->where('approval_status', 'approved')->countAllResults(),
+            'total_declined' => $this->where('course_id', $course_id)->where('approval_status', 'declined')->countAllResults(),
+        ];
+
+        return $stats;
     }
 }

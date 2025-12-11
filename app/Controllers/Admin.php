@@ -60,19 +60,38 @@ class Admin extends BaseController
             }
         }
 
+        // Check for schedule conflict if teacher is assigned
+        $teacherId = $input['teacher_id'] ?? null;
+        $schedule = $input['schedule'] ?? null;
+        $dayOfClass = $input['day_of_class'] ?? null;
+        $courseId = $input['course_id'] ?? null;
+
+        if ($teacherId && $schedule && $dayOfClass) {
+            // Check for schedule conflicts
+            $conflict = $this->checkScheduleConflict($teacherId, $schedule, $dayOfClass, $courseId);
+            if ($conflict) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Schedule conflict detected: This teacher is already assigned to another course during the same days and times.'
+                ]);
+            }
+        }
+
         $data = [
-            'school_year' => $input['school_year'] ?? null,
-            'semester' => $input['semester'] ?? null,
-            'start_date' => $input['start_date'] ?? null,
-            'end_date' => $input['end_date'] ?? null,
             'course_name' => $input['course_name'] ?? null,
             'description' => $input['description'] ?? null,
-            'teacher_id' => $input['teacher_id'] ?? null,
+            'year_level' => $input['year_level'] ?? null,
+            'school_year' => $input['school_year'] ?? null,
+            'semester' => $input['semester'] ?? null,
             'schedule' => $input['schedule'] ?? null,
+            'room' => $input['room'] ?? null,
+            'day_of_class' => $input['day_of_class'] ?? null,
+            'teacher_id' => $input['teacher_id'] ?? null,
+            'start_date' => $input['start_date'] ?? null,
+            'end_date' => $input['end_date'] ?? null,
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
-        $courseId = $input['course_id'] ?? null;
         if ($courseId) {
             $db->table('courses')->where('id', $courseId)->update($data);
             return $this->response->setJSON(['success' => true, 'message' => 'Course updated successfully']);
@@ -116,13 +135,32 @@ class Admin extends BaseController
             }
         }
 
+        // Check for schedule conflict if teacher is assigned
+        $teacherId = $input['teacher_id'] ?? null;
+        $schedule = $input['schedule'] ?? null;
+        $dayOfClass = $input['day_of_class'] ?? null;
+
+        if ($teacherId && $schedule && $dayOfClass) {
+            // Check for schedule conflicts
+            $conflict = $this->checkScheduleConflict($teacherId, $schedule, $dayOfClass);
+            if ($conflict) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Schedule conflict detected: This teacher is already assigned to another course during the same days and times.'
+                ]);
+            }
+        }
+
         $data = [
             'course_code' => $input['course_code'],
             'course_name' => $input['course_name'],
             'description' => $input['description'] ?? null,
+            'year_level' => $input['year_level'] ?? null,
             'school_year' => $input['school_year'] ?? null,
             'semester' => $input['semester'] ?? null,
             'schedule' => $input['schedule'] ?? null,
+            'room' => $input['room'] ?? null,
+            'day_of_class' => $input['day_of_class'] ?? null,
             'teacher_id' => $input['teacher_id'] ?? null,
             'status' => $input['status'] ?? 'Active', // Use provided status or default to Active
             'start_date' => $input['start_date'] ?? null,
@@ -138,4 +176,263 @@ class Admin extends BaseController
 
         return $this->response->setJSON(['success' => false, 'message' => 'Failed to create course']);
     }
+
+    /**
+     * Admin: Manage Enrollment Requests
+     */
+    public function manageEnrollmentRequests()
+    {
+        // Check if user is logged in and is an admin
+        if (!session()->get('isLoggedIn') || strtolower((string) session()->get('role')) !== 'admin') {
+            return redirect()->to('/dashboard')->with('error', 'Access denied.');
+        }
+
+        $enrollmentModel = new \App\Models\EnrollmentModel();
+
+        // Get all pending enrollment requests
+        $pendingRequests = $enrollmentModel->getAllPendingEnrollments();
+
+        return view('admin/enrollment_requests', [
+            'pendingRequests' => $pendingRequests
+        ]);
+    }
+
+    /**
+     * Admin: Process Enrollment Request (Approve/Decline)
+     */
+    public function processEnrollmentRequest()
+    {
+        // Check if user is logged in and is an admin
+        if (!session()->get('isLoggedIn') || strtolower((string) session()->get('role')) !== 'admin') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Access denied.']);
+        }
+
+        $adminId = session()->get('user_id');
+        $enrollmentId = $this->request->getPost('enrollment_id');
+        $action = $this->request->getPost('action'); // 'approve' or 'decline'
+        $notes = $this->request->getPost('notes');
+
+        if (!$enrollmentId || !in_array($action, ['approve', 'decline'])) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Invalid request parameters.']);
+        }
+
+        $enrollmentModel = new \App\Models\EnrollmentModel();
+
+        // Verify the enrollment exists and is pending
+        $enrollment = $enrollmentModel->where('id', $enrollmentId)->where('approval_status', 'pending')->first();
+
+        if (!$enrollment) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Enrollment request not found or already processed.']);
+        }
+
+        // Get course and student details for notification
+        $db = \Config\Database::connect();
+        $enrollmentDetails = $db->table('enrollments')
+            ->join('courses', 'courses.id = enrollments.course_id')
+            ->join('users', 'users.id = enrollments.user_id')
+            ->where('enrollments.id', $enrollmentId)
+            ->select('enrollments.*, courses.course_name, users.name as student_name, users.email as student_email')
+            ->get()
+            ->getRowArray();
+
+        if (!$enrollmentDetails) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Enrollment details not found.']);
+        }
+
+        // Process the enrollment request
+        if ($enrollmentModel->processEnrollmentRequest($enrollmentId, $action, $adminId, $notes)) {
+            // Create notification for the student
+            $notificationModel = new \App\Models\NotificationModel();
+            $actionText = ($action === 'approve') ? 'approved' : 'declined';
+            $message = 'Your enrollment request for ' . $enrollmentDetails['course_name'] . ' has been ' . $actionText . ' by an administrator.';
+
+            if (!empty($notes)) {
+                $message .= ' Notes: ' . $notes;
+            }
+
+            $notificationModel->insert([
+                'user_id' => $enrollmentDetails['user_id'],
+                'message' => $message,
+                'is_read' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Enrollment request ' . $actionText . ' successfully.'
+            ]);
+        }
+
+        return $this->response->setJSON(['success' => false, 'message' => 'Failed to process enrollment request.']);
+    }
+
+    /**
+     * Check for schedule conflicts when assigning a teacher to a course
+     */
+    private function checkScheduleConflict($teacherId, $newSchedule, $newDays, $excludeCourseId = null)
+    {
+        $db = \Config\Database::connect();
+
+        // Parse new course schedule and days
+        $newTimeRange = $this->parseSchedule($newSchedule);
+        $newDaysArray = $this->parseDays($newDays);
+
+        if (!$newTimeRange || empty($newDaysArray)) {
+            return false; // No conflict if schedule is invalid
+        }
+
+        // Query other courses by this teacher
+        $query = $db->table('courses')
+            ->where('teacher_id', $teacherId)
+            ->where('status', 'Active');
+
+        if ($excludeCourseId) {
+            $query->where('id !=', $excludeCourseId);
+        }
+
+        $existingCourses = $query->get()->getResultArray();
+
+        foreach ($existingCourses as $course) {
+            if (empty($course['schedule']) || empty($course['day_of_class'])) {
+                continue; // Skip courses without schedule
+            }
+
+            $existingTimeRange = $this->parseSchedule($course['schedule']);
+            $existingDaysArray = $this->parseDays($course['day_of_class']);
+
+            if (!$existingTimeRange || empty($existingDaysArray)) {
+                continue;
+            }
+
+            // Check if days overlap
+            $daysOverlap = !empty(array_intersect($newDaysArray, $existingDaysArray));
+            if (!$daysOverlap) {
+                continue;
+            }
+
+            // Check if times overlap
+            if ($this->timesOverlap($newTimeRange, $existingTimeRange)) {
+                return true; // Conflict found
+            }
+        }
+
+        return false; // No conflict
+    }
+
+    /**
+     * Parse schedule string like "08:00–09:00" into start and end times
+     */
+    private function parseSchedule($schedule)
+    {
+        if (empty($schedule)) {
+            return null;
+        }
+
+        // Handle different formats: "08:00–09:00" or "08:00 - 09:00"
+        // Try different approaches for the en dash
+        if (strpos($schedule, '–') !== false) {
+            $parts = explode('–', $schedule);
+        } elseif (strpos($schedule, '-') !== false) {
+            $parts = explode('-', $schedule);
+        } else {
+            $parts = [$schedule]; // No separator found
+        }
+
+        if (count($parts) !== 2) {
+            return null;
+        }
+
+        $startTime = trim($parts[0]);
+        $endTime = trim($parts[1]);
+
+        // Convert to minutes since midnight for easier comparison
+        $startMinutes = $this->timeToMinutes($startTime);
+        $endMinutes = $this->timeToMinutes($endTime);
+
+        if ($startMinutes === false || $endMinutes === false || $startMinutes >= $endMinutes) {
+            return null;
+        }
+
+        return ['start' => $startMinutes, 'end' => $endMinutes];
+    }
+
+    /**
+     * Parse days string like "Mon, Wed, Fri" into array
+     */
+    private function parseDays($daysString)
+    {
+        if (empty($daysString)) {
+            return [];
+        }
+
+        $days = array_map('trim', explode(',', $daysString));
+
+        // Normalize day names to full names for consistent comparison
+        $normalizedDays = [];
+        foreach ($days as $day) {
+            $normalized = $this->normalizeDayName($day);
+            if ($normalized) {
+                $normalizedDays[] = $normalized;
+            }
+        }
+
+        return array_unique($normalizedDays);
+    }
+
+    /**
+     * Normalize day abbreviations to full names
+     */
+    private function normalizeDayName($day)
+    {
+        $day = trim(strtolower($day));
+
+        $dayMappings = [
+            'mon' => 'monday',
+            'tue' => 'tuesday',
+            'wed' => 'wednesday',
+            'thu' => 'thursday',
+            'fri' => 'friday',
+            'sat' => 'saturday',
+            'sun' => 'sunday',
+            'monday' => 'monday',
+            'tuesday' => 'tuesday',
+            'wednesday' => 'wednesday',
+            'thursday' => 'thursday',
+            'friday' => 'friday',
+            'saturday' => 'saturday',
+            'sunday' => 'sunday'
+        ];
+
+        return $dayMappings[$day] ?? null;
+    }
+
+    /**
+     * Convert time string like "08:00" to minutes since midnight
+     */
+    private function timeToMinutes($time)
+    {
+        if (!preg_match('/^(\d{1,2}):(\d{2})$/', $time, $matches)) {
+            return false;
+        }
+
+        $hours = (int) $matches[1];
+        $minutes = (int) $matches[2];
+
+        if ($hours < 0 || $hours > 23 || $minutes < 0 || $minutes > 59) {
+            return false;
+        }
+
+        return $hours * 60 + $minutes;
+    }
+
+    /**
+     * Check if two time ranges overlap
+     */
+    private function timesOverlap($range1, $range2)
+    {
+        // Two ranges overlap if one starts before the other ends and ends after the other starts
+        return $range1['start'] < $range2['end'] && $range1['end'] > $range2['start'];
+    }
+
+
 }

@@ -54,12 +54,6 @@
         </li>
         <?php endif; ?>
 
-        <!-- Show announcements link only for students -->
-        <?php if ($userRole === 'student'): ?>
-        <li class="nav-item">
-          <a class="nav-link <?= $currentUri == 'announcements' ? 'active' : '' ?>" href="<?= site_url('announcements') ?>">Announcements</a>
-        </li>
-        <?php endif; ?>
 
         <!-- Dashboard link - unified route for all roles -->
         <li class="nav-item">
@@ -86,6 +80,9 @@
         <?php if ($userRole === 'admin'): ?>
         <li class="nav-item">
           <a class="nav-link <?= uri_string() == 'admin/courses' ? 'active' : '' ?>" href="<?= site_url('/admin/courses') ?>">Course Management</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <?= uri_string() == 'admin/enrollment-requests' ? 'active' : '' ?>" href="<?= site_url('/admin/enrollment-requests') ?>">Course Enrollment Requests</a>
         </li>
         <?php endif; ?>
 

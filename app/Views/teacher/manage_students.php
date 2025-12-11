@@ -261,6 +261,7 @@ $(document).ready(function() {
                                     <tr><td class="fw-semibold">Full Name:</td><td>${student.name || 'N/A'}</td></tr>
                                     <tr><td class="fw-semibold">Email:</td><td>${student.email || 'N/A'}</td></tr>
                                     <tr><td class="fw-semibold">Section:</td><td>${student.section || 'N/A'}</td></tr>
+                                    <tr><td class="fw-semibold">Room:</td><td>${student.room || 'N/A'}</td></tr>
                                 </table>
                             </div>
                             <div class="col-md-6">

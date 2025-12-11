@@ -92,10 +92,11 @@ class Course extends BaseController
             ]);
         }
 
-        // If not, insert the new enrollment record with the current timestamp
+        // If not, insert the new enrollment request with pending status
         $enrollmentData = [
             'user_id' => $user_id,
             'course_id' => $course_id,
+            'approval_status' => 'pending',
             'enrollment_date' => date('Y-m-d H:i:s')
         ];
 
@@ -107,14 +108,14 @@ class Course extends BaseController
             $notificationModel = new \App\Models\NotificationModel();
             $notificationModel->insert([
                 'user_id' => $user_id,
-                'message' => 'You have been enrolled in ' . $course['course_name'],
+                'message' => 'Your enrollment request for ' . $course['course_name'] . ' has been submitted and is pending approval.',
                 'is_read' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
 
             return $this->response->setJSON([
                 'success' => true,
-                'message' => 'Successfully enrolled in ' . esc($course['course_name']) . '!',
+                'message' => 'Enrollment request submitted for ' . esc($course['course_name']) . '. Waiting for approval.',
                 'course' => [
                     'id' => $course['id'],
                     'course_code' => $course['course_code'],
@@ -124,7 +125,7 @@ class Course extends BaseController
         } else {
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'Failed to enroll in course. Please try again.'
+                'message' => 'Failed to submit enrollment request. Please try again.'
             ]);
         }
     }
@@ -186,7 +187,7 @@ class Course extends BaseController
         // Get enrollment details with course and user information, including teacher name
         $db = \Config\Database::connect();
         $enrollment = $db->table('enrollments')
-            ->select('enrollments.*, users.name, users.email, courses.course_name, courses.course_code, courses.description, courses.school_year, courses.semester, courses.schedule, teacher.name as teacher_name')
+            ->select('enrollments.*, users.name, users.email, courses.course_name, courses.course_code, courses.description, courses.school_year, courses.semester, courses.schedule, courses.room, courses.day_of_class, teacher.name as teacher_name')
             ->join('users', 'users.id = enrollments.user_id')
             ->join('courses', 'courses.id = enrollments.course_id')
             ->join('users as teacher', 'teacher.id = courses.teacher_id', 'left')

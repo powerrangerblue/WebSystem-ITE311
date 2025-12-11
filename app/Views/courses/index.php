@@ -58,7 +58,10 @@ $isStudent = $userRole === 'student';
                     <div class="card-body">
                         <h5 class="card-title"><?= esc($course['course_name'] ?? 'Untitled Course') ?></h5>
                         <p class="card-text text-muted mb-2"><?= esc($course['description'] ?? 'No description available.') ?></p>
-                        <span class="badge text-bg-light border"><?= esc($course['course_code'] ?? 'N/A') ?></span>
+                        <div class="mb-2">
+                            <span class="badge text-bg-light border me-1"><?= esc($course['course_code'] ?? 'N/A') ?></span>
+                            <span class="badge text-bg-primary"><?= esc($course['year_level'] ?? 'N/A') ?></span>
+                        </div>
                     </div>
                     <div class="card-footer bg-white border-0">
                         <?php if ($isStudent): ?>
@@ -250,7 +253,10 @@ $(document).ready(function() {
                         <div class="card-body">
                             <h5 class="card-title">${course.course_name || 'Untitled Course'}</h5>
                             <p class="card-text text-muted mb-2">${course.description || 'No description available.'}</p>
-                            <span class="badge text-bg-light border">${course.course_code || 'N/A'}</span>
+                            <div class="mb-2">
+                                <span class="badge text-bg-light border me-1">${course.course_code || 'N/A'}</span>
+                                <span class="badge text-bg-primary">${course.year_level || 'N/A'}</span>
+                            </div>
                         </div>
                         <div class="card-footer bg-white border-0">
                             ${buttonHtml}

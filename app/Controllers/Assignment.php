@@ -504,17 +504,20 @@ class Assignment extends BaseController
     }
 
     /**
-     * Create notifications for all enrolled students when a new assignment is created
+     * Create notifications for all approved enrolled students when a new assignment is created
      */
     private function createAssignmentNotifications($assignmentId, $courseId, $assignmentTitle)
     {
-        // Get all enrolled students for this course
-        $enrolledStudents = $this->enrollmentModel->where('course_id', $courseId)->findAll();
+        // Get all approved enrolled students for this course
+        $enrolledStudents = $this->enrollmentModel
+            ->where('course_id', $courseId)
+            ->where('approval_status', 'approved')
+            ->findAll();
 
         if (!empty($enrolledStudents)) {
             $notificationModel = new \App\Models\NotificationModel();
 
-            // Create notification for each enrolled student
+            // Create notification for each approved enrolled student
             foreach ($enrolledStudents as $enrollment) {
                 $notificationModel->insert([
                     'user_id' => $enrollment['user_id'],
@@ -576,11 +579,12 @@ class Assignment extends BaseController
             return redirect()->to('/teacher/manage-students')->with('error', 'Course not found.');
         }
 
-        // Get all enrolled students for the selected course (no filtering)
+        // Get all approved enrolled students for the selected course
         $students = $db->table('enrollments')
             ->select('enrollments.*, users.name, users.email')
             ->join('users', 'users.id = enrollments.user_id')
             ->where('enrollments.course_id', $selectedCourseId)
+            ->where('enrollments.approval_status', 'approved')
             ->orderBy('users.name', 'ASC')
             ->get()
             ->getResultArray();
@@ -678,7 +682,7 @@ class Assignment extends BaseController
     }
 
     /**
-     * Count total students enrolled in teacher's courses
+     * Count total students enrolled in teacher's courses (approved enrollments only)
      */
     private function countTeacherStudents($teacherId)
     {
@@ -686,6 +690,7 @@ class Assignment extends BaseController
             return $this->db->table('enrollments')
                 ->join('courses', 'courses.id = enrollments.course_id')
                 ->where('courses.teacher_id', $teacherId)
+                ->where('enrollments.approval_status', 'approved')
                 ->where('enrollments.status !=', 'Dropped')
                 ->countAllResults();
         } catch (\Exception $e) {
@@ -747,4 +752,6 @@ class Assignment extends BaseController
             'reference_id' => $assignmentId // Optional: link to the assignment
         ]);
     }
+
+
 }

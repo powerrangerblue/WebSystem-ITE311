@@ -26,8 +26,8 @@ $session = session();
 				<?php echo csrf_field(); ?>
 				<div class="mb-3">
 					<label for="material_file" class="form-label">Choose file</label>
-					<input type="file" class="form-control" id="material_file" name="material_file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.txt" required>
-					<div class="form-text">Allowed: pdf, doc, docx, ppt, pptx, xls, xlsx, zip, rar, txt • Max 10MB</div>
+					<input type="file" class="form-control" id="material_file" name="material_file" accept=".pdf,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.txt" required>
+					<div class="form-text">Allowed: pdf, ppt, pptx, xls, xlsx, zip, rar, txt • Max 10MB</div>
 				</div>
 				<div class="d-flex gap-2">
 					<button type="submit" class="btn btn-primary">Upload</button>

@@ -42,6 +42,7 @@ $routes->get('/admin/manage-users', 'Auth::manageUsers');
 $routes->post('/admin/change-role', 'Auth::changeRole');
 $routes->post('/admin/add-user', 'Auth::addUser');
 $routes->post('/admin/edit-user', 'Auth::editUser');
+$routes->post('/admin/get-user-enrollment', 'Auth::getUserEnrollment');
 $routes->post('/admin/toggle-status', 'Auth::toggleStatus');
 $routes->get('/admin/delete-user/(:num)', 'Auth::deleteUser/$1');
 $routes->get('/admin/courses', 'Admin::courses');
@@ -66,6 +67,10 @@ $routes->post('/assignments/submit/(:num)', 'Assignment::submit/$1');
 $routes->get('/teacher/manage-students', 'Assignment::manageStudents');
 $routes->post('/teacher/manage-students/update-status', 'Assignment::updateStudentStatus');
 $routes->get('/teacher/manage-students/student/details/(:num)', 'Assignment::getStudentDetails/$1');
+
+// Admin Routes for Enrollment Requests
+$routes->get('/admin/enrollment-requests', 'Admin::manageEnrollmentRequests');
+$routes->post('/admin/enrollment-requests/process', 'Admin::processEnrollmentRequest');
 
 // File Downloads
 $routes->get('/assignments/download/(:num)', 'Assignment::downloadAssignment/$1');

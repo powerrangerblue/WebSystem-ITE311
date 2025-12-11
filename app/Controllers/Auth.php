@@ -376,11 +376,15 @@ class Auth extends Controller
             helper(['form']);
 
             $email = strtolower($this->request->getPost('email')); // Normalize email to lowercase
+            $role = $this->request->getPost('role');
 
             $rules = [
                 'name' => 'required|min_length[3]|max_length[100]|regex_match[/^[a-zA-Z\s\-\.\']+$/]',
-                'email' => 'required|valid_email'
+                'email' => 'required|valid_email',
+                'role' => 'required|in_list[student,teacher,admin]'
             ];
+
+
 
             $userModel = new UserModel();
 
@@ -399,7 +403,7 @@ class Auth extends Controller
                 'name' => $this->request->getPost('name'),
                 'email' => $email, // Already lowercased
                 'password' => 'Rmmc1960!', // Default password for all new users (meets strong password requirements)
-                'role' => 'student', // All admin-added users are students
+                'role' => $role,
                 'status' => 'active'
             ];
 
@@ -411,6 +415,10 @@ class Auth extends Controller
             $insertResult = $userModel->insert($data);
             log_message('info', 'Insert result: ' . ($insertResult ? 'success' : 'failed'));
             if ($insertResult) {
+                $userId = $insertResult;
+
+
+
                 return $this->response->setJSON(['success' => true]);
             } else {
                 $errors = $userModel->errors();
@@ -439,6 +447,7 @@ class Auth extends Controller
         $userId = $this->request->getPost('user_id');
         $email = strtolower($this->request->getPost('email')); // Normalize email to lowercase
         $password = $this->request->getPost('password');
+        $role = $this->request->getPost('role');
 
         if (!$userId) {
             return $this->response->setJSON(['success' => false, 'message' => 'User ID is required.']);
@@ -463,6 +472,8 @@ class Auth extends Controller
             'role' => 'required|in_list[student,teacher,admin]'
         ];
 
+
+
         // Add password validation only if password is provided
         if (!empty($password)) {
             $rules['password'] = 'min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/]';
@@ -485,7 +496,7 @@ class Auth extends Controller
         $data = [
             'name' => $this->request->getPost('name'),
             'email' => $email,
-            'role' => $this->request->getPost('role')
+            'role' => $role
         ];
 
         // Only update password if provided
@@ -496,11 +507,48 @@ class Auth extends Controller
         // Skip model validation since uniqueness is checked manually above
         $userModel->skipValidation(true);
 
-        if ($userModel->update($userId, $data)) {
-            return $this->response->setJSON(['success' => true]);
+        try {
+            // Update user
+            if ($userModel->update($userId, $data)) {
+                return $this->response->setJSON(['success' => true]);
+            } else {
+                $errors = $userModel->errors();
+                return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Edit user exception: ' . $e->getMessage());
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to update user. Please try again.']);
+        }
+    }
+
+    public function getUserEnrollment()
+    {
+        $session = session();
+
+        // Check if user is logged in and is admin
+        if (!$session->get('isLoggedIn') || strtolower((string) $session->get('role')) !== 'admin') {
+            return $this->response->setJSON(['success' => false, 'message' => 'Access denied.']);
+        }
+
+        $userId = $this->request->getPost('user_id');
+
+        if (!$userId) {
+            return $this->response->setJSON(['success' => false, 'message' => 'User ID is required.']);
+        }
+
+        $enrollmentModel = new \App\Models\EnrollmentModel();
+        $enrollment = $enrollmentModel->where('user_id', $userId)->first();
+
+        if ($enrollment) {
+            return $this->response->setJSON([
+                'success' => true,
+                'enrollment' => $enrollment
+            ]);
         } else {
-            $errors = $userModel->errors();
-            return $this->response->setJSON(['success' => false, 'message' => implode(', ', $errors)]);
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'No enrollment found for this user.'
+            ]);
         }
     }
 

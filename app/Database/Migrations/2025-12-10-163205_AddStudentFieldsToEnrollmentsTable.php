@@ -21,17 +21,11 @@ class AddStudentFieldsToEnrollmentsTable extends Migration
                 'null' => true,
                 'after' => 'student_id',
             ],
-            'year_level' => [
-                'type' => 'VARCHAR',
-                'constraint' => '20',
-                'null' => true,
-                'after' => 'program',
-            ],
             'section' => [
                 'type' => 'VARCHAR',
                 'constraint' => '20',
                 'null' => true,
-                'after' => 'year_level',
+                'after' => 'program',
             ],
             'status' => [
                 'type' => 'ENUM',
@@ -56,7 +50,6 @@ class AddStudentFieldsToEnrollmentsTable extends Migration
         $this->forge->dropColumn('enrollments', [
             'student_id',
             'program',
-            'year_level',
             'section',
             'status',
             'enrollment_status',

@@ -51,7 +51,7 @@ class Materials extends BaseController
             $validationRules = [
                 'material_file' => [
                     'label' => 'Material File',
-                    'rules' => 'uploaded[material_file]|max_size[material_file,10240]|ext_in[material_file,pdf,doc,docx,ppt,pptx,xls,xlsx,zip,rar,txt]',
+                    'rules' => 'uploaded[material_file]|max_size[material_file,10240]|ext_in[material_file,pdf,ppt,pptx,xls,xlsx,zip,rar,txt]',
                 ],
             ];
 

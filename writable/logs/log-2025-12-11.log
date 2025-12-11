@@ -66,3 +66,63 @@ ERROR - 2025-12-11 01:11:04 --> Error counting teacher students: Undefined prope
 ERROR - 2025-12-11 01:11:04 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
 ERROR - 2025-12-11 01:12:13 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
 ERROR - 2025-12-11 01:12:13 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 19:02:33 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 19:02:33 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 19:09:43 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 19:09:43 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 19:15:12 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 19:15:12 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 20:25:06 --> Failed to create enrollment for user ID: 36
+ERROR - 2025-12-11 20:39:54 --> mysqli_sql_exception: Duplicate entry 'ITE311' for key 'course_code' in C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-CANITAN\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `co...', 0)
+#1 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `co...')
+#2 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `co...')
+#3 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(1841): CodeIgniter\Database\BaseConnection->query('INSERT INTO `co...', NULL, false)
+#4 C:\xampp\htdocs\ITE311-CANITAN\system\Database\BaseBuilder.php(2230): CodeIgniter\Database\BaseBuilder->batchExecute('_insertBatch', 100)
+#5 C:\xampp\htdocs\ITE311-CANITAN\app\Database\Seeds\CourseSeeder.php(71): CodeIgniter\Database\BaseBuilder->insertBatch(Array)
+#6 C:\xampp\htdocs\ITE311-CANITAN\system\Database\Seeder.php(149): App\Database\Seeds\CourseSeeder->run()
+#7 C:\xampp\htdocs\ITE311-CANITAN\system\Commands\Database\Seed.php(79): CodeIgniter\Database\Seeder->call('App\\Database\\Se...')
+#8 C:\xampp\htdocs\ITE311-CANITAN\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Seed->run(Array)
+#9 C:\xampp\htdocs\ITE311-CANITAN\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('db:seed', Array)
+#10 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#11 C:\xampp\htdocs\ITE311-CANITAN\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#12 C:\xampp\htdocs\ITE311-CANITAN\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#13 {main}
+ERROR - 2025-12-11 20:44:00 --> Failed to create enrollment for user ID: 37
+ERROR - 2025-12-11 21:17:43 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 21:17:43 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 21:17:48 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 21:17:48 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+CRITICAL - 2025-12-11 21:17:49 --> ErrorException: Undefined array key "year_level"
+[Method: GET, Route: teacher/manage-students]
+in APPPATH\Views\teacher\manage_students.php on line 31.
+ 1 APPPATH\Views\teacher\manage_students.php(31): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "year_level"', 'C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Views\\teacher\\manage_students.php', 31)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Views\\teacher\\manage_students.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('teacher/manage_students', [], true)
+ 5 APPPATH\Controllers\Assignment.php(592): view('teacher/manage_students', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Assignment->manageStudents()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 21:17:51 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 21:17:51 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+CRITICAL - 2025-12-11 21:17:54 --> ErrorException: Undefined array key "year_level"
+[Method: GET, Route: teacher/manage-students]
+in APPPATH\Views\teacher\manage_students.php on line 31.
+ 1 APPPATH\Views\teacher\manage_students.php(31): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "year_level"', 'C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Views\\teacher\\manage_students.php', 31)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\ITE311-CANITAN\\app\\Views\\teacher\\manage_students.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('teacher/manage_students', [], true)
+ 5 APPPATH\Controllers\Assignment.php(592): view('teacher/manage_students', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Assignment->manageStudents()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Assignment))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 21:18:13 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-11 21:18:13 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db

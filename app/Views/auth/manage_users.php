@@ -125,6 +125,22 @@
                             <option value="admin">Admin</option>
                         </select>
                     </div>
+
+                    <!-- Enrollment Form - Only shown when role is Student -->
+                    <div id="enrollmentForm" style="display: none;">
+                        <hr>
+                        <h6 class="mb-3">Enrollment Information</h6>
+                        <div class="mb-3">
+                            <label for="enrollmentYearLevel" class="form-label">Year Level</label>
+                            <select class="form-select" id="enrollmentYearLevel" name="year_level">
+                                <option value="">Select Year Level</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -167,6 +183,22 @@
                             <option value="admin">Admin</option>
                         </select>
                     </div>
+
+                    <!-- Edit Enrollment Form - Only shown when role is Student -->
+                    <div id="editEnrollmentForm" style="display: none;">
+                        <hr>
+                        <h6 class="mb-3">Enrollment Information</h6>
+                        <div class="mb-3">
+                            <label for="editEnrollmentYearLevel" class="form-label">Year Level</label>
+                            <select class="form-select" id="editEnrollmentYearLevel" name="year_level">
+                                <option value="">Select Year Level</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -182,6 +214,12 @@
 <?= $this->section('scripts') ?>
 <script>
 $(document).ready(function() {
+    // Reset form when add user modal is shown
+    $('#addUserModal').on('show.bs.modal', function() {
+        $('#addUserForm')[0].reset();
+        $('#enrollmentForm').hide();
+    });
+
     // Handle role change
     $('.role-select').on('change', function() {
         const userId = $(this).data('user-id');
@@ -225,6 +263,31 @@ $(document).ready(function() {
         $('#editUserEmail').val(email);
         $('#editUserPassword').val(''); // Clear password field
         $('#editUserRole').val(role);
+
+        // Handle enrollment form visibility and data
+        if (role === 'student') {
+            $('#editEnrollmentForm').show();
+            // Fetch current enrollment data
+            $.ajax({
+                url: '<?= base_url('admin/get-user-enrollment') ?>',
+                type: 'POST',
+                data: { user_id: userId },
+                success: function(response) {
+                    if (response.success && response.enrollment) {
+                        $('#editEnrollmentYearLevel').val(response.enrollment.year_level || '');
+                    } else {
+                        $('#editEnrollmentYearLevel').val('');
+                    }
+                },
+                error: function() {
+                    $('#editEnrollmentYearLevel').val('');
+                }
+            });
+        } else {
+            $('#editEnrollmentForm').hide();
+            $('#editEnrollmentYearLevel').val('');
+        }
+
         $('#editUserModal').modal('show');
     };
 
@@ -293,6 +356,32 @@ $(document).ready(function() {
         });
     });
 
+    // Handle role change to show/hide enrollment form (add modal)
+    $('#userRole').on('change', function() {
+        const selectedRole = $(this).val();
+        if (selectedRole === 'student') {
+            $('#enrollmentForm').show();
+        } else {
+            $('#enrollmentForm').hide();
+            // Clear enrollment form fields when hiding
+            $('#enrollmentForm input, #enrollmentForm select').val('');
+        }
+    });
+
+    // Handle role change to show/hide enrollment form (edit modal)
+    $('#editUserRole').on('change', function() {
+        const selectedRole = $(this).val();
+        if (selectedRole === 'student') {
+            $('#editEnrollmentForm').show();
+        } else {
+            $('#editEnrollmentForm').hide();
+            // Clear enrollment form fields when hiding
+            $('#editEnrollmentForm input, #editEnrollmentForm select').val('');
+        }
+    });
+
+
+
     // Handle add user form submission
     $('#addUserForm').on('submit', function(e) {
         e.preventDefault();
@@ -309,6 +398,7 @@ $(document).ready(function() {
                 if (response.success) {
                     $('#addUserModal').modal('hide');
                     $('#addUserForm')[0].reset();
+                    $('#enrollmentForm').hide(); // Hide enrollment form after successful submission
                     showAlert('User added successfully!', 'success');
                     // Reload the page to show the new user
                     setTimeout(function() {

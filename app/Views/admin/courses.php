@@ -58,6 +58,7 @@
                             <th class="border-0 ps-4">Course Code</th>
                             <th class="border-0">Course Title</th>
                             <th class="border-0">Description</th>
+
                             <th class="border-0">School Year</th>
                             <th class="border-0">Semester</th>
                             <th class="border-0">Schedule</th>
@@ -77,6 +78,7 @@
                                             <?= esc(substr($course['description'] ?? '', 0, 50)) ?><?= strlen($course['description'] ?? '') > 50 ? '...' : '' ?>
                                         </span>
                                     </td>
+
                                     <td class="course-school-year"><?= esc($course['school_year'] ?? '-') ?></td>
                                     <td class="course-semester"><?= esc($course['semester'] ?? '-') ?></td>
                                     <td class="course-schedule"><?= esc($course['schedule'] ?? '-') ?></td>
@@ -95,6 +97,8 @@
                                                 data-school-year="<?= esc($course['school_year']) ?>"
                                                 data-semester="<?= esc($course['semester']) ?>"
                                                 data-schedule="<?= esc($course['schedule']) ?>"
+                                                data-room="<?= esc($course['room']) ?>"
+                                                data-day-of-class="<?= esc($course['day_of_class']) ?>"
                                                 data-teacher-id="<?= esc($course['teacher_id']) ?>"
                                                 data-status="<?= esc($course['status']) ?>"
                                                 data-start-date="<?= esc($course['start_date']) ?>"
@@ -208,6 +212,19 @@
                             </select>
                             <div class="form-text">Select class time slot</div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="edit-room" class="form-label">Room</label>
+                                <input type="text" class="form-control" id="edit-room" name="room" placeholder="e.g., Room 101, Lab A">
+                                <div class="form-text">Classroom or location</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="edit-day-of-class" class="form-label">Days of Class</label>
+                                <input type="text" class="form-control" id="edit-day-of-class" name="day_of_class" placeholder="e.g., Mon, Wed, Fri">
+                                <div class="form-text">Days when class meets</div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Instructor Assignment Section -->
@@ -293,9 +310,12 @@ $(document).ready(function() {
         $('#edit-course-code').val('').prop('readonly', false);
         $('#edit-course-name').val('');
         $('#edit-description').val('');
+        $('#edit-year-level').val('');
         $('#edit-school-year').val('');
         $('#edit-semester').val('');
         $('#edit-schedule').val('');
+        $('#edit-room').val('');
+        $('#edit-day-of-class').val('');
         $('#edit-teacher').val('');
         $('#edit-start-date').val('');
         $('#edit-end-date').val('');
@@ -320,9 +340,12 @@ $(document).ready(function() {
         $('#edit-course-code').val(courseData.courseCode).prop('readonly', true);
         $('#edit-course-name').val(courseData.courseName);
         $('#edit-description').val(courseData.description);
+        $('#edit-year-level').val(courseData.yearLevel);
         $('#edit-school-year').val(courseData.schoolYear);
         $('#edit-semester').val(courseData.semester);
         $('#edit-schedule').val(courseData.schedule);
+        $('#edit-room').val(courseData.room);
+        $('#edit-day-of-class').val(courseData.dayOfClass);
         $('#edit-teacher').val(courseData.teacherId);
         $('#edit-start-date').val(courseData.startDate);
         $('#edit-end-date').val(courseData.endDate);
@@ -375,6 +398,7 @@ $(document).ready(function() {
                         row.find('.course-title').text(formData.get('course_name'));
                         row.find('.course-description span').text(formData.get('description').substring(0, 50) + (formData.get('description').length > 50 ? '...' : ''));
                         row.find('.course-description span').attr('title', formData.get('description'));
+                        row.find('.course-year-level').text(formData.get('year_level') || '-');
                         row.find('.course-school-year').text(formData.get('school_year') || '-');
                         row.find('.course-semester').text(formData.get('semester') || '-');
                         row.find('.course-schedule').text(formData.get('schedule') || '-');
@@ -389,9 +413,12 @@ $(document).ready(function() {
                         editButton.data({
                             'courseName': formData.get('course_name'),
                             'description': formData.get('description'),
+                            'yearLevel': formData.get('year_level'),
                             'schoolYear': formData.get('school_year'),
                             'semester': formData.get('semester'),
                             'schedule': formData.get('schedule'),
+                            'room': formData.get('room'),
+                            'dayOfClass': formData.get('day_of_class'),
                             'teacherId': teacherId,
                             'startDate': formData.get('start_date'),
                             'endDate': formData.get('end_date')
