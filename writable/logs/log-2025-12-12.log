@@ -1,0 +1,6 @@
+ERROR - 2025-12-12 06:28:32 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-12 06:28:32 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-12 06:29:12 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-12 06:29:12 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-12 06:34:05 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-12 06:34:05 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db

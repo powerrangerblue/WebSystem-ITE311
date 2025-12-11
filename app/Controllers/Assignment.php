@@ -550,7 +550,7 @@ class Assignment extends BaseController
         $courses = $db->table('courses')
             ->where('teacher_id', $teacherId)
             ->where('status', 'Active')
-            ->select('id, course_code, course_name, school_year, semester')
+            ->select('id, course_code, course_name, school_year, semester, room, schedule, day_of_class')
             ->get()
             ->getResultArray();
 

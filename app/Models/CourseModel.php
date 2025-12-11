@@ -16,6 +16,8 @@ class CourseModel extends Model
         'school_year',
         'semester',
         'schedule',
+        'room',
+        'day_of_class',
         'teacher_id',
         'status',
         'start_date',

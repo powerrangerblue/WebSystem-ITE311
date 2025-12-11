@@ -16,7 +16,9 @@ class NotificationModel extends Model
         'user_id',
         'message',
         'is_read',
-        'created_at'
+        'created_at',
+        'type',
+        'reference_id'
     ];
 
     // Dates

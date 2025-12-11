@@ -28,7 +28,7 @@
                     <select class="form-select" id="course-select" onchange="changeCourse(this.value)">
                         <?php foreach ($courses as $course): ?>
                             <option value="<?= esc($course['id']) ?>" <?= $currentCourse['id'] == $course['id'] ? 'selected' : '' ?>>
-                                <?= esc($course['course_code']) ?> – <?= esc($course['course_name']) ?>
+                                <?= esc($course['course_code']) ?> – <?= esc($course['course_name']) ?> (Room <?= esc($course['room']) ?>, <?= esc($course['schedule']) ?>, <?= esc($course['day_of_class']) ?>)
                             </option>
                         <?php endforeach; ?>
                     </select>

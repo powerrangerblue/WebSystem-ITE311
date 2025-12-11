@@ -47,9 +47,12 @@ class Admin extends BaseController
         $db = \Config\Database::connect();
         $input = $this->request->getPost();
 
-        // Validate dates: end_date should be after start_date
+        $courseId = $input['course_id'] ?? null;
+
+        // Validate dates against academic year if dates and school year are provided
         $startDate = $input['start_date'] ?? null;
         $endDate = $input['end_date'] ?? null;
+        $schoolYear = $input['school_year'] ?? null;
 
         if (!empty($startDate) && !empty($endDate)) {
             if (strtotime($endDate) <= strtotime($startDate)) {
@@ -58,13 +61,22 @@ class Admin extends BaseController
                     'message' => 'End date must be after the start date'
                 ]);
             }
+
+            // Validate that dates match the selected academic year
+            if (!empty($schoolYear)) {
+                if (!$this->validateDatesAgainstAcademicYear($startDate, $endDate, $schoolYear)) {
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'The Start Date and End Date must match the selected Academic Year (' . $schoolYear . ').'
+                    ]);
+                }
+            }
         }
 
         // Check for schedule conflict if teacher is assigned
         $teacherId = $input['teacher_id'] ?? null;
         $schedule = $input['schedule'] ?? null;
         $dayOfClass = $input['day_of_class'] ?? null;
-        $courseId = $input['course_id'] ?? null;
 
         if ($teacherId && $schedule && $dayOfClass) {
             // Check for schedule conflicts
@@ -125,6 +137,7 @@ class Admin extends BaseController
         // Validate dates: end_date should be after start_date
         $startDate = $input['start_date'] ?? null;
         $endDate = $input['end_date'] ?? null;
+        $schoolYear = $input['school_year'] ?? null;
 
         if (!empty($startDate) && !empty($endDate)) {
             if (strtotime($endDate) <= strtotime($startDate)) {
@@ -132,6 +145,16 @@ class Admin extends BaseController
                     'success' => false,
                     'message' => 'End date must be after the start date'
                 ]);
+            }
+
+            // Validate that dates match the selected academic year
+            if (!empty($schoolYear)) {
+                if (!$this->validateDatesAgainstAcademicYear($startDate, $endDate, $schoolYear)) {
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'The Start Date and End Date must match the selected Academic Year (' . $schoolYear . ').'
+                    ]);
+                }
             }
         }
 
@@ -256,6 +279,28 @@ class Admin extends BaseController
                 'is_read' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
+
+            // If enrollment is approved, notify the teacher
+            if ($action === 'approve') {
+                // Get the teacher assigned to this course
+                $course = $db->table('courses')
+                    ->select('teacher_id')
+                    ->where('id', $enrollmentDetails['course_id'])
+                    ->get()
+                    ->getRowArray();
+
+                if ($course && $course['teacher_id']) {
+                    // Create notification for the teacher
+                    $notificationModel->insert([
+                        'user_id' => $course['teacher_id'],
+                        'message' => 'Student ' . $enrollmentDetails['student_name'] . ' has been approved for enrollment in your course: ' . $enrollmentDetails['course_name'],
+                        'is_read' => 0,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'type' => 'enrollment',
+                        'reference_id' => $enrollmentDetails['id'], // Reference to the enrollment ID
+                    ]);
+                }
+            }
 
             return $this->response->setJSON([
                 'success' => true,
@@ -434,5 +479,35 @@ class Admin extends BaseController
         return $range1['start'] < $range2['end'] && $range1['end'] > $range2['start'];
     }
 
+    /**
+     * Validate that start and end dates fall within the academic year range
+     * Academic year format: "2025–2026" corresponds to Start Date in 2025, End Date in 2026
+     */
+    private function validateDatesAgainstAcademicYear($startDate, $endDate, $schoolYear)
+    {
+        if (empty($startDate) || empty($endDate) || empty($schoolYear)) {
+            return false;
+        }
+
+        // Parse school year (e.g., "2025–2026")
+        if (!preg_match('/^(\d{4})[–\-](\d{4})$/', $schoolYear, $matches)) {
+            return false; // Invalid format
+        }
+
+        $startYear = (int) $matches[1];
+        $endYear = (int) $matches[2];
+
+        // Start Date must be within the first year (Jan 1 to Dec 31)
+        $startYearStart = date('Y-m-d', strtotime($startYear . '-01-01'));
+        $startYearEnd = date('Y-m-d', strtotime($startYear . '-12-31'));
+
+        // End Date must be within the second year (Jan 1 to Dec 31)
+        $endYearStart = date('Y-m-d', strtotime($endYear . '-01-01'));
+        $endYearEnd = date('Y-m-d', strtotime($endYear . '-12-31'));
+
+        // Check if start date is in the first year and end date is in the second year
+        return ($startDate >= $startYearStart && $startDate <= $startYearEnd) &&
+               ($endDate >= $endYearStart && $endDate <= $endYearEnd);
+    }
 
 }

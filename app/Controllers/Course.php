@@ -113,6 +113,30 @@ class Course extends BaseController
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
 
+            // Get student name for admin notification
+            $student = $db->table('users')->where('id', $user_id)->select('name')->get()->getRowArray();
+
+            // Create notifications for all admin users
+            if ($student) {
+                $admins = $db->table('users')
+                    ->where('role', 'admin')
+                    ->where('status', 'active')
+                    ->select('id')
+                    ->get()
+                    ->getResultArray();
+
+                foreach ($admins as $admin) {
+                    $notificationModel->insert([
+                        'user_id' => $admin['id'],
+                        'message' => 'New enrollment request: Student ' . $student['name'] . ' has requested to enroll in ' . $course['course_name'] . ' (' . $course['course_code'] . ').',
+                        'is_read' => 0,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'type' => 'enrollment_request',
+                        'reference_id' => $enrollmentId,
+                    ]);
+                }
+            }
+
             return $this->response->setJSON([
                 'success' => true,
                 'message' => 'Enrollment request submitted for ' . esc($course['course_name']) . '. Waiting for approval.',
