@@ -93,7 +93,7 @@ class Admin extends BaseController
 
         if ($teacherId && $schedule && $dayOfClass) {
             // Check for schedule conflicts
-            $conflict = $this->checkScheduleConflict($teacherId, $schedule, $dayOfClass, $courseId);
+            $conflict = $this->checkScheduleConflict($teacherId, $schedule, $dayOfClass, $input['semester'], $input['school_year'], $courseId);
             if ($conflict) {
                 return $this->response->setJSON([
                     'success' => false,
@@ -174,7 +174,7 @@ class Admin extends BaseController
 
         if ($teacherId && $schedule && $dayOfClass) {
             // Check for schedule conflicts
-            $conflict = $this->checkScheduleConflict($teacherId, $schedule, $dayOfClass);
+            $conflict = $this->checkScheduleConflict($teacherId, $schedule, $dayOfClass, $input['semester'], $input['school_year']);
             if ($conflict) {
                 return $this->response->setJSON([
                     'success' => false,
@@ -323,7 +323,7 @@ class Admin extends BaseController
     /**
      * Check for schedule conflicts when assigning a teacher to a course
      */
-    private function checkScheduleConflict($teacherId, $newSchedule, $newDays, $excludeCourseId = null)
+    private function checkScheduleConflict($teacherId, $newSchedule, $newDays, $newSemester, $newSchoolYear, $excludeCourseId = null)
     {
         $db = \Config\Database::connect();
 
@@ -335,10 +335,12 @@ class Admin extends BaseController
             return false; // No conflict if schedule is invalid
         }
 
-        // Query other courses by this teacher
+        // Query other courses by this teacher in the same semester and school year
         $query = $db->table('courses')
             ->where('teacher_id', $teacherId)
-            ->where('status', 'Active');
+            ->where('status', 'Active')
+            ->where('semester', $newSemester)
+            ->where('school_year', $newSchoolYear);
 
         if ($excludeCourseId) {
             $query->where('id !=', $excludeCourseId);

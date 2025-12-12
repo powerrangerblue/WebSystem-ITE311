@@ -4,3 +4,7 @@ ERROR - 2025-12-12 06:29:12 --> Error counting teacher students: Undefined prope
 ERROR - 2025-12-12 06:29:12 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
 ERROR - 2025-12-12 06:34:05 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
 ERROR - 2025-12-12 06:34:05 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-12 09:47:16 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-12 09:47:16 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-12 09:47:19 --> Error counting teacher students: Undefined property: App\Controllers\Assignment::$db
+ERROR - 2025-12-12 09:47:19 --> Error getting teacher upcoming assignments: Undefined property: App\Controllers\Assignment::$db
